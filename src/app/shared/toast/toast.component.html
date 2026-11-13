@@ -1,0 +1,25 @@
+<div class="pointer-events-none fixed right-4 top-24 z-[120] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-2 max-md:bottom-24 max-md:top-auto">
+  @for (message of toast.messages(); track message.id) {
+    <div
+      class="animate-pop pointer-events-auto flex items-start gap-2.5 rounded-xl border bg-white p-3 shadow-[0_20px_40px_-18px_rgba(11,31,23,0.4)]"
+      [class.border-brand-200]="message.tone === 'success'"
+      [class.border-rose-200]="message.tone === 'error'"
+      [class.border-line]="message.tone === 'info'"
+      role="status"
+    >
+      <span
+        class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full"
+        [class.bg-brand-50]="message.tone === 'success'"
+        [class.text-brand-700]="message.tone === 'success'"
+        [class.bg-rose-50]="message.tone === 'error'"
+        [class.text-rose-600]="message.tone === 'error'"
+        [class.bg-cream]="message.tone === 'info'"
+        [class.text-muted]="message.tone === 'info'"
+      >
+        <app-icon [name]="message.tone === 'success' ? 'check-circle' : message.tone === 'error' ? 'x-circle' : 'info'" [size]="15" />
+      </span>
+      <p class="flex-1 pt-0.5 text-[11.5px] font-bold leading-snug text-ink">{{ message.text }}</p>
+      <button type="button" class="mt-0.5 text-faint transition hover:text-ink" (click)="toast.dismiss(message.id)" aria-label="Dismiss"><app-icon name="close" [size]="13" /></button>
+    </div>
+  }
+</div>

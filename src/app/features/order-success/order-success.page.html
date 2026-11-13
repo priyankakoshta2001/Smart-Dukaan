@@ -1,0 +1,157 @@
+@if (order(); as order) {
+  <section class="relative overflow-hidden bg-brand-950 py-10 text-white">
+    <div class="mesh-green absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0 opacity-60"></div>
+    <span class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sun-400/15 blur-3xl"></span>
+
+    <div class="container-page relative">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="mx-auto grid h-16 w-16 place-items-center rounded-full bg-sun-400 text-ink shadow-[0_20px_40px_-18px_rgba(245,147,0,0.9)]">
+          <app-icon name="check" [size]="32" [strokeWidth]="2.6" />
+        </span>
+        <span class="mt-4 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[9.5px] font-extrabold uppercase tracking-[0.18em] text-brand-100">Order confirmed</span>
+        <h1 class="mt-3 text-3xl font-extrabold leading-[1.05] tracking-[-0.045em] sm:text-4xl">
+          Thank you, {{ order.address.name.split(" ")[0] }}!<br />
+          <span class="font-display font-normal italic text-sun-300">Your order is in.</span>
+        </h1>
+        <p class="mx-auto mt-2 max-w-lg text-[12.5px] leading-relaxed text-brand-100/80">
+          {{ order.shops.length }} {{ order.shops.length === 1 ? "shop is" : "shops are" }} packing your order. We'll keep you updated at every step.
+        </p>
+
+        <div class="mx-auto mt-5 inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur">
+          <div class="text-left">
+            <p class="text-[8.5px] font-extrabold uppercase tracking-[0.16em] text-brand-200/70">Order ID</p>
+            <p class="text-[15px] font-extrabold tracking-wide">{{ order.id }}</p>
+          </div>
+          <button type="button" class="grid h-8 w-8 place-items-center rounded-lg bg-white/10 text-brand-100 transition hover:bg-white/20" (click)="copyOrderId()" aria-label="Copy order ID">
+            <app-icon name="copy" [size]="14" />
+          </button>
+          <span class="h-8 w-px bg-white/15"></span>
+          <div class="text-left">
+            <p class="text-[8.5px] font-extrabold uppercase tracking-[0.16em] text-brand-200/70">Arriving</p>
+            <p class="text-[13px] font-extrabold text-sun-300">{{ order.eta }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad pt-7">
+    <div class="container-page grid gap-5 lg:grid-cols-[1fr_21rem]">
+      <div class="space-y-3">
+        <!-- timeline -->
+        <div class="rounded-2xl border border-line bg-white p-4 sm:p-5">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-[13px] font-extrabold">Live order status</h2>
+            <span class="badge badge-green">{{ order.status }}</span>
+          </div>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-4">
+            @for (stage of stages; track stage.label; let index = $index) {
+              <div class="relative">
+                <div class="flex items-center gap-2 sm:block">
+                  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full" [class.bg-brand-700]="index === 1" [class.text-white]="index === 1" [class.bg-brand-50]="index !== 1" [class.text-brand-700]="index !== 1">
+                    <app-icon [name]="stage.icon" [size]="16" />
+                  </span>
+                  <div class="sm:mt-2">
+                    <p class="text-[10.5px] font-extrabold text-ink">{{ stage.label }}</p>
+                    <p class="text-[9px] font-semibold text-muted">{{ stage.copy }}</p>
+                  </div>
+                </div>
+                @if (index < 3) {
+                  <span class="absolute left-[4.5rem] top-4 hidden h-px w-[calc(100%-4.5rem)] bg-line sm:block"></span>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="mt-4 flex items-center gap-2 rounded-xl bg-brand-50 px-3 py-2.5">
+            <app-icon name="truck" [size]="16" class="shrink-0 text-brand-700" />
+            <p class="text-[10px] font-bold text-brand-800">Packed by {{ order.shops[0] }} · Delivery partner assigned shortly</p>
+          </div>
+        </div>
+
+        <!-- items -->
+        <div class="overflow-hidden rounded-2xl border border-line bg-white">
+          <div class="flex items-center justify-between gap-2 border-b border-line px-4 py-3">
+            <h2 class="text-[13px] font-extrabold">Items in this order</h2>
+            <span class="text-[9.5px] font-bold text-muted">{{ order.items.length }} items · {{ order.shops.length }} shops</span>
+          </div>
+          <div class="divide-y divide-line/70">
+            @for (item of order.items; track item.id) {
+              <div class="flex items-center gap-3 px-4 py-3">
+                <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-line bg-cream/60 p-1">
+                  <img [src]="item.image" [alt]="item.title" class="h-full w-full object-contain" loading="lazy" />
+                </span>
+                <div class="min-w-0 flex-1">
+                  <p class="truncate text-[11px] font-extrabold text-ink">{{ item.title }}</p>
+                  <p class="text-[9px] font-semibold text-muted">{{ item.shopName }} · {{ item.unit }} · Qty {{ item.qty }}</p>
+                </div>
+                <p class="shrink-0 text-[11px] font-extrabold text-ink">₹{{ itemTotal(item.qty, item.price) }}</p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <h3 class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink"><app-icon name="pin" [size]="12" class="text-brand-700" /> Delivering to</h3>
+            <p class="mt-2 text-[11px] font-extrabold text-ink">{{ order.address.name }} · {{ order.address.label }}</p>
+            <p class="mt-0.5 text-[10px] font-semibold leading-relaxed text-muted">{{ order.address.line1 }}, {{ order.address.line2 }}<br />{{ order.address.city }}, {{ order.address.state }} — {{ order.address.pin }}</p>
+            <p class="mt-1 text-[9.5px] font-bold text-ink-soft">{{ order.address.phone }}</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <h3 class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink"><app-icon name="card" [size]="12" class="text-brand-700" /> Payment &amp; slot</h3>
+            <p class="mt-2 text-[11px] font-extrabold text-ink">{{ order.payment }}</p>
+            <p class="mt-0.5 text-[10px] font-semibold text-muted">Slot: {{ order.slot }}</p>
+            <p class="mt-1 text-[9.5px] font-semibold text-brand-700">Payment confirmed</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="space-y-3 lg:sticky lg:top-[11.5rem] lg:h-fit">
+        <div class="rounded-2xl border border-line bg-white p-4">
+          <h2 class="text-[12px] font-extrabold uppercase tracking-[0.14em] text-ink">Bill details</h2>
+          <dl class="mt-3 space-y-1.5 text-[10.5px]">
+            <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Item total</dt><dd class="font-extrabold text-ink">₹{{ order.subtotal }}</dd></div>
+            @if (order.discount > 0) {
+              <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Coupon discount</dt><dd class="font-extrabold text-brand-700">−₹{{ order.discount }}</dd></div>
+            }
+            <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Delivery fee</dt><dd class="font-extrabold" [class.text-brand-700]="order.delivery === 0">{{ order.delivery === 0 ? "FREE" : "₹" + order.delivery }}</dd></div>
+          </dl>
+          <div class="mt-3 flex items-end justify-between border-t border-line pt-3">
+            <p class="text-[11px] font-extrabold text-ink">Amount paid</p>
+            <p class="text-2xl font-extrabold tracking-tight text-ink">₹{{ order.total }}</p>
+          </div>
+
+          <div class="mt-3 grid gap-2">
+            <a routerLink="/account" [queryParams]="{ tab: 'orders' }" class="btn btn-primary btn-sm btn-block">Track my order</a>
+            <a routerLink="/shops" class="btn btn-outline btn-sm btn-block">Continue shopping</a>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-brand-100 bg-brand-50 p-4">
+          <p class="flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-brand-700"><app-icon name="headphones" [size]="12" /> Need help?</p>
+          <p class="mt-1.5 text-[10.5px] font-semibold leading-relaxed text-ink-soft">Something missing or damaged? Report within 24 hours for a free replacement.</p>
+          <a routerLink="/help" class="mt-2 inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700">Visit help centre <app-icon name="arrow-right" [size]="11" /></a>
+        </div>
+
+        <div class="rounded-2xl border border-line bg-white p-4">
+          <p class="text-[9px] font-extrabold uppercase tracking-[0.14em] text-faint">Delivered from</p>
+          <div class="mt-2 space-y-1.5">
+            @for (shop of order.shops; track shop) {
+              <p class="flex items-center gap-1.5 text-[10.5px] font-bold text-ink"><app-icon name="store" [size]="12" class="text-brand-700" /> {{ shop }}</p>
+            }
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+} @else {
+  <section class="container-page py-24 text-center">
+    <span class="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-cream text-muted"><app-icon name="receipt" [size]="34" /></span>
+    <h1 class="mt-5 text-2xl font-extrabold">Order not found</h1>
+    <p class="mx-auto mt-2 max-w-md text-[12.5px] text-muted">We couldn't find that order. Check your account for recent orders.</p>
+    <a routerLink="/account" class="btn btn-primary btn-sm mt-5">Go to my orders</a>
+  </section>
+}

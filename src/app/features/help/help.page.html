@@ -1,0 +1,165 @@
+<div class="page-enter">
+  <!-- ---------------------------------------------------------------- hero -->
+  <section class="container-page pt-4 sm:pt-6">
+    <div class="relative overflow-hidden rounded-[1.75rem] border border-line surface-hero px-5 py-8 text-center sm:px-8 sm:py-10">
+      <div class="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-brand-100/60 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-24 right-0 h-56 w-56 rounded-full bg-sun-100/70 blur-3xl"></div>
+
+      <div class="relative mx-auto max-w-xl">
+        <span class="eyebrow justify-center"><app-icon name="headphones" [size]="12" /> Help centre</span>
+        <h1 class="mt-2 text-[1.9rem] font-extrabold leading-tight tracking-[-0.045em] sm:text-[2.4rem]">
+          How can we <span class="font-display font-normal italic text-brand-700">help today?</span>
+        </h1>
+        <p class="mx-auto mt-2 max-w-md text-[11.5px] font-medium leading-relaxed text-muted">
+          Search the answer, browse a topic, or track an order — all in one place. Still stuck? A real human is one tap away.
+        </p>
+
+        <div class="relative mt-5">
+          <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted"><app-icon name="search" [size]="18" /></span>
+          <input
+            type="text"
+            class="input h-12 rounded-2xl pl-11 pr-24 text-[12.5px] shadow-soft"
+            placeholder="Try “delivery charges” or “return”"
+            [value]="query()"
+            (input)="onQuery($event)"
+            aria-label="Search help articles"
+          />
+          @if (query()) {
+            <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-line bg-white px-2.5 py-1 text-[9.5px] font-extrabold text-muted transition hover:text-ink" (click)="clearQuery()">Clear</button>
+          }
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+          <span class="text-[9px] font-extrabold uppercase tracking-wider text-faint">Popular</span>
+          @for (item of popular; track item.label) {
+            <button type="button" class="rounded-full border border-line bg-white px-2.5 py-1 text-[9.5px] font-bold text-ink-soft transition hover:border-brand-300 hover:text-brand-700" (click)="setQuery(item.term)">{{ item.label }}</button>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------- topics -->
+  <section class="container-page mt-8 sm:mt-10">
+    <div class="flex items-end justify-between gap-3">
+      <div>
+        <span class="eyebrow"><app-icon name="grid" [size]="12" /> Browse by topic</span>
+        <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">Start with a <span class="font-display font-normal italic text-brand-700">category.</span></h2>
+      </div>
+    </div>
+
+    <div class="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+      @for (topic of topics; track topic.title) {
+        <button type="button" class="group flex items-start gap-3 rounded-2xl border border-line bg-white p-3.5 text-left transition duration-300 hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft" (click)="setQuery(topic.term)">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-white {{ topic.tone }}"><app-icon [name]="topic.icon" [size]="18" /></span>
+          <span class="min-w-0">
+            <span class="block text-[11.5px] font-extrabold text-ink">{{ topic.title }}</span>
+            <span class="mt-0.5 block text-[9.5px] font-semibold leading-relaxed text-muted">{{ topic.copy }}</span>
+          </span>
+          <app-icon name="arrow-up-right" [size]="13" class="ml-auto mt-1 shrink-0 text-faint transition group-hover:text-brand-700" />
+        </button>
+      }
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- faq + aside -->
+  <section class="container-page mt-8 pb-4 sm:mt-10">
+    <div class="grid items-start gap-4 lg:grid-cols-[1fr_330px]">
+      <!-- faqs -->
+      <div class="overflow-hidden rounded-2xl border border-line bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3.5">
+          <div>
+            <h2 class="text-[13px] font-extrabold">
+              @if (query()) {
+                {{ filteredFaqs().length }} {{ filteredFaqs().length === 1 ? "answer" : "answers" }} for “{{ query() }}”
+              } @else {
+                Frequently asked questions
+              }
+            </h2>
+            <p class="text-[9.5px] font-semibold text-muted">Straight answers, no fine print.</p>
+          </div>
+          <span class="badge badge-green">{{ filteredFaqs().length }} articles</span>
+        </div>
+
+        @if (filteredFaqs().length === 0) {
+          <div class="flex flex-col items-center justify-center px-5 py-14 text-center">
+            <span class="grid h-14 w-14 place-items-center rounded-full bg-cream text-muted"><app-icon name="search" [size]="26" /></span>
+            <h3 class="mt-3 text-base font-extrabold">No answer for “{{ query() }}” yet</h3>
+            <p class="mt-1 max-w-xs text-[11px] font-medium leading-relaxed text-muted">Try a simpler word like “delivery”, “return” or “payment”. Or just ask us directly — we answer fast.</p>
+            <div class="mt-3 flex gap-2">
+              <button type="button" class="btn btn-outline btn-sm" (click)="clearQuery()">Clear search</button>
+              <a routerLink="/contact" class="btn btn-primary btn-sm">Ask support</a>
+            </div>
+          </div>
+        } @else {
+          <div class="divide-y divide-line">
+            @for (faq of filteredFaqs(); track faq.q; let index = $index) {
+              <div>
+                <button type="button" class="flex w-full items-center gap-3 px-4 py-3.5 text-left transition hover:bg-cream/40" (click)="toggleFaq(index)">
+                  <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-[9px] font-extrabold" [class.bg-brand-700]="openFaq() === index" [class.text-white]="openFaq() === index" [class.bg-cream]="openFaq() !== index" [class.text-muted]="openFaq() !== index">{{ index + 1 }}</span>
+                  <span class="flex-1 text-[11.5px] font-extrabold text-ink">{{ faq.q }}</span>
+                  <app-icon name="chevron-down" [size]="15" class="shrink-0 text-muted transition" [class.rotate-180]="openFaq() === index" />
+                </button>
+                @if (openFaq() === index) {
+                  <p class="animate-pop px-4 pb-4 pl-14 text-[11px] font-medium leading-relaxed text-muted">{{ faq.a }}</p>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- aside -->
+      <aside class="space-y-3">
+        <section class="overflow-hidden rounded-2xl border border-brand-800 surface-dark p-4 text-white">
+          <div class="flex items-center gap-2">
+            <span class="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-sun-300"><app-icon name="truck" [size]="17" /></span>
+            <div>
+              <h2 class="text-[11.5px] font-extrabold">Track an order</h2>
+              <p class="text-[9px] font-semibold text-brand-100/60">Live rider location in seconds</p>
+            </div>
+          </div>
+
+          <div class="mt-3 flex gap-1.5">
+            <input type="text" class="input h-9 flex-1 border-white/15 bg-white/10 text-[11px] text-white placeholder:text-brand-100/40" placeholder="SD482913" [value]="orderId()" (input)="onOrderId($event)" aria-label="Order ID" />
+            <button type="button" class="btn btn-sun btn-sm h-9 shrink-0 px-3 text-[10px]" (click)="trackOrder()">Track</button>
+          </div>
+          <button type="button" class="mt-2 text-[9px] font-bold text-brand-100/60 underline-offset-2 hover:text-sun-300 hover:underline" (click)="useDemo()">Try demo order SD482913 →</button>
+        </section>
+
+        <section class="rounded-2xl border border-line bg-white p-4">
+          <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand-700"><app-icon name="chat" [size]="17" /></span>
+          <h2 class="mt-2.5 text-[11.5px] font-extrabold">Still need help?</h2>
+          <p class="mt-1 text-[9.5px] font-medium leading-relaxed text-muted">Our team replies in under a minute during support hours. No bots, no hold music.</p>
+          <div class="mt-2.5 space-y-1.5">
+            <a routerLink="/contact" class="flex items-center justify-between rounded-lg bg-cream/60 px-2.5 py-2 text-[9.5px] font-extrabold text-ink-soft transition hover:bg-brand-50 hover:text-brand-800">Chat with support <app-icon name="arrow-right" [size]="11" /></a>
+            <a href="tel:+918047182200" class="flex items-center justify-between rounded-lg bg-cream/60 px-2.5 py-2 text-[9.5px] font-extrabold text-ink-soft transition hover:bg-brand-50 hover:text-brand-800">Call +91 80 4718 2200 <app-icon name="phone" [size]="11" /></a>
+            <a href="mailto:care@smartdukaan.in" class="flex items-center justify-between rounded-lg bg-cream/60 px-2.5 py-2 text-[9.5px] font-extrabold text-ink-soft transition hover:bg-brand-50 hover:text-brand-800">care@smartdukaan.in <app-icon name="mail" [size]="11" /></a>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-line bg-white p-4">
+          <h2 class="text-[11.5px] font-extrabold">Useful policies</h2>
+          <div class="mt-2 space-y-1">
+            @for (policy of [{ label: "Returns & refunds", slug: "returns" }, { label: "Delivery information", slug: "shipping" }, { label: "Terms of service", slug: "terms" }, { label: "Privacy policy", slug: "privacy" }]; track policy.slug) {
+              <a [routerLink]="['/policy', policy.slug]" class="flex items-center justify-between rounded-lg px-2 py-1.5 text-[9.5px] font-bold text-ink-soft transition hover:bg-cream hover:text-brand-700">{{ policy.label }} <app-icon name="chevron-right" [size]="11" class="text-faint" /></a>
+            }
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <!-- support strip -->
+    <div class="mt-4 grid gap-2.5 rounded-2xl border border-line bg-white p-4 sm:grid-cols-3">
+      @for (item of [{ icon: "clock", title: "7 AM – 11 PM", copy: "Every day, including holidays" }, { icon: "zap", title: "48-second replies", copy: "Average chat response time" }, { icon: "users", title: "Real humans", copy: "No scripts, no bots" }]; track item.title) {
+        <div class="flex items-center gap-2.5">
+          <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon [name]="item.icon" [size]="16" /></span>
+          <div class="leading-tight">
+            <p class="text-[10.5px] font-extrabold text-ink">{{ item.title }}</p>
+            <p class="mt-0.5 text-[9px] font-semibold text-muted">{{ item.copy }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</div>

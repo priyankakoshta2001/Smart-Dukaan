@@ -1,0 +1,100 @@
+@if (pwa.dialogOpen()) {
+  <div class="fixed inset-0 z-[130] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Get the Smart Dukaan app">
+    <button type="button" class="absolute inset-0 bg-ink/60 backdrop-blur-sm" aria-label="Close dialog" (click)="pwa.closeDialog()"></button>
+
+    <div class="animate-pop relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-[0_40px_80px_-30px_rgba(11,34,24,0.55)]">
+      <!-- visual band -->
+      <div class="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-900 to-brand-950 px-6 pb-6 pt-7 text-white">
+        <div class="dot-grid pointer-events-none absolute inset-0 opacity-30"></div>
+        <span class="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-brand-500/30 blur-2xl"></span>
+        <span class="pointer-events-none absolute -left-8 bottom-0 h-28 w-28 rounded-full bg-sun-400/20 blur-2xl"></span>
+
+        <button
+          type="button"
+          class="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-white transition hover:bg-white/20"
+          aria-label="Close dialog"
+          (click)="pwa.closeDialog()"
+        >
+          <app-icon name="close" [size]="17" />
+        </button>
+
+        <div class="relative flex items-center gap-5">
+          <div class="min-w-0 flex-1">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-sun-200">
+              <app-icon name="smartphone" [size]="11" /> Free · 4.8 ★ · 5L+ downloads
+            </span>
+            <h2 class="mt-2.5 text-[1.55rem] font-extrabold leading-tight tracking-[-0.03em]">
+              Get the <span class="font-display font-normal italic text-sun-300">Smart Dukaan</span> App
+            </h2>
+            <p class="mt-1.5 max-w-xs text-[11.5px] font-medium leading-relaxed text-white/85">
+              All your nearby shops in one app — multiple stores, one cart, one delivery fee.
+            </p>
+          </div>
+
+          <img
+            src="/assets/reference/home-app-phone.jpg"
+            alt="Smart Dukaan app on a phone"
+            class="hidden h-44 w-[8.5rem] shrink-0 object-contain object-bottom sm:block"
+          />
+        </div>
+      </div>
+
+      <!-- body -->
+      <div class="p-6">
+        <div class="grid grid-cols-2 gap-2">
+          @for (perk of perks; track perk.title) {
+            <div class="rounded-2xl border border-line bg-cream/60 px-3 py-2.5">
+              <span class="grid h-8 w-8 place-items-center rounded-xl bg-white text-brand-700 shadow-sm"><app-icon [name]="perk.icon" [size]="15" /></span>
+              <p class="mt-1.5 text-[10.5px] font-extrabold leading-tight text-ink">{{ perk.title }}</p>
+              <p class="mt-0.5 text-[9px] font-semibold leading-snug text-muted">{{ perk.copy }}</p>
+            </div>
+          }
+        </div>
+
+        @if (pwa.installed()) {
+          <div class="mt-4 flex items-center gap-2.5 rounded-2xl border border-brand-200 bg-brand-50 px-4 py-3">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-700 text-white"><app-icon name="check" [size]="17" /></span>
+            <div>
+              <p class="text-[12px] font-extrabold text-brand-900">App installed!</p>
+              <p class="text-[10px] font-semibold text-brand-800/80">Smart Dukaan is already on this device. Enjoy!</p>
+            </div>
+          </div>
+        } @else {
+          <button type="button" class="btn btn-primary btn-lg btn-block mt-4" (click)="pwa.install()">
+            <app-icon name="download" [size]="16" /> Install app now — it's free
+          </button>
+          @if (!pwa.canInstall()) {
+            <p class="mt-2 text-center text-[9.5px] font-semibold leading-relaxed text-muted">
+              Install button tab enable hota hai jab browser install offer kare. Tab tak niche ke badges se app install kar sakte hain.
+            </p>
+          }
+        }
+
+        <div class="mt-4 flex items-center justify-center gap-2.5">
+          <button type="button" class="flex items-center gap-2 rounded-xl bg-ink px-3.5 py-2.5 text-white transition hover:bg-brand-950" (click)="pwa.install()">
+            <app-icon name="play" [size]="16" class="text-sun-300" />
+            <span class="leading-tight text-left">
+              <span class="block text-[7.5px] font-bold uppercase tracking-wider text-white/60">Get it on</span>
+              <span class="block text-[11.5px] font-extrabold">Google Play</span>
+            </span>
+          </button>
+          <button type="button" class="flex items-center gap-2 rounded-xl bg-ink px-3.5 py-2.5 text-white transition hover:bg-brand-950" (click)="pwa.install()">
+            <app-icon name="apple" [size]="16" />
+            <span class="leading-tight text-left">
+              <span class="block text-[7.5px] font-bold uppercase tracking-wider text-white/60">Download on the</span>
+              <span class="block text-[11.5px] font-extrabold">App Store</span>
+            </span>
+          </button>
+        </div>
+
+        <a
+          routerLink="/shop"
+          class="mt-4 block text-center text-[11px] font-extrabold text-muted transition hover:text-brand-700"
+          (click)="pwa.closeDialog()"
+        >
+          Continue shopping on the web instead →
+        </a>
+      </div>
+    </div>
+  </div>
+}

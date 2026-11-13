@@ -1,0 +1,18 @@
+<span class="inline-flex items-center gap-1.5">
+  <span class="flex items-center gap-[1px] text-sun-400">
+    @for (star of stars; track star) {
+      <app-icon
+        name="star"
+        [size]="size()"
+        [class.text-sun-400]="star <= filled()"
+        [class.text-line]="star > filled()"
+      />
+    }
+  </span>
+  @if (showValue()) {
+    <span class="text-[11px] font-extrabold text-ink-soft">{{ rating().toFixed(1) }}</span>
+  }
+  @if (reviews() !== null) {
+    <span class="text-[10.5px] font-semibold text-faint">({{ reviews() }})</span>
+  }
+</span>

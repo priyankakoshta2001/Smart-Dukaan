@@ -1,0 +1,305 @@
+<section class="border-b border-line bg-white">
+  <div class="container-page py-5">
+    <nav class="flex items-center gap-1.5 text-[10px] font-bold text-muted" aria-label="Breadcrumb">
+      <a routerLink="/" class="transition hover:text-brand-700">Home</a>
+      <app-icon name="chevron-right" [size]="10" class="text-faint" />
+      <a routerLink="/cart" class="transition hover:text-brand-700">Cart</a>
+      <app-icon name="chevron-right" [size]="10" class="text-faint" />
+      <span class="text-ink">Checkout</span>
+    </nav>
+
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-extrabold tracking-[-0.045em] sm:text-3xl">Secure checkout</h1>
+        <p class="mt-1 text-[11.5px] font-semibold text-muted">{{ itemCount() }} items · {{ shopCount() }} shops · one payment</p>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-700 px-3 py-1.5 text-[9.5px] font-extrabold text-white"><app-icon name="check" [size]="11" /> Cart</span>
+        <span class="h-px w-4 bg-brand-300"></span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-brand-300 bg-brand-50 px-3 py-1.5 text-[9.5px] font-extrabold text-brand-800"><span class="grid h-3.5 w-3.5 place-items-center rounded-full bg-brand-700 text-[8px] text-white">2</span> Address &amp; payment</span>
+        <span class="h-px w-4 bg-line"></span>
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-[9.5px] font-extrabold text-faint"><span class="grid h-3.5 w-3.5 place-items-center rounded-full bg-cream text-[8px]">3</span> Done</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+@if (cart.count() === 0) {
+  <section class="container-page py-20">
+    <div class="mx-auto max-w-lg rounded-[1.75rem] border border-line bg-white px-6 py-14 text-center">
+      <span class="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-cream text-muted"><app-icon name="bag" [size]="34" /></span>
+      <h2 class="mt-5 text-2xl font-extrabold tracking-tight">Nothing to check out</h2>
+      <p class="mx-auto mt-2 max-w-sm text-[12.5px] leading-relaxed text-muted">Your cart is empty. Add essentials from nearby shops and come back to complete your order.</p>
+      <div class="mt-5 flex justify-center gap-2">
+        <a routerLink="/shop" class="btn btn-primary btn-sm">Start shopping</a>
+        <a routerLink="/offers" class="btn btn-outline btn-sm">See offers</a>
+      </div>
+    </div>
+  </section>
+} @else {
+  <section class="section-pad pt-7">
+    <div class="container-page grid gap-5 lg:grid-cols-[1fr_21rem] xl:grid-cols-[1fr_23rem]">
+      <div class="space-y-3">
+        <!-- address -->
+        <div class="rounded-2xl border border-line bg-white p-4 sm:p-5">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="flex items-center gap-2 text-[13px] font-extrabold">
+              <span class="grid h-6 w-6 place-items-center rounded-full bg-brand-700 text-[10px] text-white">1</span> Delivery address
+            </h2>
+            <button type="button" class="inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700" (click)="showAddressForm.set(!showAddressForm())">
+              <app-icon [name]="showAddressForm() ? 'close' : 'plus'" [size]="12" /> {{ showAddressForm() ? "Cancel" : "Add new address" }}
+            </button>
+          </div>
+
+          @if (addresses().length) {
+            <div class="mt-3 grid gap-2 sm:grid-cols-2">
+              @for (address of addresses(); track address.id) {
+                <button
+                  type="button"
+                  class="relative rounded-xl border p-3.5 text-left transition"
+                  [class.border-brand-600]="selectedAddressId() === address.id"
+                  [class.bg-brand-50]="selectedAddressId() === address.id"
+                  [class.border-line]="selectedAddressId() !== address.id"
+                  [class.hover:border-brand-200]="selectedAddressId() !== address.id"
+                  (click)="selectAddress(address.id)"
+                >
+                  <div class="flex items-center gap-1.5">
+                    <span class="grid h-5 w-5 place-items-center rounded-md" [class.bg-brand-700]="selectedAddressId() === address.id" [class.text-white]="selectedAddressId() === address.id" [class.bg-cream]="selectedAddressId() !== address.id" [class.text-muted]="selectedAddressId() !== address.id">
+                      <app-icon [name]="address.label === 'Work' ? 'bag' : 'home'" [size]="11" />
+                    </span>
+                    <span class="text-[10px] font-extrabold uppercase tracking-[0.1em] text-ink">{{ address.label }}</span>
+                    @if (address.isDefault) {
+                      <span class="rounded bg-brand-700 px-1.5 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wide text-white">Default</span>
+                    }
+                    @if (selectedAddressId() === address.id) {
+                      <app-icon name="check-circle" [size]="13" class="ml-auto text-brand-700" />
+                    }
+                  </div>
+                  <p class="mt-1.5 text-[11.5px] font-extrabold text-ink">{{ address.name }}</p>
+                  <p class="mt-0.5 text-[10px] font-semibold leading-relaxed text-muted">{{ address.line1 }}, {{ address.line2 }}<br />{{ address.city }}, {{ address.state }} — {{ address.pin }}</p>
+                  <p class="mt-1 text-[9.5px] font-bold text-ink-soft">{{ address.phone }}</p>
+                </button>
+              }
+            </div>
+          }
+
+          @if (showAddressForm()) {
+            <div class="mt-3 rounded-xl border border-dashed border-brand-200 bg-brand-50/40 p-3.5">
+              <div class="grid gap-2.5 sm:grid-cols-2">
+                <div>
+                  <label class="field-label" for="address-label">Label</label>
+                  <select id="address-label" class="input h-10" [value]="form().label" (change)="setField('label', $event)">
+                    <option value="Home">Home</option>
+                    <option value="Work">Work</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label" for="address-name">Full name</label>
+                  <input id="address-name" type="text" class="input h-10" placeholder="Aarav Sharma" [value]="form().name" (input)="setField('name', $event)" />
+                </div>
+                <div>
+                  <label class="field-label" for="address-phone">Phone</label>
+                  <input id="address-phone" type="tel" class="input h-10" placeholder="98765 43210" [value]="form().phone" (input)="setField('phone', $event)" />
+                </div>
+                <div>
+                  <label class="field-label" for="address-pin">PIN code</label>
+                  <input id="address-pin" type="text" class="input h-10" placeholder="482002" [value]="form().pin" (input)="setField('pin', $event)" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="field-label" for="address-line1">Flat / house no., building</label>
+                  <input id="address-line1" type="text" class="input h-10" placeholder="Flat 402, Sunrise Residency" [value]="form().line1" (input)="setField('line1', $event)" />
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="field-label" for="address-line2">Area / locality</label>
+                  <input id="address-line2" type="text" class="input h-10" placeholder="Napier Town" [value]="form().line2" (input)="setField('line2', $event)" />
+                </div>
+                <div class="sm:col-span-2 flex flex-wrap items-center justify-between gap-2">
+                  <p class="text-[9.5px] font-semibold text-muted">City: <span class="font-extrabold text-ink">{{ location.label() }}</span></p>
+                  <button type="button" class="btn btn-primary btn-sm" (click)="saveAddress()">Save &amp; deliver here</button>
+                </div>
+              </div>
+              @if (formError()) {
+                <p class="form-error"><app-icon name="x-circle" [size]="12" /> {{ formError() }}</p>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- delivery slot -->
+        <div class="rounded-2xl border border-line bg-white p-4 sm:p-5">
+          <h2 class="flex items-center gap-2 text-[13px] font-extrabold">
+            <span class="grid h-6 w-6 place-items-center rounded-full bg-brand-700 text-[10px] text-white">2</span> Delivery slot
+          </h2>
+          <p class="mt-1 text-[10.5px] font-semibold text-muted">Shops pack fresh — choose a time that works for you.</p>
+
+          <div class="mt-3 grid gap-2 sm:grid-cols-2">
+            @for (option of slots; track option.id) {
+              <button type="button" class="flex items-center gap-2.5 rounded-xl border p-3 text-left transition" [class.border-brand-600]="slot() === option.id" [class.bg-brand-50]="slot() === option.id" [class.border-line]="slot() !== option.id" (click)="slot.set(option.id)">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg" [class.bg-brand-700]="slot() === option.id" [class.text-white]="slot() === option.id" [class.bg-cream]="slot() !== option.id" [class.text-ink-soft]="slot() !== option.id">
+                  <app-icon [name]="option.icon" [size]="16" />
+                </span>
+                <div class="min-w-0 flex-1">
+                  <p class="text-[11px] font-extrabold text-ink">{{ option.label }} @if (option.tag) { <span class="ml-1 rounded bg-sun-100 px-1 py-0.5 text-[7.5px] font-extrabold uppercase tracking-wide text-sun-700">{{ option.tag }}</span> }</p>
+                  <p class="text-[9.5px] font-semibold text-muted">{{ option.copy }}</p>
+                </div>
+                @if (slot() === option.id) {
+                  <app-icon name="check-circle" [size]="14" class="text-brand-700" />
+                }
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- payment -->
+        <div class="rounded-2xl border border-line bg-white p-4 sm:p-5">
+          <h2 class="flex items-center gap-2 text-[13px] font-extrabold">
+            <span class="grid h-6 w-6 place-items-center rounded-full bg-brand-700 text-[10px] text-white">3</span> Payment method
+          </h2>
+          <p class="mt-1 flex items-center gap-1 text-[10px] font-semibold text-muted"><app-icon name="lock" [size]="11" class="text-brand-700" /> 100% secure · your payment details are never stored.</p>
+
+          <div class="mt-3 grid gap-2 sm:grid-cols-2">
+            @for (option of payments; track option.id) {
+              <button type="button" class="flex items-center gap-2.5 rounded-xl border p-3 text-left transition" [class.border-brand-600]="payment() === option.id" [class.bg-brand-50]="payment() === option.id" [class.border-line]="payment() !== option.id" (click)="payment.set(option.id)">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg" [class.bg-brand-700]="payment() === option.id" [class.text-white]="payment() === option.id" [class.bg-cream]="payment() !== option.id" [class.text-ink-soft]="payment() !== option.id">
+                  <app-icon [name]="option.icon" [size]="16" />
+                </span>
+                <div class="min-w-0 flex-1">
+                  <p class="text-[11px] font-extrabold text-ink">{{ option.label }}</p>
+                  <p class="text-[9.5px] font-semibold text-muted">{{ option.copy }}</p>
+                </div>
+                <span class="grid h-4 w-4 place-items-center rounded-full border" [class.border-brand-700]="payment() === option.id" [class.border-line]="payment() !== option.id">
+                  @if (payment() === option.id) {
+                    <span class="h-2 w-2 rounded-full bg-brand-700"></span>
+                  }
+                </span>
+              </button>
+            }
+          </div>
+
+          @if (payment() === "upi") {
+            <div class="mt-3 rounded-xl bg-cream/60 p-3">
+              <label class="field-label" for="upi-id">UPI ID</label>
+              <div class="flex gap-2">
+                <input id="upi-id" type="text" class="input h-10 flex-1" placeholder="yourname@bank" [value]="upiId()" (input)="upiId.set($any($event.target).value)" />
+                <span class="inline-flex items-center gap-1 rounded-lg bg-white px-2.5 text-[9px] font-extrabold text-brand-700"><app-icon name="shield" [size]="11" /> Verified</span>
+              </div>
+              <div class="mt-2 flex gap-1.5">
+                @for (app of ["GPay", "PhonePe", "Paytm", "BHIM"]; track app) {
+                  <span class="rounded-md border border-line bg-white px-2 py-1 text-[8.5px] font-bold text-muted">{{ app }}</span>
+                }
+              </div>
+            </div>
+          } @else if (payment() === "card") {
+            <div class="mt-3 grid gap-2.5 rounded-xl bg-cream/60 p-3 sm:grid-cols-2">
+              <div class="sm:col-span-2">
+                <label class="field-label" for="card-number">Card number</label>
+                <input id="card-number" type="text" class="input h-10" placeholder="4242 4242 4242 4242" [value]="cardNumber()" (input)="cardNumber.set($any($event.target).value)" />
+              </div>
+              <div>
+                <label class="field-label" for="card-expiry">Expiry</label>
+                <input id="card-expiry" type="text" class="input h-10" placeholder="MM / YY" [value]="cardExpiry()" (input)="cardExpiry.set($any($event.target).value)" />
+              </div>
+              <div>
+                <label class="field-label" for="card-cvv">CVV</label>
+                <input id="card-cvv" type="password" class="input h-10" placeholder="•••" [value]="cardCvv()" (input)="cardCvv.set($any($event.target).value)" />
+              </div>
+              <p class="sm:col-span-2 text-[9px] font-semibold text-faint">Demo mode — no real payment is processed. Use any test values.</p>
+            </div>
+          } @else if (payment() === "netbanking") {
+            <div class="mt-3 rounded-xl bg-cream/60 p-3">
+              <label class="field-label" for="bank">Choose your bank</label>
+              <select id="bank" class="input h-10">
+                <option>HDFC Bank</option>
+                <option>ICICI Bank</option>
+                <option>State Bank of India</option>
+                <option>Axis Bank</option>
+                <option>Kotak Mahindra Bank</option>
+              </select>
+            </div>
+          } @else {
+            <div class="mt-3 flex items-start gap-2 rounded-xl bg-cream/60 p-3">
+              <app-icon name="cash" [size]="16" class="mt-0.5 shrink-0 text-brand-700" />
+              <p class="text-[10px] font-semibold leading-relaxed text-muted">Keep exact change ready if possible. Our delivery partner will collect payment at your doorstep.</p>
+            </div>
+          )}
+        </div>
+
+        <div class="flex items-start gap-2 rounded-2xl border border-line bg-white p-3.5">
+          <app-icon name="info" [size]="15" class="mt-0.5 shrink-0 text-brand-700" />
+          <p class="text-[10px] font-semibold leading-relaxed text-muted">This is a demo checkout. No money is charged — your order is saved locally so you can explore tracking and order history.</p>
+        </div>
+      </div>
+
+      <!-- summary -->
+      <aside class="lg:sticky lg:top-[11.5rem] lg:h-fit">
+        <div class="rounded-2xl border border-line bg-white p-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-[12px] font-extrabold uppercase tracking-[0.14em] text-ink">Order summary</h2>
+            <a routerLink="/cart" class="text-[9.5px] font-extrabold text-brand-700">Edit cart</a>
+          </div>
+
+          <div class="mt-3 max-h-52 space-y-2 overflow-y-auto pr-1">
+            @for (group of cart.groups(); track group.shop.slug) {
+              <div>
+                <p class="flex items-center gap-1.5 text-[9px] font-extrabold uppercase tracking-wide text-faint"><app-icon name="store" [size]="10" /> {{ group.shop.name }}</p>
+                @for (line of group.lines; track line.product.id) {
+                  <div class="mt-1.5 flex items-center gap-2">
+                    <span class="grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-lg bg-cream p-0.5"><img [src]="line.product.image" [alt]="line.product.title" class="h-full w-full object-contain" /></span>
+                    <span class="min-w-0 flex-1 truncate text-[10px] font-bold text-ink">{{ line.product.title }}</span>
+                    <span class="shrink-0 text-[9.5px] font-semibold text-muted">×{{ line.qty }}</span>
+                    <span class="w-10 shrink-0 text-right text-[10px] font-extrabold text-ink">₹{{ line.product.price * line.qty }}</span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+
+          <dl class="mt-3 space-y-1.5 border-t border-line pt-3 text-[10.5px]">
+            <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Item total</dt><dd class="font-extrabold text-ink">₹{{ cart.subtotal() }}</dd></div>
+            <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">MRP savings</dt><dd class="font-extrabold text-brand-700">−₹{{ cart.savings() }}</dd></div>
+            @if (cart.discount() > 0) {
+              <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Coupon ({{ cart.couponCode() }})</dt><dd class="font-extrabold text-brand-700">−₹{{ cart.discount() }}</dd></div>
+            }
+            <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Delivery ({{ slot() === "express" ? "express" : slot() }})</dt><dd class="font-extrabold" [class.text-brand-700]="cart.deliveryFee() === 0">{{ cart.deliveryFee() === 0 ? "FREE" : "₹" + cart.deliveryFee() }}</dd></div>
+          </dl>
+
+          <div class="mt-3 flex items-end justify-between border-t border-line pt-3">
+            <div>
+              <p class="text-[11px] font-extrabold text-ink">Total payable</p>
+              <p class="text-[9px] font-semibold text-muted">You save ₹{{ totalSavings() }}</p>
+            </div>
+            <p class="text-2xl font-extrabold tracking-tight text-ink">₹{{ cart.total() }}</p>
+          </div>
+
+          <div class="mt-2.5 flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2">
+            <app-icon name="calendar" [size]="14" class="shrink-0 text-brand-700" />
+            <p class="text-[9.5px] font-bold text-brand-800">Arriving {{ deliveryDate() }} · {{ slots[0].copy.toLowerCase() }}</p>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-block mt-3 h-11" [disabled]="placing()" (click)="placeOrder()">
+            @if (placing()) {
+              Placing order…
+            } @else {
+              Pay ₹{{ cart.total() }} &amp; place order <app-icon name="arrow-right" [size]="15" />
+            }
+          </button>
+
+          <div class="mt-3 flex items-center justify-center gap-3 text-[8.5px] font-bold text-faint">
+            <span class="inline-flex items-center gap-1"><app-icon name="lock" [size]="10" /> SSL secure</span>
+            <span class="inline-flex items-center gap-1"><app-icon name="shield" [size]="10" /> Buyer protection</span>
+          </div>
+        </div>
+
+        <div class="mt-3 flex items-start gap-2 rounded-2xl border border-line bg-white p-3.5">
+          <app-icon name="truck" [size]="16" class="mt-0.5 shrink-0 text-brand-700" />
+          <div>
+            <p class="text-[10px] font-extrabold text-ink">Delivering to {{ selectedAddress().label }}</p>
+            <p class="mt-0.5 line-clamp-2 text-[9.5px] font-semibold text-muted">{{ selectedAddress().line1 }}{{ selectedAddress().line2 ? ", " + selectedAddress().line2 : "" }}, {{ selectedAddress().city }}</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+}

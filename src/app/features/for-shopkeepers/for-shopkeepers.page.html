@@ -1,0 +1,183 @@
+<div class="page-enter">
+  <!-- ---------------------------------------------------------------- hero -->
+  <section class="relative overflow-hidden surface-hero">
+    <span class="pointer-events-none absolute -right-16 -top-16 h-72 w-72 rounded-full bg-brand-100/60 blur-3xl"></span>
+    <span class="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-brand-100/50 blur-3xl"></span>
+
+    <div class="container-page relative py-10 lg:py-14">
+      <nav class="flex items-center gap-1.5 text-[10px] font-bold text-muted">
+        <a routerLink="/" class="transition hover:text-brand-700">Home</a>
+        <app-icon name="chevron-right" [size]="11" class="text-faint" />
+        <span class="text-ink">For Shopkeepers</span>
+      </nav>
+
+      <div class="mt-4 grid items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div class="animate-rise">
+          <span class="eyebrow"><app-icon name="store" [size]="12" /> For shopkeepers</span>
+          <h1 class="mt-3 text-[2.1rem] font-extrabold leading-[1.02] tracking-[-0.05em] sm:text-5xl">
+            Grow your kirana<br /><span class="font-display font-normal italic text-brand-700">with Smart Dukaan.</span>
+          </h1>
+          <p class="mt-3 max-w-lg text-[12.5px] font-medium leading-relaxed text-muted">
+            List your shop, reach thousands of nearby customers and get weekly payouts — no technical know-how needed. Our city team sets everything up for you.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-2.5">
+            <a routerLink="/contact" [queryParams]="{ topic: 'shop-partner' }" class="btn btn-dark btn-sm">Register Your Shop <app-icon name="arrow-right" [size]="13" /></a>
+            <a href="#how-it-works" class="btn btn-outline btn-sm">See how it works</a>
+          </div>
+
+          <div class="mt-7 grid max-w-md grid-cols-3 gap-2.5">
+            @for (stat of stats; track stat.label) {
+              <div class="rounded-xl border border-line bg-white/70 px-3 py-2.5">
+                <p class="text-[16px] font-extrabold leading-none text-ink">{{ stat.value }}</p>
+                <p class="mt-1 text-[8px] font-extrabold uppercase tracking-[0.1em] text-muted">{{ stat.label }}</p>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- hero image -->
+        <div class="relative mx-auto w-full max-w-[21.5rem] lg:mx-0 lg:justify-self-end">
+          <span class="pointer-events-none absolute -inset-4 rounded-[2.2rem] bg-brand-200/40 blur-2xl"></span>
+
+          <div class="relative overflow-hidden rounded-[1.6rem] border border-line bg-white shadow-soft">
+            <div class="relative h-48 sm:h-52">
+              <img
+                src="/assets/reference/partner-shopkeeper.jpg"
+                alt="A local shopkeeper at his store counter"
+                class="h-full w-full object-cover object-center"
+              />
+              <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-950/60 via-transparent to-transparent"></span>
+              <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[8.5px] font-extrabold uppercase tracking-[0.12em] text-brand-700 backdrop-blur">
+                <app-icon name="store" [size]="11" /> Shop partner
+              </span>
+              <div class="absolute inset-x-3 bottom-3 rounded-xl bg-white/95 px-3 py-2.5 shadow-soft backdrop-blur">
+                <div class="flex items-center gap-2.5">
+                  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="cash" [size]="17" /></span>
+                  <div class="min-w-0">
+                    <p class="text-[11.5px] font-extrabold leading-tight text-ink">Weekly payouts, zero hassle</p>
+                    <p class="text-[9px] font-semibold text-muted">Money hits your bank every Monday</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4">
+              <p class="text-[9px] font-extrabold uppercase tracking-[0.16em] text-brand-700">Why shop owners join us</p>
+              <ul class="mt-2 space-y-1.5">
+                @for (benefit of benefits; track benefit) {
+                  <li class="flex items-start gap-2 text-[10.5px] font-semibold leading-snug text-ink-soft">
+                    <app-icon name="check-circle" [size]="14" class="mt-0.5 shrink-0 text-brand-700" /> {{ benefit }}
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ how it works -->
+  <section id="how-it-works" class="section-pad bg-white py-12">
+    <div class="container-page">
+      <div class="mx-auto max-w-xl text-center">
+        <span class="section-eyebrow"><span class="h-1.5 w-1.5 rounded-full bg-sun-500"></span> Simple onboarding</span>
+        <h2 class="section-title mt-2">From sign-up to your first order<br class="hidden sm:block" /> in under 48 hours.</h2>
+      </div>
+
+      <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        @for (step of steps; track step.title; let index = $index) {
+          <div class="group relative rounded-2xl border border-line bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft">
+            <div class="flex items-center justify-between">
+              <span class="grid h-10 w-10 place-items-center rounded-xl bg-brand-700 text-white transition group-hover:bg-brand-800"><app-icon [name]="step.icon" [size]="18" /></span>
+              <span class="text-[25px] font-extrabold leading-none text-brand-200">0{{ index + 1 }}</span>
+            </div>
+            <h3 class="mt-3 text-[12.5px] font-extrabold text-ink">{{ step.title }}</h3>
+            <p class="mt-1 text-[10.5px] leading-relaxed text-muted">{{ step.copy }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- --------------------------------------------------------- real shops -->
+  <section class="section-pad bg-cream py-12">
+    <div class="container-page grid items-center gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10">
+      <div class="relative">
+        <div class="relative overflow-hidden rounded-[1.6rem] border border-line bg-white shadow-soft">
+          <img
+            src="/assets/reference/gupta-storefront.jpg"
+            alt="Gupta General Store, a Smart Dukaan partner shop"
+            class="h-56 w-full object-cover sm:h-64"
+            loading="lazy"
+          />
+          <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[8.5px] font-extrabold uppercase tracking-[0.12em] text-brand-700 backdrop-blur">
+            <app-icon name="award" [size]="11" /> Top rated partner
+          </span>
+        </div>
+        <div class="absolute -bottom-4 right-3 flex items-center gap-2 rounded-xl border border-line bg-white px-3 py-2 shadow-soft">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="star-outline" [size]="15" /></span>
+          <div>
+            <p class="text-[11px] font-extrabold leading-none text-ink">4.8 / 5</p>
+            <p class="text-[8.5px] font-semibold text-muted">1,240+ happy customers</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <span class="section-eyebrow"><span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span> Real shops, real growth</span>
+        <h2 class="section-title mt-2">Gupta General Store doubled its daily orders in 6 weeks.</h2>
+        <p class="section-copy mt-2">
+          "Pehle sirf walk-in customers the. Smart Dukaan se aas-paas ke 40 societies tak pahunch gaye — ab subah se raat tak orders aate hain, aur payout har Monday time par."
+        </p>
+        <p class="mt-2 text-[10px] font-extrabold uppercase tracking-[0.12em] text-muted">— Rakesh Gupta, Owner</p>
+
+        <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+          @for (win of wins; track win) {
+            <li class="flex items-start gap-2 rounded-xl border border-line bg-white px-3 py-2 text-[10.5px] font-semibold leading-snug text-ink-soft">
+              <app-icon name="check-circle" [size]="14" class="mt-0.5 shrink-0 text-brand-700" /> {{ win }}
+            </li>
+          }
+        </ul>
+
+        <a routerLink="/store/gupta-general-store" class="btn btn-outline btn-sm mt-4">
+          Visit their storefront <app-icon name="arrow-right" [size]="12" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------------ faqs -->
+  <section class="section-pad bg-white py-12">
+    <div class="container-page">
+      <div class="mx-auto max-w-xl text-center">
+        <span class="section-eyebrow"><span class="h-1.5 w-1.5 rounded-full bg-sun-500"></span> Common questions</span>
+        <h2 class="section-title mt-2">Shop partner FAQs</h2>
+      </div>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        @for (item of faqs; track item.q) {
+          <div class="rounded-2xl border border-line bg-cream p-4 transition hover:border-brand-200 hover:bg-white hover:shadow-soft">
+            <p class="flex items-start gap-2 text-[12px] font-extrabold text-ink">
+              <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-700"><app-icon name="chat" [size]="11" /></span>
+              {{ item.q }}
+            </p>
+            <p class="mt-1.5 pl-7 text-[10.5px] leading-relaxed text-muted">{{ item.a }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- -------------------------------------------------------------------- cta -->
+  <section class="bg-cream pb-14 pt-2">
+    <div class="container-page">
+      <div class="flex flex-col items-center justify-between gap-4 overflow-hidden rounded-2xl bg-brand-900 px-5 py-6 text-center text-white sm:flex-row sm:px-7 sm:text-left">
+        <div>
+          <p class="text-[16px] font-extrabold">Ready to list your shop?</p>
+          <p class="mt-0.5 text-[10.5px] font-semibold text-brand-100/70">Our city team will call you within 24 hours of signing up.</p>
+        </div>
+        <a routerLink="/contact" [queryParams]="{ topic: 'shop-partner' }" class="btn btn-sun btn-sm shrink-0">Register Your Shop <app-icon name="arrow-right" [size]="13" /></a>
+      </div>
+    </div>
+  </section>
+</div>

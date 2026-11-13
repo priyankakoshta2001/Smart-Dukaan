@@ -1,0 +1,466 @@
+<header class="sticky top-0 z-50">
+  <!-- main bar -->
+  <div class="border-b border-line bg-paper/95 backdrop-blur-md">
+    <div class="container-page flex h-[4.6rem] items-center gap-2 lg:gap-3">
+      <button
+        type="button"
+        class="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-ink transition hover:bg-cream md:hidden"
+        aria-label="Open menu"
+        (click)="mobileOpen.set(true)"
+      >
+        <app-icon name="menu" [size]="21" />
+      </button>
+
+      <a routerLink="/" class="flex shrink-0 items-center gap-2.5" aria-label="Smart Dukaan home">
+        <span class="relative grid h-11 w-11 place-items-center rounded-[15px] bg-gradient-to-br from-brand-500 via-brand-700 to-brand-900 text-white shadow-[0_10px_22px_-10px_rgba(6,112,68,0.9)]">
+          <app-icon name="store" [size]="22" />
+          <span class="absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full border-2 border-paper bg-sun-400"></span>
+        </span>
+        <span class="leading-none">
+          <span class="block text-[21px] font-extrabold tracking-[-0.055em] text-ink">Smart <span class="text-brand-700">Dukaan</span></span>
+          <span class="mt-1 hidden text-[8px] font-extrabold uppercase tracking-[0.18em] text-muted sm:block">Your Local Shops, Now Online</span>
+        </span>
+      </a>
+
+      <!-- all categories -->
+      <div class="relative hidden xl:block" data-menu="categories">
+        <button
+          type="button"
+          class="flex h-11 items-center gap-2 rounded-xl border border-line bg-white px-3 text-[11.5px] font-extrabold text-ink transition hover:border-brand-300"
+          (click)="categoriesOpen.set(!categoriesOpen()); accountOpen.set(false); locationOpen.set(false)"
+        >
+          <app-icon name="grid" [size]="15" class="text-brand-700" />
+          All Categories
+          <app-icon name="chevron-down" [size]="12" class="text-muted" />
+        </button>
+
+        @if (categoriesOpen()) {
+          <div class="animate-pop absolute left-0 top-[calc(100%+9px)] z-50 w-[34rem] overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_60px_-24px_rgba(11,34,24,0.35)]">
+            <div class="flex items-center justify-between border-b border-line bg-cream/50 px-4 py-3">
+              <p class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-brand-700">Shop by category</p>
+              <a routerLink="/shop" class="text-[10px] font-extrabold text-ink-soft hover:text-brand-700" (click)="categoriesOpen.set(false)">View all</a>
+            </div>
+            <div class="grid grid-cols-2 gap-1 p-2">
+              @for (category of catalog.categoryViews(); track category.slug) {
+                <button type="button" class="flex items-center gap-2.5 rounded-xl px-2.5 py-2 text-left transition hover:bg-brand-50" (click)="chooseCategory(category.slug)">
+                  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-cream text-base">{{ category.emoji }}</span>
+                  <span class="min-w-0">
+                    <span class="block truncate text-[11px] font-bold text-ink">{{ category.name }}</span>
+                    <span class="block text-[9px] font-semibold text-muted">{{ category.count }} items</span>
+                  </span>
+                </button>
+              }
+            </div>
+            <a routerLink="/shops" class="flex items-center justify-between border-t border-line bg-brand-900 px-4 py-2.5 text-[10.5px] font-bold text-white" (click)="categoriesOpen.set(false)">
+              Explore nearby shops <app-icon name="arrow-right" [size]="13" />
+            </a>
+          </div>
+        }
+      </div>
+
+      <!-- search -->
+      <div class="relative hidden flex-1 md:block" data-menu="search">
+        <form (submit)="submitSearch($event)" class="relative">
+          <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-700"><app-icon name="search" [size]="17" /></span>
+          <input
+            type="text"
+            class="h-11 w-full rounded-xl border border-line bg-white pl-10 pr-[96px] text-[12px] font-semibold text-ink placeholder:font-medium placeholder:text-faint focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-500/10"
+            placeholder="Search for shops, milk, atta, snacks…"
+            [value]="query()"
+            (input)="onSearch($event)"
+            (focus)="searchOpen.set(true)"
+            aria-label="Search products and shops"
+          />
+          <button type="submit" class="absolute right-1.5 top-1/2 flex h-8 -translate-y-1/2 items-center gap-1.5 rounded-lg bg-brand-700 px-3 text-[10.5px] font-extrabold text-white transition hover:bg-brand-800">
+            <app-icon name="search" [size]="12" /> Search
+          </button>
+        </form>
+
+        @if (searchOpen()) {
+          <div class="animate-pop absolute left-0 right-0 top-[calc(100%+8px)] z-50 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_60px_-24px_rgba(11,34,24,0.35)]">
+            @if (query().trim().length) {
+              @if (hasResults()) {
+                @if (shopSuggestions().length) {
+                  <div class="border-b border-line/70 p-2">
+                    <p class="px-2 py-1 text-[8.5px] font-extrabold uppercase tracking-[0.18em] text-faint">Shops near you</p>
+                    @for (shop of shopSuggestions(); track shop.slug) {
+                      <button type="button" class="flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left transition hover:bg-cream" (click)="openShop(shop.slug)">
+                        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-gradient-to-br text-[9px] font-extrabold text-white" [class]="shop.accent">{{ shop.initials }}</span>
+                        <span class="min-w-0 flex-1">
+                          <span class="block truncate text-[11px] font-bold text-ink">{{ shop.name }}</span>
+                          <span class="block text-[9px] font-semibold text-muted">{{ shop.area }} · {{ shop.distance }} km · {{ shop.etaMin }}–{{ shop.etaMax }} min</span>
+                        </span>
+                        <app-icon name="chevron-right" [size]="12" class="text-faint" />
+                      </button>
+                    }
+                  </div>
+                }
+                @if (suggestions().length) {
+                  <div class="p-2">
+                    <p class="px-2 py-1 text-[8.5px] font-extrabold uppercase tracking-[0.18em] text-faint">Products</p>
+                    @for (product of suggestions(); track product.id) {
+                      <button type="button" class="flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left transition hover:bg-cream" (click)="openProduct(product.slug)">
+                        <span class="h-10 w-10 shrink-0 overflow-hidden rounded-lg bg-cream p-0.5">
+                          <img [src]="product.image" [alt]="product.title" class="h-full w-full object-contain" />
+                        </span>
+                        <span class="min-w-0 flex-1">
+                          <span class="block truncate text-[11px] font-bold text-ink">{{ product.title }}</span>
+                          <span class="block text-[9px] font-semibold text-muted">{{ product.brand }} · {{ product.unit }}</span>
+                        </span>
+                        <span class="text-[11px] font-extrabold text-ink">₹{{ product.price }}</span>
+                      </button>
+                    }
+                  </div>
+                }
+                <button type="button" class="flex w-full items-center justify-between border-t border-line bg-cream/60 px-4 py-2.5 text-[10.5px] font-extrabold text-brand-700" (click)="submitSearch($event)">
+                  View all results for “{{ query().trim() }}” <app-icon name="arrow-right" [size]="13" />
+                </button>
+              } @else {
+                <div class="px-4 py-7 text-center">
+                  <p class="text-[12px] font-extrabold text-ink">No matches for “{{ query().trim() }}”</p>
+                  <p class="mt-1 text-[10.5px] text-muted">Try “milk”, “atta”, “snacks” or a shop name.</p>
+                </div>
+              }
+            } @else {
+              <div class="p-4">
+                <p class="text-[8.5px] font-extrabold uppercase tracking-[0.18em] text-faint">Popular searches</p>
+                <div class="mt-2 flex flex-wrap gap-1.5">
+                  @for (term of ["milk", "atta", "rice", "snacks", "ice cream", "tissue", "honey"]; track term) {
+                    <button type="button" class="chip !h-7 !text-[9.5px]" (click)="query.set(term); submitSearch()">{{ term }}</button>
+                  }
+                </div>
+                <p class="mt-4 text-[8.5px] font-extrabold uppercase tracking-[0.18em] text-faint">Trending shops</p>
+                <div class="mt-2 space-y-0.5">
+                  @for (shop of catalog.featuredShops().slice(0, 3); track shop.slug) {
+                    <button type="button" class="flex w-full items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-left transition hover:bg-cream" (click)="openShop(shop.slug)">
+                      <span class="grid h-7 w-7 place-items-center rounded-md text-[8px] font-extrabold text-white" [class]="'bg-gradient-to-br ' + shop.accent">{{ shop.initials }}</span>
+                      <span class="text-[10.5px] font-bold text-ink">{{ shop.name }}</span>
+                      <span class="ml-auto text-[9px] font-semibold text-muted">{{ shop.etaMin }}–{{ shop.etaMax }} min</span>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="ml-auto flex items-center gap-1 sm:gap-1.5">
+        <!-- location -->
+        <div class="relative hidden md:block" data-menu="location">
+          <button
+            type="button"
+            class="flex items-center gap-2 rounded-xl border border-transparent px-2 py-1.5 text-left transition hover:border-line hover:bg-white"
+            (click)="locationOpen.set(!locationOpen()); categoriesOpen.set(false); accountOpen.set(false)"
+          >
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="pin" [size]="16" /></span>
+            <span class="leading-tight">
+              <span class="flex items-center gap-1 text-[8.5px] font-extrabold uppercase tracking-[0.13em] text-brand-700">
+                <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span> Deliver to
+              </span>
+              <span class="mt-0.5 flex items-center gap-1 text-[11px] font-bold text-ink">{{ location.label() }} <app-icon name="chevron-down" [size]="10" class="text-muted" /></span>
+            </span>
+          </button>
+
+          @if (locationOpen()) {
+            <div class="animate-pop absolute right-0 top-[calc(100%+9px)] z-50 w-64 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_60px_-24px_rgba(11,34,24,0.35)]">
+              <div class="border-b border-line bg-cream/60 px-4 py-3">
+                <p class="text-[9px] font-extrabold uppercase tracking-[0.16em] text-brand-700">Choose your city</p>
+                <p class="mt-0.5 text-[10px] font-semibold text-muted">We show shops around your selected city.</p>
+              </div>
+              <div class="p-1.5">
+                @for (city of location.cities; track city.name) {
+                  <button type="button" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-cream" (click)="selectCity(city.name)">
+                    <span class="grid h-7 w-7 place-items-center rounded-md" [class.bg-brand-50]="city.available" [class.bg-cream]="!city.available" [class.text-brand-700]="city.available" [class.text-faint]="!city.available">
+                      <app-icon name="pin" [size]="14" />
+                    </span>
+                    <span class="flex-1 text-[11px] font-bold text-ink">{{ city.name }}, {{ city.state }}</span>
+                    @if (location.city() === city.name) {
+                      <app-icon name="check" [size]="13" class="text-brand-700" />
+                    } @else if (!city.available) {
+                      <span class="text-[8px] font-extrabold uppercase tracking-wide text-faint">Soon</span>
+                    }
+                  </button>
+                }
+              </div>
+              <button type="button" class="flex w-full items-center justify-center gap-1.5 border-t border-line bg-brand-50 px-3 py-2.5 text-[10px] font-extrabold text-brand-700" (click)="selectCity('Jabalpur')">
+                <app-icon name="zap" [size]="12" /> Use my current location
+              </button>
+            </div>
+          }
+        </div>
+
+        <a routerLink="/wishlist" class="relative grid h-10 w-10 place-items-center rounded-xl text-ink-soft transition hover:bg-cream hover:text-rose-500" aria-label="Wishlist">
+          <app-icon name="heart" [size]="20" />
+          @if (wishlist.count() > 0) {
+            <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[8.5px] font-extrabold text-white">{{ wishlist.count() }}</span>
+          }
+        </a>
+
+        <!-- account -->
+        <div class="relative" data-menu="account">
+          <button
+            type="button"
+            class="flex items-center gap-1.5 rounded-xl p-1.5 transition hover:bg-cream"
+            (click)="accountOpen.set(!accountOpen()); categoriesOpen.set(false); locationOpen.set(false)"
+            aria-label="Account menu"
+          >
+            @if (auth.isLoggedIn()) {
+              <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-brand-600 to-brand-900 text-[10px] font-extrabold text-white">{{ auth.initial() }}</span>
+              <span class="hidden max-w-16 truncate text-[10.5px] font-bold text-ink lg:block">{{ auth.firstName() }}</span>
+              <app-icon name="chevron-down" [size]="10" class="hidden text-muted lg:block" />
+            } @else {
+              <span class="grid h-8 w-8 place-items-center rounded-full bg-cream text-ink-soft"><app-icon name="user" [size]="18" /></span>
+              <span class="hidden text-[10.5px] font-bold text-ink lg:block">Login</span>
+            }
+          </button>
+
+          @if (accountOpen()) {
+            <div class="animate-pop absolute right-0 top-[calc(100%+9px)] z-50 w-64 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_60px_-20px_rgba(11,34,24,0.4)]">
+              @if (auth.isLoggedIn()) {
+                <div class="flex items-center gap-2.5 border-b border-line bg-cream/60 px-4 py-3.5">
+                  <span class="grid h-9 w-9 place-items-center rounded-full bg-brand-700 text-[11px] font-extrabold text-white">{{ auth.initial() }}</span>
+                  <div class="min-w-0">
+                    <p class="truncate text-[11.5px] font-extrabold text-ink">{{ auth.user()?.name }}</p>
+                    <p class="truncate text-[9.5px] font-semibold text-muted">{{ auth.user()?.email }}</p>
+                  </div>
+                </div>
+              } @else {
+                <div class="border-b border-line bg-cream/60 px-4 py-3.5">
+                  <p class="text-[11.5px] font-extrabold text-ink">Welcome to Smart Dukaan</p>
+                  <p class="mt-0.5 text-[10px] font-semibold text-muted">Login to track orders & save addresses</p>
+                  <div class="mt-2.5 flex gap-2">
+                    <a routerLink="/login" class="btn btn-primary btn-sm flex-1" (click)="accountOpen.set(false)">Login</a>
+                    <a routerLink="/register" class="btn btn-outline btn-sm flex-1" (click)="accountOpen.set(false)">Register</a>
+                  </div>
+                </div>
+              }
+              <div class="p-1.5">
+                <a routerLink="/account" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-[11px] font-bold text-ink-soft transition hover:bg-cream" (click)="accountOpen.set(false)"><app-icon name="user" [size]="15" class="text-muted" /> My account</a>
+                <a routerLink="/account" [queryParams]="{ tab: 'orders' }" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-[11px] font-bold text-ink-soft transition hover:bg-cream" (click)="accountOpen.set(false)"><app-icon name="package" [size]="15" class="text-muted" /> My orders</a>
+                <a routerLink="/wishlist" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-[11px] font-bold text-ink-soft transition hover:bg-cream" (click)="accountOpen.set(false)"><app-icon name="heart" [size]="15" class="text-muted" /> Wishlist</a>
+                <a routerLink="/help" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-[11px] font-bold text-ink-soft transition hover:bg-cream" (click)="accountOpen.set(false)"><app-icon name="chat" [size]="15" class="text-muted" /> Help centre</a>
+                @if (auth.isLoggedIn()) {
+                  <button type="button" class="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[11px] font-bold text-rose-600 transition hover:bg-rose-50" (click)="logout()"><app-icon name="logout" [size]="15" /> Sign out</button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <button
+          type="button"
+          class="flex h-10 items-center gap-2 rounded-xl bg-brand-800 px-2.5 text-white shadow-[0_10px_24px_-14px_rgba(6,112,68,0.9)] transition hover:bg-brand-900 sm:px-3.5"
+          (click)="cart.openDrawer()"
+          aria-label="Open cart"
+        >
+          <span class="relative">
+            <app-icon name="cart" [size]="18" />
+            @if (cart.count() > 0) {
+              <span class="absolute -right-2 -top-2 grid h-4 min-w-4 place-items-center rounded-full bg-sun-400 px-1 text-[8.5px] font-extrabold text-ink">{{ cart.count() }}</span>
+            }
+          </span>
+          @if (cart.count() > 0) {
+            <span class="hidden text-[10.5px] font-extrabold sm:block">₹{{ cart.subtotal() }}</span>
+          } @else {
+            <span class="hidden text-[10.5px] font-extrabold sm:block">Cart</span>
+          }
+        </button>
+      </div>
+    </div>
+
+    <!-- mobile search -->
+    <div class="container-page pb-3 md:hidden">
+      <div class="mb-2 flex items-center justify-between gap-2">
+        <div class="relative" data-menu="location">
+          <button
+            type="button"
+            class="flex items-center gap-1.5 rounded-lg border border-line bg-white px-2.5 py-1.5 text-[10.5px] font-bold text-ink transition hover:border-brand-300"
+            (click)="locationOpen.set(!locationOpen()); categoriesOpen.set(false); accountOpen.set(false)"
+          >
+            <app-icon name="pin" [size]="13" class="text-brand-700" />
+            <span class="text-muted">Deliver to</span>
+            <span>{{ location.city() }}</span>
+            <app-icon name="chevron-down" [size]="10" class="text-muted" />
+          </button>
+
+          @if (locationOpen()) {
+            <div class="animate-pop absolute left-0 top-[calc(100%+8px)] z-50 w-64 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_60px_-24px_rgba(11,34,24,0.35)]">
+              <div class="border-b border-line bg-cream/60 px-4 py-2.5">
+                <p class="text-[9px] font-extrabold uppercase tracking-[0.16em] text-brand-700">Choose your city</p>
+                <p class="mt-0.5 text-[9.5px] font-semibold text-muted">Shops and prices update with your city.</p>
+              </div>
+              <div class="p-1.5">
+                @for (city of location.cities; track city.name) {
+                  <button type="button" class="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left transition hover:bg-cream" (click)="selectCity(city.name)">
+                    <span class="grid h-7 w-7 place-items-center rounded-md" [class.bg-brand-50]="city.available" [class.bg-cream]="!city.available" [class.text-brand-700]="city.available" [class.text-faint]="!city.available">
+                      <app-icon name="pin" [size]="14" />
+                    </span>
+                    <span class="flex-1 text-[11px] font-bold text-ink">{{ city.name }}, {{ city.state }}</span>
+                    @if (location.city() === city.name) {
+                      <app-icon name="check" [size]="13" class="text-brand-700" />
+                    } @else if (!city.available) {
+                      <span class="text-[8px] font-extrabold uppercase tracking-wide text-faint">Soon</span>
+                    }
+                  </button>
+                }
+              </div>
+              <button type="button" class="flex w-full items-center justify-center gap-1.5 border-t border-line bg-brand-50 px-3 py-2.5 text-[10px] font-extrabold text-brand-700" (click)="selectCity('Jabalpur')">
+                <app-icon name="zap" [size]="12" /> Use my current location
+              </button>
+            </div>
+          }
+        </div>
+
+        <span class="flex items-center gap-1 text-[9.5px] font-bold text-brand-700">
+          <span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span>
+          {{ catalog.shopViews().length }} shops nearby
+        </span>
+      </div>
+
+      <form (submit)="submitSearch($event)" class="relative">
+        <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-700"><app-icon name="search" [size]="16" /></span>
+        <input
+          type="text"
+          class="h-10 w-full rounded-xl border border-line bg-white pl-10 pr-20 text-[12px] font-semibold placeholder:font-medium placeholder:text-faint focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-500/10"
+          placeholder="Search shops or products…"
+          [value]="query()"
+          (input)="onSearch($event)"
+          aria-label="Search products and shops"
+        />
+        <button type="submit" class="absolute right-1 top-1/2 h-8 -translate-y-1/2 rounded-lg bg-brand-700 px-3 text-[10px] font-extrabold text-white">Search</button>
+      </form>
+    </div>
+
+    <!-- secondary nav -->
+    <div class="nav-dark hidden bg-brand-900 md:block">
+      <div class="container-page flex h-11 items-center gap-5 overflow-x-auto hide-scrollbar">
+        <a routerLink="/shop" routerLinkActive="active" class="nav-link shrink-0 xl:hidden">
+          <app-icon name="grid" [size]="13" /> All Categories
+        </a>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link shrink-0">
+          <app-icon name="home" [size]="13" /> Home
+        </a>
+        <a routerLink="/shops" fragment="nearby-shops" routerLinkActive="active" class="nav-link shrink-0">Nearby Shops</a>
+        <a routerLink="/shops" fragment="browse-categories" routerLinkActive="active" class="nav-link shrink-0">Browse Categories</a>
+        <a routerLink="/offers" routerLinkActive="active" class="nav-link shrink-0">Offers</a>
+        <a routerLink="/how-it-works" routerLinkActive="active" class="nav-link shrink-0">How It Works</a>
+        <a routerLink="/for-shopkeepers" routerLinkActive="active" class="nav-link shrink-0">For Shopkeepers</a>
+        <a routerLink="/for-delivery-partners" routerLinkActive="active" class="nav-link shrink-0">For Delivery Partners</a>
+        <a routerLink="/features" routerLinkActive="active" class="nav-link shrink-0">Features</a>
+        <a routerLink="/contact" routerLinkActive="active" class="nav-link shrink-0">Contact</a>
+        <div class="ml-auto flex shrink-0 items-center gap-3">
+          <a routerLink="/for-shopkeepers" class="inline-flex items-center gap-1 text-[10px] font-extrabold text-sun-400 transition hover:text-sun-300">
+            <app-icon name="store" [size]="12" /> Become a Shop Partner
+          </a>
+          <div class="relative" data-menu="app">
+            <button type="button" class="inline-flex items-center gap-1 text-[10px] font-extrabold text-white/90 transition hover:text-sun-300" (click)="appMenuOpen.set(!appMenuOpen())">
+              <app-icon name="download" [size]="12" /> Get the App
+            </button>
+            @if (appMenuOpen()) {
+              <div class="animate-pop absolute right-0 top-[calc(100%+9px)] z-50 w-60 rounded-2xl border border-line bg-white p-2 shadow-xl">
+                <p class="px-2 py-1 text-[8.5px] font-extrabold uppercase tracking-widest text-faint">Smart Dukaan app</p>
+                <button type="button" class="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-[10.5px] font-bold text-ink transition hover:bg-cream" (click)="appMenuOpen.set(false); pwa.openDialog()">
+                  <app-icon name="play" [size]="14" class="text-brand-700" /> Google Play
+                </button>
+                <button type="button" class="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-[10.5px] font-bold text-ink transition hover:bg-cream" (click)="appMenuOpen.set(false); pwa.openDialog()">
+                  <app-icon name="apple" [size]="14" class="text-brand-700" /> App Store
+                </button>
+                <p class="px-2 pb-1 pt-1.5 text-[8.5px] font-semibold leading-relaxed text-muted">Free install · 4.8★ · 30-min delivery</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- mobile drawer -->
+  @if (mobileOpen()) {
+    <div class="fixed inset-0 z-[110] md:hidden">
+      <button type="button" class="absolute inset-0 bg-ink/50 backdrop-blur-sm" aria-label="Close menu" (click)="mobileOpen.set(false)"></button>
+      <aside class="absolute inset-y-0 left-0 flex w-[88%] max-w-xs flex-col bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b border-line px-4 py-4">
+          <a routerLink="/" class="flex items-center gap-2" (click)="mobileOpen.set(false)">
+            <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-800 text-white"><app-icon name="store" [size]="19" /></span>
+            <span class="text-[15px] font-extrabold tracking-[-0.04em]">Smart <span class="text-brand-700">Dukaan</span></span>
+          </a>
+          <button type="button" class="grid h-8 w-8 place-items-center rounded-lg text-muted hover:bg-cream" (click)="mobileOpen.set(false)" aria-label="Close menu"><app-icon name="close" [size]="18" /></button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto px-3 py-4">
+          @if (auth.isLoggedIn()) {
+            <div class="mb-4 flex items-center gap-2.5 rounded-xl bg-brand-50 p-3">
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-brand-700 text-[11px] font-extrabold text-white">{{ auth.initial() }}</span>
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-[11.5px] font-extrabold text-ink">{{ auth.user()?.name }}</p>
+                <p class="truncate text-[9.5px] font-semibold text-muted">{{ auth.user()?.email }}</p>
+              </div>
+              <a routerLink="/account" class="text-[9.5px] font-extrabold text-brand-700" (click)="mobileOpen.set(false)">Account</a>
+            </div>
+          } @else {
+            <div class="mb-4 rounded-xl border border-brand-100 bg-brand-50 p-3">
+              <p class="text-[11.5px] font-extrabold text-ink">Welcome to Smart Dukaan</p>
+              <p class="mt-0.5 text-[9.5px] font-semibold text-muted">Login for faster checkout and order tracking.</p>
+              <div class="mt-2 flex gap-2">
+                <a routerLink="/login" class="btn btn-primary btn-sm flex-1" (click)="mobileOpen.set(false)">Login</a>
+                <a routerLink="/register" class="btn btn-outline btn-sm flex-1" (click)="mobileOpen.set(false)">Register</a>
+              </div>
+            </div>
+          }
+
+          <div class="mb-4 rounded-xl border border-line p-3">
+            <div class="flex items-center justify-between gap-2">
+              <p class="flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-brand-700">
+                <app-icon name="pin" [size]="12" /> Deliver to
+              </p>
+              <span class="truncate text-[9.5px] font-bold text-ink">{{ location.label() }}</span>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              @for (city of location.cities; track city.name) {
+                <button
+                  type="button"
+                  class="chip !h-7 !px-2 !text-[9.5px]"
+                  [class.chip-active]="location.city() === city.name"
+                  (click)="selectCity(city.name)"
+                >
+                  {{ city.name }}
+                  @if (!city.available) {
+                    <span class="rounded bg-white/70 px-1 text-[7px] font-extrabold uppercase tracking-wide">Soon</span>
+                  }
+                </button>
+              }
+            </div>
+          </div>
+
+          <p class="px-2 text-[8.5px] font-extrabold uppercase tracking-[0.18em] text-faint">Explore</p>
+          <div class="mt-1.5 space-y-0.5">
+            <a routerLink="/" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="home" [size]="16" class="text-muted" /> Home</a>
+            <a routerLink="/shops" fragment="nearby-shops" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="store" [size]="16" class="text-muted" /> Nearby Shops</a>
+            <a routerLink="/shops" fragment="browse-categories" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="grid" [size]="16" class="text-muted" /> Browse Categories</a>
+            <a routerLink="/offers" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="percent" [size]="16" class="text-sun-500" /> Offers & coupons</a>
+            <a routerLink="/how-it-works" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="zap" [size]="16" class="text-brand-700" /> How it works</a>
+            <a routerLink="/account" [queryParams]="{ tab: 'orders' }" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="package" [size]="16" class="text-muted" /> Track Order</a>
+            <a routerLink="/help" class="flex items-center gap-3 rounded-lg px-2 py-2.5 text-[12px] font-bold text-ink-soft hover:bg-cream" (click)="mobileOpen.set(false)"><app-icon name="chat" [size]="16" class="text-muted" /> Help & Support</a>
+          </div>
+
+          <p class="mt-5 px-2 text-[8.5px] font-extrabold uppercase tracking-[0.18em] text-faint">Categories</p>
+          <div class="mt-1.5 grid grid-cols-2 gap-1">
+            @for (category of catalog.categoryViews(); track category.slug) {
+              <button type="button" class="flex items-center gap-1.5 rounded-lg border border-line px-2 py-2 text-left" (click)="chooseCategory(category.slug)">
+                <span class="text-sm">{{ category.emoji }}</span>
+                <span class="min-w-0 flex-1 truncate text-[9.5px] font-bold text-ink-soft">{{ category.short }}</span>
+              </button>
+            }
+          </div>
+
+          <div class="mt-5 rounded-xl bg-cream p-3">
+            <p class="text-[9px] font-extrabold uppercase tracking-widest text-brand-700">Partner with us</p>
+            <a routerLink="/for-shopkeepers" class="mt-1.5 flex items-center gap-1.5 text-[10.5px] font-bold text-ink" (click)="mobileOpen.set(false)"><app-icon name="store" [size]="13" class="text-brand-700" /> Become a Shop Partner</a>
+            <a routerLink="/for-delivery-partners" class="mt-1 flex items-center gap-1.5 text-[10.5px] font-bold text-ink" (click)="mobileOpen.set(false)"><app-icon name="truck" [size]="13" class="text-brand-700" /> Join as Delivery Partner</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  }
+</header>

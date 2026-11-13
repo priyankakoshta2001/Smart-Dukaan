@@ -1,0 +1,32 @@
+{
+  "name": "Smart Dukaan — Your Local Shops, Now Online",
+  "short_name": "Smart Dukaan",
+  "description": "Order groceries, dairy, fruits and daily essentials from trusted local shops near you. Multiple shops, one cart.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f6ef",
+  "theme_color": "#067044",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

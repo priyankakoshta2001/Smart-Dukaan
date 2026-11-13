@@ -1,0 +1,161 @@
+@if (shop(); as shop) {
+  <div class="bg-white pb-12">
+    <app-store-hero [shop]="shop" [productCount]="productCount()" />
+
+    <div class="container-page pt-4">
+      <!-- ================================================== story -->
+      <section class="grid items-center gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <div>
+          <span class="eyebrow"><app-icon name="store" [size]="12" /> Our story</span>
+          <h1 class="mt-1.5 text-[1.7rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2.2rem]">
+            {{ yearsServing() }} years of trust,<br />
+            <span class="font-display font-normal italic text-brand-700">now at your doorstep.</span>
+          </h1>
+          <p class="mt-3 max-w-xl text-[12.5px] font-medium leading-relaxed text-muted">
+            {{ shop.name }} {{ shop.since }} mein {{ shop.area }}, {{ shop.city }} ke dil mein shuru hua tha. Starting as a small counter
+            with a handwritten ledger, {{ owner() }} ne shop ko is kadar bharosa banaya ki aaj poora mohalla yahin se apna monthly ration
+            leta hai.
+          </p>
+          <p class="mt-2 max-w-xl text-[12.5px] font-medium leading-relaxed text-muted">
+            Smart Dukaan pe aane ke baad bhi kuch nahi badla — same trusted stock, same fair prices, same personal touch. Bas ab aap
+            ghar baithe order karte hain aur hum {{ shop.etaMin }}–{{ shop.etaMax }} minute mein sab kuch pahoncha dete hain.
+          </p>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1.5 text-[10.5px] font-bold text-ink-soft"><app-icon name="clock" [size]="13" class="text-brand-700" /> Open {{ shop.timing }}</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1.5 text-[10.5px] font-bold text-ink-soft"><app-icon name="pin" [size]="13" class="text-brand-700" /> {{ shop.area }}, {{ shop.city }}</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1.5 text-[10.5px] font-bold text-ink-soft"><app-icon name="calendar" [size]="13" class="text-brand-700" /> Since {{ shop.since }}</span>
+          </div>
+        </div>
+
+        <!-- owner card -->
+        <figure class="relative overflow-hidden rounded-[1.6rem] border border-line surface-hero p-5 shadow-sm">
+          <span class="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-white/70"></span>
+          <div class="relative flex items-center gap-4">
+            <span class="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-[20px] font-extrabold text-white shadow-md" [class]="shop.accent">{{ shop.initials }}</span>
+            <div class="min-w-0">
+              <p class="text-[15px] font-extrabold text-ink">{{ owner() }}</p>
+              <p class="text-[10.5px] font-bold uppercase tracking-wider text-brand-700">Owner · {{ shop.name }}</p>
+              <p class="mt-0.5 flex items-center gap-1 text-[10px] font-semibold text-muted"><app-icon name="star" [size]="11" class="text-sun-500" /> {{ shop.rating.toFixed(1) }} rating · {{ shop.reviews }} reviews</p>
+            </div>
+          </div>
+          <blockquote class="relative mt-4 border-l-[3px] border-brand-600 pl-3.5 text-[12px] font-medium italic leading-relaxed text-ink-soft">
+            “Hamara usool simple hai — jo ghar ke liye nahi khareedenge, wo dukaan pe bhi nahi rakhenge. Aap ka bharosa hi hamari asli
+            kamai hai.”
+          </blockquote>
+          <figcaption class="relative mt-3 flex items-center gap-2 text-[9.5px] font-extrabold uppercase tracking-wider text-brand-800">
+            <app-icon name="shield" [size]="12" /> Verified Smart Dukaan partner
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ================================================== stats -->
+      <section class="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div class="rounded-2xl border border-line bg-white p-4 text-center transition hover:border-brand-200">
+          <p class="text-[1.5rem] font-extrabold tracking-tight text-brand-800">{{ yearsServing() }}+</p>
+          <p class="mt-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-muted">Years serving</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white p-4 text-center transition hover:border-brand-200">
+          <p class="text-[1.5rem] font-extrabold tracking-tight text-brand-800">{{ shop.reviews.toLocaleString("en-IN") }}</p>
+          <p class="mt-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-muted">Happy reviews</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white p-4 text-center transition hover:border-brand-200">
+          <p class="text-[1.5rem] font-extrabold tracking-tight text-brand-800">{{ productCount() }}</p>
+          <p class="mt-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-muted">Products online</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white p-4 text-center transition hover:border-brand-200">
+          <p class="text-[1.5rem] font-extrabold tracking-tight text-brand-800">{{ shop.etaMin }}–{{ shop.etaMax }}<span class="text-[11px]"> min</span></p>
+          <p class="mt-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-muted">Avg delivery</p>
+        </div>
+      </section>
+
+      <!-- ================================================== what we stock -->
+      <section class="mt-8">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <span class="eyebrow"><app-icon name="grid" [size]="12" /> Aisle by aisle</span>
+            <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">What we <span class="font-display font-normal italic text-brand-700">stock.</span></h2>
+          </div>
+          <a [routerLink]="['/store', shop.slug]" class="text-[11px] font-extrabold text-brand-700 hover:underline">Browse all products →</a>
+        </div>
+        <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          @for (card of categoryCards(); track card.slug) {
+            <a [routerLink]="['/store', shop.slug]" [queryParams]="{ category: card.slug }" class="group rounded-2xl border border-line bg-white p-3.5 transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft">
+              <span class="grid h-10 w-10 place-items-center rounded-xl bg-cream text-[18px]">{{ card.emoji }}</span>
+              <p class="mt-2 text-[11.5px] font-extrabold leading-tight text-ink">{{ card.name }}</p>
+              <p class="mt-0.5 text-[9.5px] font-semibold leading-snug text-muted">{{ card.copy }}</p>
+            </a>
+          }
+        </div>
+      </section>
+
+      <!-- ================================================== gallery -->
+      <section class="mt-8">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <span class="eyebrow"><app-icon name="camera" [size]="12" /> Fresh from the shelves</span>
+            <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">Inside <span class="font-display font-normal italic text-brand-700">our store.</span></h2>
+          </div>
+        </div>
+        <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          @for (shot of gallery; track shot.label) {
+            <figure class="group relative overflow-hidden rounded-2xl border border-line bg-cream">
+              <img [src]="shot.src" [alt]="shot.label" class="aspect-square w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+              <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent px-3 pb-2 pt-6 text-[10px] font-extrabold text-white">{{ shot.label }}</figcaption>
+            </figure>
+          }
+        </div>
+      </section>
+
+      <!-- ================================================== service promises -->
+      <section class="mt-8">
+        <div class="grid gap-2 rounded-[1.35rem] border border-line bg-white p-4 sm:grid-cols-3 sm:p-5">
+          <div class="flex items-start gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"><app-icon name="shield" [size]="18" /></span>
+            <div>
+              <p class="text-[12px] font-extrabold text-ink">Quality checked</p>
+              <p class="mt-0.5 text-[10px] font-medium leading-relaxed text-muted">Har batch verify hota hai before it goes online on Smart Dukaan.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"><app-icon name="refresh" [size]="18" /></span>
+            <div>
+              <p class="text-[12px] font-extrabold text-ink">Easy replacements</p>
+              <p class="mt-0.5 text-[10px] font-medium leading-relaxed text-muted">Pasand nahi aaya? 24 hours me replace, no questions asked.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"><app-icon name="truck" [size]="18" /></span>
+            <div>
+              <p class="text-[12px] font-extrabold text-ink">{{ shop.etaMin }}–{{ shop.etaMax }} min delivery</p>
+              <p class="mt-0.5 text-[10px] font-medium leading-relaxed text-muted">{{ shop.distance }} km away — closest store to you in {{ shop.area }}.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== cta -->
+      <section class="mt-8">
+        <div class="relative flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-900 via-brand-800 to-brand-900 px-5 py-5 text-white">
+          <div class="hero-grid pointer-events-none absolute inset-0 opacity-40"></div>
+          <div class="relative flex items-center gap-3">
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-sun-300 backdrop-blur"><app-icon name="bag" [size]="20" /></span>
+            <div>
+              <p class="text-[13px] font-extrabold">Shopping list taiyaar hai?</p>
+              <p class="text-[10.5px] font-semibold text-white/75">{{ productCount() }} products · {{ shop.timing }} open · {{ shop.etaMin }}–{{ shop.etaMax }} min delivery</p>
+            </div>
+          </div>
+          <div class="relative flex gap-2">
+            <a [routerLink]="['/store', shop.slug]" class="btn btn-sun btn-sm">Shop now <app-icon name="arrow-right" [size]="13" /></a>
+            <a [routerLink]="['/store', shop.slug, 'reviews']" class="btn btn-outline btn-sm border-white/30 bg-white/10 text-white hover:bg-white/20">Read reviews</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+} @else {
+  <section class="container-page py-20 text-center">
+    <h1 class="text-2xl font-extrabold">Store not found</h1>
+    <a routerLink="/shops" class="btn btn-primary btn-sm mt-4">Browse nearby shops</a>
+  </section>
+}

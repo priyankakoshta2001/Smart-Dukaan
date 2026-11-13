@@ -1,0 +1,233 @@
+<div class="page-enter">
+  <!-- ================================================== dark support hero -->
+  <section class="relative overflow-hidden bg-brand-950 text-white">
+    <div class="mesh-green absolute inset-0 opacity-80"></div>
+    <div class="hero-grid pointer-events-none absolute inset-0 opacity-40"></div>
+    <span class="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-brand-500/25 blur-3xl"></span>
+    <span class="pointer-events-none absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-sun-400/15 blur-3xl"></span>
+
+    <div class="container-page relative py-9 lg:py-12">
+      <div class="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+        <div class="max-w-xl">
+          <nav class="flex items-center gap-1.5 text-[10px] font-bold text-white/60">
+            <a routerLink="/" class="transition hover:text-white">Home</a>
+            <app-icon name="chevron-right" [size]="11" />
+            <span class="text-white">Contact &amp; Support</span>
+          </nav>
+
+          <span class="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-sun-300">
+            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-sun-400"></span> Real humans · not bots
+          </span>
+
+          <h1 class="mt-3 text-[2.2rem] font-extrabold leading-[1.04] tracking-[-0.045em] sm:text-[2.7rem]">
+            We're here<br />
+            <span class="font-display font-normal italic text-sun-300">to help.</span>
+          </h1>
+          <p class="mt-3 max-w-md text-[12.5px] font-medium leading-relaxed text-white/85">
+            Missing item, late rider ya bas ek sawaal ho — 7 AM se 11 PM tak, har din, hum sun rahe hain. Live order issues 24×7.
+          </p>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <span class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[10px] font-bold text-white/90 backdrop-blur"><app-icon name="clock" [size]="13" class="text-sun-300" /> 7 AM – 11 PM, all days</span>
+            <span class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[10px] font-bold text-white/90 backdrop-blur"><app-icon name="zap" [size]="13" class="text-sun-300" /> Avg. reply 4 hrs</span>
+            <span class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[10px] font-bold text-white/90 backdrop-blur"><app-icon name="phone" [size]="13" class="text-sun-300" /> +91 761 400 2200</span>
+          </div>
+        </div>
+
+        <!-- rider image card -->
+        <div class="relative mx-auto w-full max-w-[19rem]">
+          <div class="relative overflow-hidden rounded-[1.6rem] border-4 border-white/15 bg-brand-800 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.6)]">
+            <img src="/assets/reference/partner-rider.jpg" alt="Smart Dukaan delivery partner ready to help" class="h-56 w-full object-cover object-top sm:h-64" />
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/90 to-transparent p-4 pt-8">
+              <p class="text-[12px] font-extrabold">Rider at your door in 30–45 min</p>
+              <p class="mt-0.5 text-[10px] font-semibold text-white/75">Live tracking on every order</p>
+            </div>
+          </div>
+          <span class="absolute -left-3 top-4 flex items-center gap-1.5 rounded-full bg-sun-400 px-3 py-1.5 text-[9px] font-extrabold text-ink shadow-lg">
+            <app-icon name="chat" [size]="11" /> Chat reply · 48 sec
+          </span>
+          <span class="absolute -right-2 bottom-16 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[9px] font-extrabold text-ink shadow-lg">
+            <app-icon name="shield" [size]="11" class="text-brand-700" /> 100% issue resolution
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- curve into page -->
+    <div class="h-6 rounded-t-[2rem] bg-paper"></div>
+  </section>
+
+  <div class="container-page pt-2">
+    <!-- ================================================== channels -->
+    <div class="-mt-2 grid gap-2.5 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+      @for (channel of channels; track channel.title) {
+        <a [href]="channel.href" [attr.target]="channel.href.startsWith('http') ? '_blank' : null" [attr.rel]="channel.href.startsWith('http') ? 'noopener' : null" class="group relative overflow-hidden rounded-2xl border border-line bg-white p-4 transition duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br text-white shadow-md {{ channel.tone }}"><app-icon [name]="channel.icon" [size]="19" /></span>
+          <p class="mt-3 text-[12px] font-extrabold text-ink">{{ channel.title }}</p>
+          <p class="mt-1 text-[10px] font-medium leading-relaxed text-muted">{{ channel.detail }}</p>
+          <span class="mt-2.5 inline-flex items-center gap-1 text-[9.5px] font-extrabold text-brand-700 transition group-hover:gap-1.5">{{ channel.action }} <app-icon name="arrow-up-right" [size]="11" /></span>
+        </a>
+      }
+    </div>
+
+    <!-- ================================================== form + aside -->
+    <div class="mt-4 grid items-start gap-4 lg:grid-cols-[1fr_350px]">
+      <section class="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+        <div class="flex items-center justify-between border-b border-line bg-cream/60 px-4 py-3.5 sm:px-5">
+          <div>
+            <h2 class="text-[13px] font-extrabold text-ink">Send us a message</h2>
+            <p class="text-[9.5px] font-semibold text-muted">One form, one human, one proper reply.</p>
+          </div>
+          <span class="badge badge-green">Avg. reply 4 hrs</span>
+        </div>
+
+        @if (sent()) {
+          <div class="animate-pop flex flex-col items-center justify-center px-5 py-12 text-center">
+            <span class="grid h-16 w-16 place-items-center rounded-full bg-brand-50 text-brand-700">
+              <app-icon name="check-circle" [size]="32" />
+            </span>
+            <h3 class="mt-4 text-lg font-extrabold text-ink">Message sent, {{ name().split(" ")[0] }}!</h3>
+            <p class="mt-1.5 max-w-sm text-[11.5px] font-medium leading-relaxed text-muted">
+              We've got it. A support specialist will reply to <span class="font-extrabold text-ink">{{ email() }}</span> within 4 working hours. Urgent order issue? Call us on +91 761 400 2200.
+            </p>
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+              <button type="button" class="btn btn-primary btn-sm" (click)="sendAnother()">Send another message</button>
+              <a routerLink="/help" class="btn btn-outline btn-sm">Browse the help centre</a>
+            </div>
+          </div>
+        } @else {
+          <form (submit)="submit($event)" class="p-4 sm:p-5">
+            <p class="text-[9.5px] font-extrabold uppercase tracking-[0.14em] text-faint">What's it about?</p>
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              @for (option of topics; track option) {
+                <button type="button" class="chip h-8 text-[10px]" [class.chip-active]="topic() === option" (click)="setTopic(option)">{{ option }}</button>
+              }
+            </div>
+
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+              <div>
+                <label class="field-label" for="contact-name">Your name</label>
+                <input id="contact-name" type="text" class="input text-[12px]" placeholder="Aarav Sharma" [value]="name()" (input)="onField('name', $event)" autocomplete="name" />
+              </div>
+              <div>
+                <label class="field-label" for="contact-email">Email address</label>
+                <input id="contact-email" type="email" class="input text-[12px]" placeholder="you@example.com" [value]="email()" (input)="onField('email', $event)" autocomplete="email" />
+              </div>
+              <div>
+                <label class="field-label" for="contact-phone">Phone <span class="font-semibold normal-case tracking-normal text-faint">(optional)</span></label>
+                <input id="contact-phone" type="tel" class="input text-[12px]" placeholder="98765 43210" [value]="phone()" (input)="onField('phone', $event)" autocomplete="tel" />
+              </div>
+              <div>
+                <label class="field-label" for="contact-order">Order ID <span class="font-semibold normal-case tracking-normal text-faint">(optional)</span></label>
+                <input id="contact-order" type="text" class="input text-[12px]" placeholder="SD482913" [value]="orderId()" (input)="onField('orderId', $event)" />
+              </div>
+              <div class="sm:col-span-2">
+                <label class="field-label" for="contact-message">Tell us what happened</label>
+                <textarea id="contact-message" rows="5" class="input resize-none text-[12px]" placeholder="The more detail, the faster we can fix it…" [value]="message()" (input)="onField('message', $event)"></textarea>
+              </div>
+            </div>
+
+            @if (error()) {
+              <p class="animate-pop mt-3 flex items-center gap-1.5 rounded-lg bg-rose-50 px-3 py-2 text-[10.5px] font-bold text-rose-600">
+                <app-icon name="x-circle" [size]="13" class="shrink-0" /> {{ error() }}
+              </p>
+            }
+
+            <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+              <p class="flex items-center gap-1.5 text-[9px] font-semibold text-muted"><app-icon name="shield" [size]="11" class="text-brand-700" /> We never share your details.</p>
+              <button type="submit" class="btn btn-primary btn-sm px-5">Send message <app-icon name="send" [size]="13" /></button>
+            </div>
+          </form>
+        }
+      </section>
+
+      <!-- aside -->
+      <aside class="space-y-3">
+        <section class="rounded-2xl border border-line bg-white p-4">
+          <div class="flex items-center gap-2">
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="clock" [size]="15" /></span>
+            <div>
+              <h2 class="text-[11.5px] font-extrabold text-ink">Support hours</h2>
+              <p class="text-[9px] font-semibold text-muted">All times IST</p>
+            </div>
+          </div>
+          <div class="mt-2.5 space-y-1.5">
+            @for (slot of hours; track slot.day) {
+              <div class="flex items-center justify-between rounded-lg bg-cream/60 px-2.5 py-1.5">
+                <span class="text-[9.5px] font-bold text-ink-soft">{{ slot.day }}</span>
+                <span class="text-[9px] font-extrabold text-brand-700">{{ slot.time }}</span>
+              </div>
+            }
+          </div>
+          <p class="mt-2 flex items-start gap-1.5 text-[9px] font-semibold leading-relaxed text-muted">
+            <app-icon name="info" [size]="11" class="mt-px shrink-0 text-sun-600" /> Live order issues are prioritised 24/7, even outside these hours.
+          </p>
+        </section>
+
+        <section class="rounded-2xl border border-line bg-white p-4">
+          <h2 class="text-[11.5px] font-extrabold text-ink">Quick links</h2>
+          <div class="mt-2 space-y-1">
+            @for (link of quickLinks; track link.label) {
+              <a [routerLink]="link.link" [queryParams]="link.tab ? { tab: link.tab } : {}" class="flex items-center justify-between rounded-lg px-2 py-1.5 text-[10px] font-bold text-ink-soft transition hover:bg-brand-50/60 hover:text-brand-800">
+                {{ link.label }} <app-icon name="chevron-right" [size]="12" class="text-faint" />
+              </a>
+            }
+          </div>
+        </section>
+
+        <section class="relative overflow-hidden rounded-2xl border border-brand-100 bg-brand-50/70 p-4">
+          <div class="dot-grid pointer-events-none absolute inset-0 opacity-40"></div>
+          <span class="relative grid h-9 w-9 place-items-center rounded-xl bg-white text-brand-700 shadow-sm"><app-icon name="whatsapp" [size]="17" /></span>
+          <h2 class="relative mt-2.5 text-[11.5px] font-extrabold text-brand-900">Prefer WhatsApp?</h2>
+          <p class="relative mt-1 text-[9.5px] font-medium leading-relaxed text-brand-900/75">Send "Hi" to +91 761 400 2200 and get order updates, rider location and support in one thread.</p>
+          <a href="https://wa.me/917614002200" target="_blank" rel="noopener" class="relative mt-2 inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700">Open WhatsApp <app-icon name="arrow-up-right" [size]="11" /></a>
+        </section>
+      </aside>
+    </div>
+
+    <!-- ================================================== offices -->
+    <section class="mt-10">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <span class="eyebrow"><app-icon name="map" [size]="12" /> Come say hi</span>
+          <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">Our <span class="font-display font-normal italic text-brand-700">doors are open.</span></h2>
+        </div>
+        <span class="text-[10px] font-semibold text-muted">Visitors welcome between 10 AM and 5 PM</span>
+      </div>
+
+      <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        @for (office of offices; track office.city) {
+          <article class="group relative overflow-hidden rounded-2xl border border-line bg-white p-5 transition hover:border-brand-200 hover:shadow-soft">
+            <div class="dot-grid pointer-events-none absolute inset-0 opacity-30"></div>
+            <div class="relative">
+              <div class="flex items-center gap-2">
+                <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-900 text-white shadow-sm"><app-icon name="store" [size]="17" /></span>
+                <div>
+                  <h3 class="text-[12px] font-extrabold text-ink">{{ office.city }}</h3>
+                  <p class="text-[8.5px] font-extrabold uppercase tracking-[0.12em] text-brand-700">{{ office.meta }}</p>
+                </div>
+              </div>
+              <p class="mt-2.5 max-w-sm text-[10.5px] font-medium leading-relaxed text-muted">{{ office.address }}</p>
+              <a href="https://maps.google.com" target="_blank" rel="noopener" class="mt-2 inline-flex items-center gap-1 text-[9.5px] font-extrabold text-brand-700">Get directions <app-icon name="arrow-up-right" [size]="11" /></a>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <!-- ================================================== faq cta -->
+    <section class="mt-10 pb-4">
+      <div class="relative flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-2xl bg-gradient-to-r from-brand-900 via-brand-800 to-brand-900 px-5 py-5 text-white">
+        <div class="hero-grid pointer-events-none absolute inset-0 opacity-40"></div>
+        <div class="relative flex items-center gap-3">
+          <span class="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-sun-300 backdrop-blur"><app-icon name="chat" [size]="20" /></span>
+          <div>
+            <p class="text-[12.5px] font-extrabold">Maybe it's already answered</p>
+            <p class="text-[10px] font-semibold text-white/75">Delivery, returns, payments and more — in the help centre.</p>
+          </div>
+        </div>
+        <a routerLink="/help" class="btn btn-sun btn-sm relative">Visit help centre <app-icon name="arrow-right" [size]="13" /></a>
+      </div>
+    </section>
+  </div>
+</div>

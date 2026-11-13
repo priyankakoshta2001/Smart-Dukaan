@@ -1,0 +1,74 @@
+<div class="page-enter container-page pt-5 sm:pt-8">
+  <div class="relative overflow-hidden rounded-[1.75rem] border border-line surface-hero px-5 py-9 text-center sm:px-8 sm:py-12">
+    <div class="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-brand-100/60 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 right-0 h-56 w-56 rounded-full bg-sun-100/70 blur-3xl"></div>
+
+    <div class="relative mx-auto max-w-xl">
+      <div class="flex items-center justify-center gap-3">
+        <span class="font-display text-[5.5rem] italic leading-none text-brand-300 sm:text-[7rem]">4</span>
+        <span class="grid h-16 w-16 place-items-center rounded-full border border-line bg-white text-brand-700 shadow-soft sm:h-20 sm:w-20">
+          <app-icon name="bag" [size]="30" />
+        </span>
+        <span class="font-display text-[5.5rem] italic leading-none text-brand-300 sm:text-[7rem]">4</span>
+      </div>
+
+      <span class="eyebrow mt-2 justify-center"><app-icon name="search" [size]="12" /> Aisle not found</span>
+      <h1 class="mt-2 text-[1.7rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2.2rem]">
+        This shelf seems to have<br />
+        <span class="font-display font-normal italic text-brand-700">wandered off.</span>
+      </h1>
+      <p class="mx-auto mt-2 max-w-md text-[11.5px] font-medium leading-relaxed text-muted">
+        The page you're looking for may have moved, sold out, or never existed. No worries — the rest of the marketplace is well stocked.
+      </p>
+
+      <form (submit)="search($event)" class="relative mx-auto mt-5 max-w-md">
+        <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"><app-icon name="search" [size]="16" /></span>
+        <input type="text" class="input h-11 pl-10 pr-24 text-[12px]" placeholder="Search for milk, atta, mascara…" [value]="query()" (input)="onQuery($event)" aria-label="Search products" />
+        <button type="submit" class="btn btn-primary btn-sm absolute right-1.5 top-1/2 h-8 -translate-y-1/2 px-3.5 text-[10.5px]">Search</button>
+      </form>
+
+      <div class="mt-4 flex flex-wrap justify-center gap-2">
+        <a routerLink="/" class="btn btn-primary btn-sm"><app-icon name="home" [size]="13" /> Back home</a>
+        <a routerLink="/shop" class="btn btn-outline btn-sm"><app-icon name="bag" [size]="13" /> Shop everything</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- quick links -->
+  <div class="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+    @for (item of links; track item.label) {
+      <a [routerLink]="item.link" class="group flex items-center gap-2.5 rounded-2xl border border-line bg-white p-3.5 transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft">
+        <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700 transition group-hover:bg-brand-700 group-hover:text-white"><app-icon [name]="item.icon" [size]="16" /></span>
+        <span class="min-w-0 leading-tight">
+          <span class="block text-[11px] font-extrabold text-ink">{{ item.label }}</span>
+          <span class="block text-[9px] font-semibold text-muted">{{ item.copy }}</span>
+        </span>
+        <app-icon name="chevron-right" [size]="12" class="ml-auto shrink-0 text-faint transition group-hover:text-brand-700" />
+      </a>
+    }
+  </div>
+
+  <!-- popular -->
+  <section class="mt-10">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <span class="eyebrow"><app-icon name="flame" [size]="12" /> Popular right now</span>
+        <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">While you're here, <span class="font-display font-normal italic text-brand-700">these are loved.</span></h2>
+      </div>
+      <a routerLink="/shop" class="link-arrow">Browse all <app-icon name="arrow-right" [size]="13" /></a>
+    </div>
+    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      @for (product of popular(); track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  </section>
+
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-white px-4 py-4 pb-4">
+    <p class="flex items-center gap-2 text-[10.5px] font-semibold text-muted">
+      <app-icon name="info" [size]="14" class="shrink-0 text-brand-700" />
+      Followed an old link? Tell us and we'll point you the right way.
+    </p>
+    <a routerLink="/contact" class="btn btn-outline btn-sm">Report a broken link</a>
+  </div>
+</div>

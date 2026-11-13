@@ -1,0 +1,103 @@
+<article class="group relative flex h-full flex-col overflow-hidden rounded-[1.2rem] border border-line bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_26px_50px_-30px_rgba(11,34,24,0.45)]">
+  <div class="relative">
+    <a [routerLink]="['/product', product().slug]" class="product-media block">
+      <img [src]="product().image" [alt]="product().title" loading="lazy" decoding="async" />
+    </a>
+
+    <button
+      type="button"
+      class="absolute right-2.5 top-2.5 z-10 grid h-8 w-8 place-items-center rounded-full border border-white/80 bg-white/90 text-ink-soft shadow-sm backdrop-blur transition hover:scale-105 hover:text-rose-500"
+      [attr.aria-label]="wishlist.has(product().id) ? 'Remove from wishlist' : 'Save to wishlist'"
+      (click)="toggleWishlist()"
+    >
+      <app-icon
+        name="heart"
+        [size]="15"
+        [class.text-rose-500]="wishlist.has(product().id)"
+        [class.fill-rose-500]="wishlist.has(product().id)"
+      />
+    </button>
+
+    @if (product().badge) {
+      <span
+        class="badge absolute left-2.5 top-2.5 z-10 shadow-sm"
+        [class.badge-sun]="product().badge.includes('OFF')"
+        [class.badge-green]="product().badge === 'Farm fresh' || product().badge === 'Bestseller'"
+        [class.badge-ink]="product().badge === 'Popular'"
+        >{{ product().badge }}</span
+      >
+    }
+
+    @if (discount() >= 10) {
+      <span class="absolute bottom-2.5 left-2.5 rounded-md bg-ink/90 px-1.5 py-0.5 text-[9.5px] font-extrabold tracking-wide text-white backdrop-blur">
+        {{ discount() }}% OFF
+      </span>
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col px-3 pb-3 pt-2.5">
+    <div class="flex items-center justify-between gap-2 text-[9px] font-extrabold uppercase tracking-[0.1em] text-faint">
+      <span class="truncate">{{ product().brand }}</span>
+      <span class="shrink-0 rounded bg-cream px-1.5 py-0.5 text-[8.5px] font-bold normal-case tracking-normal text-muted">{{ product().unit }}</span>
+    </div>
+
+    <a
+      [routerLink]="['/product', product().slug]"
+      class="mt-1 line-clamp-2 min-h-[2.45rem] text-[13px] font-bold leading-snug text-ink transition hover:text-brand-700"
+      >{{ product().title }}</a
+    >
+
+    <a
+      [routerLink]="['/store', product().shopSlug]"
+      class="mt-1.5 flex min-w-0 items-center gap-1 text-[10px] font-semibold text-muted transition hover:text-brand-700"
+    >
+      <app-icon name="store" [size]="11" class="shrink-0 text-brand-600" />
+      <span class="truncate">{{ shopName() }}</span>
+    </a>
+
+    <div class="mt-1.5 flex items-center gap-1.5">
+      <app-rating [rating]="product().rating" [size]="10.5" [showValue]="true" />
+      <span class="text-[9.5px] font-semibold text-faint">({{ product().reviewCount }})</span>
+    </div>
+
+    <div class="mt-auto flex items-end justify-between gap-2 pt-2.5">
+      <div class="leading-none">
+        <div class="flex items-baseline gap-1.5">
+          <span class="text-[16px] font-extrabold tracking-[-0.04em] text-ink">₹{{ product().price }}</span>
+          <span class="price-strike text-[10.5px] font-semibold">₹{{ product().mrp }}</span>
+        </div>
+        <span class="mt-1 block text-[8.5px] font-semibold text-faint">Inclusive of all taxes</span>
+      </div>
+
+      @if (cart.qty(product().id); as qty) {
+        <div class="flex h-8 items-center rounded-lg bg-brand-700 text-white shadow-sm">
+          <button
+            type="button"
+            class="grid h-8 w-7 place-items-center rounded-l-lg transition hover:bg-brand-800"
+            aria-label="Decrease quantity"
+            (click)="decrement()"
+          >
+            <app-icon name="minus" [size]="12" />
+          </button>
+          <span class="min-w-4 text-center text-[11px] font-extrabold">{{ qty }}</span>
+          <button
+            type="button"
+            class="grid h-8 w-7 place-items-center rounded-r-lg transition hover:bg-brand-800"
+            aria-label="Increase quantity"
+            (click)="increment()"
+          >
+            <app-icon name="plus" [size]="12" />
+          </button>
+        </div>
+      } @else {
+        <button
+          type="button"
+          class="flex h-8 items-center gap-1 rounded-lg border border-brand-200 bg-brand-50 px-2.5 text-[10.5px] font-extrabold text-brand-700 transition hover:border-brand-700 hover:bg-brand-700 hover:text-white"
+          (click)="add()"
+        >
+          <app-icon name="plus" [size]="12" /> Add
+        </button>
+      }
+    </div>
+  </div>
+</article>

@@ -1,0 +1,19 @@
+<div class="flex flex-wrap items-end justify-between gap-4">
+  <div class="max-w-2xl">
+    @if (eyebrow()) {
+      <span class="section-eyebrow"><span class="h-1.5 w-1.5 rounded-full bg-sun-500"></span>{{ eyebrow() }}</span>
+    }
+    <h2 class="section-title mt-2">{{ title() }}</h2>
+    @if (copy()) {
+      <p class="section-copy mt-2 max-w-xl">{{ copy() }}</p>
+    }
+  </div>
+  @if (link()) {
+    <a [routerLink]="link()" class="group inline-flex items-center gap-1.5 text-[11.5px] font-extrabold text-brand-700 transition hover:text-brand-800">
+      {{ linkLabel() }}
+      <span class="grid h-7 w-7 place-items-center rounded-full border border-brand-200 bg-brand-50 transition group-hover:bg-brand-700 group-hover:text-white">
+        <app-icon name="arrow-right" [size]="13" />
+      </span>
+    </a>
+  }
+</div>

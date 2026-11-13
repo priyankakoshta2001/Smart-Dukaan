@@ -1,0 +1,247 @@
+@if (product(); as p) {
+  <section class="border-b border-line bg-white">
+    <div class="container-page py-4">
+      <nav class="flex flex-wrap items-center gap-1.5 text-[10px] font-bold text-muted" aria-label="Breadcrumb">
+        <a routerLink="/" class="transition hover:text-brand-700">Home</a>
+        <app-icon name="chevron-right" [size]="10" class="text-faint" />
+        <a routerLink="/shop" class="transition hover:text-brand-700">Shop</a>
+        <app-icon name="chevron-right" [size]="10" class="text-faint" />
+        <a [routerLink]="['/shop']" [queryParams]="{ category: p.category }" class="transition hover:text-brand-700">{{ catalog.categoryLabel(p.category) }}</a>
+        <app-icon name="chevron-right" [size]="10" class="text-faint" />
+        <span class="line-clamp-1 text-ink">{{ p.title }}</span>
+      </nav>
+    </div>
+  </section>
+
+  <section class="section-pad pt-6">
+    <div class="container-page">
+      <div class="grid gap-6 lg:grid-cols-[1.02fr_1fr] xl:gap-10">
+        <!-- gallery -->
+        <div class="lg:sticky lg:top-[11.5rem] lg:h-fit">
+          <div class="grid gap-3 sm:grid-cols-[4.5rem_1fr]">
+            <div class="order-2 flex gap-2 sm:order-1 sm:flex-col">
+              @for (image of p.images; track image; let index = $index) {
+                <button
+                  type="button"
+                  class="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-xl border bg-white p-1 transition sm:h-[4.5rem] sm:w-full"
+                  [class.border-brand-600]="activeImage() === index"
+                  [class.ring-2]="activeImage() === index"
+                  [class.ring-brand-500/20]="activeImage() === index"
+                  [class.border-line]="activeImage() !== index"
+                  (click)="setImage(index)"
+                  [attr.aria-label]="'View image ' + (index + 1)"
+                >
+                  <img [src]="image" [alt]="p.title" class="h-full w-full object-contain" loading="lazy" />
+                </button>
+              }
+            </div>
+
+            <div class="group order-1 relative overflow-hidden rounded-[1.75rem] border border-line bg-gradient-to-br from-white via-cream to-brand-50 sm:order-2">
+              <div class="absolute left-4 top-4 z-10 flex flex-col gap-1.5">
+                @if (p.badge) {
+                  <span class="badge badge-green shadow-sm">{{ p.badge }}</span>
+                }
+                @if (discount() >= 10) {
+                  <span class="badge badge-sun shadow-sm">{{ discount() }}% OFF</span>
+                }
+              </div>
+              <button type="button" class="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full border border-line bg-white/90 text-ink-soft shadow-sm backdrop-blur transition hover:text-rose-500" (click)="toggleWishlist()" [attr.aria-label]="wishlist.has(p.id) ? 'Remove from wishlist' : 'Save to wishlist'">
+                <app-icon name="heart" [size]="17" [class.text-rose-500]="wishlist.has(p.id)" />
+              </button>
+              <div class="flex aspect-square items-center justify-center p-8">
+                <img [src]="activeSrc()" [alt]="p.title" class="h-full w-full object-contain transition duration-500 group-hover:scale-105" />
+              </div>
+              <div class="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-xl border border-white/70 bg-white/85 px-3 py-2 backdrop-blur">
+                <span class="inline-flex items-center gap-1.5 text-[9.5px] font-extrabold text-brand-700"><app-icon name="shield" [size]="12" /> 100% genuine product</span>
+                <span class="inline-flex items-center gap-1.5 text-[9.5px] font-bold text-muted"><app-icon name="truck" [size]="12" /> {{ p.deliveryMin }}–{{ p.deliveryMin + 15 }} min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- info -->
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="badge badge-line">{{ p.brand }}</span>
+            <span class="badge badge-green">{{ p.unit }}</span>
+            @if (p.stock > 0) {
+              <span class="inline-flex items-center gap-1 text-[9.5px] font-extrabold text-brand-700"><span class="h-1.5 w-1.5 rounded-full bg-brand-500"></span> In stock</span>
+            } @else {
+              <span class="text-[9.5px] font-extrabold text-rose-600">Out of stock</span>
+            }
+          </div>
+
+          <h1 class="mt-2.5 text-2xl font-extrabold leading-tight tracking-[-0.04em] sm:text-[2rem]">{{ p.title }}</h1>
+
+          <div class="mt-2 flex flex-wrap items-center gap-3">
+            <app-rating [rating]="p.rating" [reviews]="p.reviewCount" [size]="14" />
+            <span class="text-[10px] font-semibold text-faint">·</span>
+            <a href="#reviews" class="text-[10.5px] font-bold text-brand-700 hover:underline">{{ p.reviewCount }} verified reviews</a>
+          </div>
+
+          <p class="mt-3 text-[12px] leading-relaxed text-muted">{{ p.description }}</p>
+
+          <div class="mt-4 rounded-2xl border border-line bg-white p-4">
+            <div class="flex flex-wrap items-end gap-2.5">
+              <span class="text-[2rem] font-extrabold leading-none tracking-[-0.05em] text-ink">₹{{ p.price }}</span>
+              <span class="price-strike text-[14px] font-semibold">₹{{ p.mrp }}</span>
+              @if (discount() > 0) {
+                <span class="badge badge-sun">{{ discount() }}% OFF</span>
+              }
+            </div>
+            <p class="mt-1 text-[10px] font-semibold text-brand-700">You save ₹{{ saved() }} on this order · inclusive of all taxes</p>
+
+            <div class="mt-4 flex flex-wrap items-center gap-2">
+              <div class="flex h-11 items-center rounded-xl border border-brand-200 bg-brand-50 text-brand-700">
+                <button type="button" class="grid h-11 w-9 place-items-center rounded-l-xl transition hover:bg-brand-100" (click)="decrement()" aria-label="Decrease quantity"><app-icon name="minus" [size]="14" /></button>
+                <span class="min-w-7 text-center text-[13px] font-extrabold">{{ qty() }}</span>
+                <button type="button" class="grid h-11 w-9 place-items-center rounded-r-xl transition hover:bg-brand-100" (click)="increment()" aria-label="Increase quantity"><app-icon name="plus" [size]="14" /></button>
+              </div>
+              <button type="button" class="btn btn-primary h-11 flex-1 min-w-[8rem]" (click)="addToCart()">
+                <app-icon name="cart" [size]="16" /> Add to cart
+              </button>
+              <button type="button" class="btn btn-dark h-11 flex-1 min-w-[8rem]" (click)="buyNow()">Buy now</button>
+              <button type="button" class="grid h-11 w-11 place-items-center rounded-xl border border-line bg-white text-ink-soft transition hover:bg-cream" (click)="share()" aria-label="Share product"><app-icon name="send" [size]="17" /></button>
+            </div>
+
+            <div class="mt-3 grid gap-2 border-t border-line pt-3 sm:grid-cols-3">
+              @for (promise of promises; track promise.text) {
+                <span class="flex items-center gap-1.5 text-[9.5px] font-bold text-ink-soft"><app-icon [name]="promise.icon" [size]="12" class="text-brand-600" /> {{ promise.text }}</span>
+              }
+            </div>
+          </div>
+
+          @if (shop(); as shop) {
+            <a [routerLink]="['/store', shop.slug]" class="group mt-3 flex items-center gap-3 rounded-2xl border border-line bg-white p-3.5 transition hover:border-brand-200 hover:shadow-soft">
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-[12px] font-extrabold text-white" [class]="shop.accent">{{ shop.initials }}</span>
+              <div class="min-w-0 flex-1">
+                <p class="flex items-center gap-1.5 text-[11.5px] font-extrabold text-ink">Sold by {{ shop.name }} <app-icon name="shield" [size]="11" class="text-brand-600" /></p>
+                <p class="mt-0.5 text-[9.5px] font-semibold text-muted">{{ shop.area }} · {{ shop.distance }} km · {{ shop.etaMin }}–{{ shop.etaMax }} min delivery</p>
+              </div>
+              <span class="inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700 transition group-hover:gap-1.5">Visit shop <app-icon name="arrow-right" [size]="12" /></span>
+            </a>
+          }
+
+          <div class="mt-3 grid gap-2 sm:grid-cols-2">
+            <div class="flex items-center gap-2.5 rounded-xl border border-line bg-cream/60 p-3">
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white text-brand-700"><app-icon name="truck" [size]="15" /></span>
+              <div>
+                <p class="text-[10px] font-extrabold text-ink">Delivery by 8:30 PM</p>
+                <p class="text-[9px] font-semibold text-muted">Order in next 2 hours</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2.5 rounded-xl border border-line bg-cream/60 p-3">
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white text-brand-700"><app-icon name="refresh" [size]="15" /></span>
+              <div>
+                <p class="text-[10px] font-extrabold text-ink">Easy replacement</p>
+                <p class="text-[9px] font-semibold text-muted">Within 24 hours, no questions</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs -->
+      <div id="reviews" class="mt-10 overflow-hidden rounded-2xl border border-line bg-white">
+        <div class="flex gap-1 overflow-x-auto border-b border-line px-3 pt-3 hide-scrollbar">
+          <button type="button" class="rounded-t-lg px-3.5 py-2.5 text-[11px] font-extrabold transition" [class.bg-cream]="tab() === 'details'" [class.text-brand-700]="tab() === 'details'" [class.text-muted]="tab() !== 'details'" (click)="tab.set('details')">Product details</button>
+          <button type="button" class="rounded-t-lg px-3.5 py-2.5 text-[11px] font-extrabold transition" [class.bg-cream]="tab() === 'highlights'" [class.text-brand-700]="tab() === 'highlights'" [class.text-muted]="tab() !== 'highlights'" (click)="tab.set('highlights')">Why you'll love it</button>
+          <button type="button" class="rounded-t-lg px-3.5 py-2.5 text-[11px] font-extrabold transition" [class.bg-cream]="tab() === 'reviews'" [class.text-brand-700]="tab() === 'reviews'" [class.text-muted]="tab() !== 'reviews'" (click)="tab.set('reviews')">Reviews ({{ p.reviewCount }})</button>
+        </div>
+
+        <div class="p-5">
+          @if (tab() === 'details') {
+            <div class="grid gap-6 sm:grid-cols-[1.2fr_1fr]">
+              <div>
+                <h3 class="text-[13px] font-extrabold">About this product</h3>
+                <p class="mt-1.5 text-[11.5px] leading-relaxed text-muted">{{ p.description }}</p>
+                <p class="mt-2 text-[11.5px] leading-relaxed text-muted">Stocked and packed fresh by {{ shop()?.name }}, {{ shop()?.area }}. Every order is checked before pickup and delivered in a sealed, tamper-proof bag.</p>
+              </div>
+              <div class="rounded-xl bg-cream/70 p-4">
+                <h3 class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-ink">Quick facts</h3>
+                <dl class="mt-2.5 space-y-2 text-[10.5px]">
+                  <div class="flex justify-between gap-3 border-b border-line/70 pb-1.5"><dt class="font-semibold text-muted">Brand</dt><dd class="font-extrabold text-ink">{{ p.brand }}</dd></div>
+                  <div class="flex justify-between gap-3 border-b border-line/70 pb-1.5"><dt class="font-semibold text-muted">Pack size</dt><dd class="font-extrabold text-ink">{{ p.unit }}</dd></div>
+                  <div class="flex justify-between gap-3 border-b border-line/70 pb-1.5"><dt class="font-semibold text-muted">Category</dt><dd class="font-extrabold text-ink">{{ catalog.categoryLabel(p.category) }}</dd></div>
+                  <div class="flex justify-between gap-3"><dt class="font-semibold text-muted">Ships from</dt><dd class="font-extrabold text-ink">{{ shop()?.area }}, {{ shop()?.city }}</dd></div>
+                </dl>
+              </div>
+            </div>
+          } @else if (tab() === 'highlights') {
+            <div class="grid gap-2 sm:grid-cols-3">
+              @for (highlight of p.highlights; track highlight) {
+                <div class="rounded-xl border border-line bg-cream/50 p-3.5">
+                  <span class="grid h-7 w-7 place-items-center rounded-lg bg-brand-700 text-white"><app-icon name="check" [size]="13" /></span>
+                  <p class="mt-2 text-[11px] font-bold leading-snug text-ink">{{ highlight }}</p>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="grid gap-5 sm:grid-cols-[13rem_1fr]">
+              <div class="rounded-xl bg-cream/70 p-4 text-center">
+                <p class="text-4xl font-extrabold tracking-tight">{{ p.rating.toFixed(1) }}</p>
+                <div class="mt-1 flex justify-center"><app-rating [rating]="p.rating" [showValue]="false" [size]="14" /></div>
+                <p class="mt-1 text-[10px] font-semibold text-muted">{{ p.reviewCount }} verified ratings</p>
+                <div class="mt-3 space-y-1.5">
+                  @for (row of [5, 4, 3, 2, 1]; track row) {
+                    <div class="flex items-center gap-1.5">
+                      <span class="w-2 text-[9px] font-bold text-muted">{{ row }}</span>
+                      <app-icon name="star" [size]="8" class="text-sun-400" />
+                      <span class="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
+                        <span class="block h-full rounded-full bg-brand-500" [style.width.%]="row === 5 ? 68 : row === 4 ? 22 : row === 3 ? 7 : row === 2 ? 2 : 1"></span>
+                      </span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                @for (review of reviewSamples; track review.name) {
+                  <div class="rounded-xl border border-line p-3.5">
+                    <div class="flex items-center gap-2">
+                      <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br text-[9px] font-extrabold text-white" [class]="review.tint">{{ review.initials }}</span>
+                      <div class="min-w-0 flex-1">
+                        <p class="text-[10.5px] font-extrabold text-ink">{{ review.name }}</p>
+                        <p class="flex items-center gap-1 text-[8.5px] font-semibold text-faint"><app-icon name="check-circle" [size]="9" class="text-brand-600" /> Verified purchase · {{ review.date }}</p>
+                      </div>
+                      <app-rating [rating]="review.rating" [showValue]="false" [size]="10" />
+                    </div>
+                    <p class="mt-2 text-[11px] leading-relaxed text-ink-soft">{{ review.text }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- related -->
+      @if (related().length) {
+        <div class="mt-10">
+          <div class="flex items-end justify-between gap-3">
+            <div>
+              <span class="section-eyebrow">You may also like</span>
+              <h2 class="section-title mt-1.5">Pairs well with this</h2>
+            </div>
+            <a routerLink="/shop" class="inline-flex items-center gap-1 text-[10.5px] font-extrabold text-brand-700">See all <app-icon name="arrow-right" [size]="12" /></a>
+          </div>
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            @for (item of related(); track item.id) {
+              <app-product-card [product]="item" />
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+} @else {
+  <section class="container-page py-24 text-center">
+    <span class="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-cream text-muted"><app-icon name="search" [size]="34" /></span>
+    <h1 class="mt-5 text-2xl font-extrabold">Product not found</h1>
+    <p class="mx-auto mt-2 max-w-md text-[12.5px] text-muted">This item may be out of stock or the link is outdated. Explore nearby shops for fresh stock.</p>
+    <div class="mt-5 flex justify-center gap-2">
+      <a routerLink="/shop" class="btn btn-primary btn-sm">Browse products</a>
+      <a routerLink="/shops" class="btn btn-outline btn-sm">Nearby shops</a>
+    </div>
+  </section>
+}

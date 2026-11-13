@@ -1,0 +1,186 @@
+<section class="border-b border-line bg-white">
+  <div class="container-page py-7">
+    <nav class="flex items-center gap-1.5 text-[10px] font-bold text-muted" aria-label="Breadcrumb">
+      <a routerLink="/" class="transition hover:text-brand-700">Home</a>
+      <app-icon name="chevron-right" [size]="10" class="text-faint" />
+      <a routerLink="/shop" class="transition hover:text-brand-700">Shop</a>
+      <app-icon name="chevron-right" [size]="10" class="text-faint" />
+      <span class="text-ink">{{ categoryLabel() }}</span>
+    </nav>
+
+    <div class="mt-2.5 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <div class="flex flex-wrap items-center gap-2">
+          <h1 class="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">{{ categoryLabel() }}</h1>
+          <span class="badge badge-green">{{ results().length }} items</span>
+        </div>
+        <p class="mt-1.5 max-w-xl text-[12.5px] leading-relaxed text-muted">
+          Fresh stock from verified shops in {{ location.city() }}. Add from multiple shops — checkout once, pay one delivery fee.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button type="button" class="btn btn-outline btn-sm lg:hidden" (click)="filtersOpen.set(!filtersOpen())">
+          <app-icon name="sliders" [size]="14" /> Filters
+          @if (hasFilters()) {
+            <span class="ml-0.5 h-1.5 w-1.5 rounded-full bg-brand-600"></span>
+          }
+        </button>
+        <select class="input h-9 w-44 text-[11px] font-bold" [value]="sort()" (change)="onSort($event)" aria-label="Sort products">
+          @for (option of sortOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="mt-4 flex gap-1.5 overflow-x-auto hide-scrollbar pb-1">
+      <button type="button" class="chip shrink-0" [class.chip-active]="category() === 'all'" (click)="selectCategory('all')">
+        <app-icon name="grid" [size]="12" /> All
+      </button>
+      @for (item of categories(); track item.slug) {
+        <button type="button" class="chip shrink-0" [class.chip-active]="category() === item.slug" (click)="selectCategory(item.slug)">
+          <span class="text-[12px]">{{ item.emoji }}</span> {{ item.short }}
+        </button>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section-pad pt-7">
+  <div class="container-page">
+    <div class="grid gap-6 lg:grid-cols-[15rem_1fr]">
+      <!-- sidebar -->
+      <aside class="filters-panel lg:sticky lg:top-[11.5rem] lg:h-fit" [class.open]="filtersOpen()">
+        <div class="space-y-3">
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-ink">Search</h2>
+              @if (hasFilters()) {
+                <button type="button" class="text-[9.5px] font-extrabold text-brand-700 hover:underline" (click)="clearFilters()">Clear all</button>
+              }
+            </div>
+            <form (submit)="submitSearch($event)" class="relative mt-2.5">
+              <span class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-faint"><app-icon name="search" [size]="14" /></span>
+              <input
+                type="text"
+                class="input h-9 pl-8 text-[11px]"
+                placeholder="Milk, atta, rice…"
+                [value]="search()"
+                (input)="onSearch($event)"
+                aria-label="Search products"
+              />
+            </form>
+          </div>
+
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <h2 class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-ink">Category</h2>
+            <div class="mt-2 space-y-0.5">
+              <button type="button" class="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-[11px] font-bold transition hover:bg-cream" [class.bg-brand-50]="category() === 'all'" [class.text-brand-700]="category() === 'all'" (click)="selectCategory('all')">
+                <span>All products</span>
+                <span class="text-[9px] font-extrabold text-faint">{{ catalog.products().length }}</span>
+              </button>
+              @for (item of categories(); track item.slug) {
+                <button type="button" class="flex w-full items-center justify-between gap-2 rounded-lg px-2 py-1.5 text-left text-[11px] font-semibold text-ink-soft transition hover:bg-cream" [class.bg-brand-50]="category() === item.slug" [class.text-brand-700]="category() === item.slug" (click)="selectCategory(item.slug)">
+                  <span class="flex min-w-0 items-center gap-1.5"><span class="text-[11px]">{{ item.emoji }}</span><span class="truncate">{{ item.short }}</span></span>
+                  <span class="shrink-0 text-[9px] font-extrabold text-faint">{{ item.count }}</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <h2 class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-ink">Shop</h2>
+            <select class="input mt-2.5 h-9 text-[11px]" [value]="shopFilter()" (change)="shopFilter.set($any($event.target).value)" aria-label="Filter by shop">
+              <option value="all">All nearby shops</option>
+              @for (shop of shops(); track shop.slug) {
+                <option [value]="shop.slug">{{ shop.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-ink">Max price</h2>
+              <span class="text-[11px] font-extrabold text-brand-700">₹{{ maxPrice() }}</span>
+            </div>
+            <input type="range" min="50" max="600" step="10" [value]="maxPrice()" (input)="onPrice($event)" class="mt-3 h-1.5 w-full accent-brand-700" aria-label="Maximum price" />
+            <div class="mt-1 flex justify-between text-[9px] font-semibold text-faint"><span>₹50</span><span>₹600</span></div>
+          </div>
+
+          <div class="rounded-2xl border border-line bg-white p-4">
+            <h2 class="text-[11px] font-extrabold uppercase tracking-[0.14em] text-ink">Rating</h2>
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              <button type="button" class="chip !h-7 !text-[9.5px]" [class.chip-active]="minRating() === 0" (click)="minRating.set(0)">Any</button>
+              <button type="button" class="chip !h-7 !text-[9.5px]" [class.chip-active]="minRating() === 4" (click)="minRating.set(4)">4★ &amp; up</button>
+              <button type="button" class="chip !h-7 !text-[9.5px]" [class.chip-active]="minRating() === 4.5" (click)="minRating.set(4.5)">4.5★ &amp; up</button>
+            </div>
+            <label class="mt-3 flex cursor-pointer items-center gap-2 text-[10.5px] font-semibold text-ink-soft">
+              <input type="checkbox" [checked]="inStockOnly()" (change)="inStockOnly.set($any($event.target).checked)" class="h-3.5 w-3.5 rounded border-line accent-brand-700" />
+              In stock only
+            </label>
+          </div>
+
+          <div class="rounded-2xl border border-brand-100 bg-brand-50 p-4">
+            <span class="inline-flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-[0.14em] text-brand-700"><app-icon name="truck" [size]="12" /> Free delivery</span>
+            <p class="mt-1.5 text-[11px] font-bold leading-snug text-ink">Add ₹499 worth of essentials and delivery is on us.</p>
+            <a routerLink="/offers" class="mt-2 inline-flex items-center gap-1 text-[10px] font-extrabold text-brand-700">See offers <app-icon name="arrow-right" [size]="11" /></a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- results -->
+      <div>
+        @if (hasFilters()) {
+          <div class="mb-3 flex flex-wrap items-center gap-1.5">
+            <span class="text-[9.5px] font-extrabold uppercase tracking-wider text-faint">Active</span>
+            @if (search().trim()) {
+              <button type="button" class="chip !h-7 !text-[9.5px]" (click)="search.set(''); submitSearch()">“{{ search().trim() }}” <app-icon name="close" [size]="10" /></button>
+            }
+            @if (category() !== "all") {
+              <button type="button" class="chip !h-7 !text-[9.5px]" (click)="selectCategory('all')">{{ categoryLabel() }} <app-icon name="close" [size]="10" /></button>
+            }
+            @if (shopFilter() !== "all") {
+              <button type="button" class="chip !h-7 !text-[9.5px]" (click)="shopFilter.set('all')">
+                {{ catalog.shop(shopFilter())?.name }} <app-icon name="close" [size]="10" />
+              </button>
+            }
+            @if (minRating() > 0) {
+              <button type="button" class="chip !h-7 !text-[9.5px]" (click)="minRating.set(0)">{{ minRating() }}★ &amp; up <app-icon name="close" [size]="10" /></button>
+            }
+            <button type="button" class="ml-1 text-[9.5px] font-extrabold text-rose-600 hover:underline" (click)="clearFilters()">Clear all</button>
+          </div>
+        }
+
+        <div class="mb-3 flex items-center justify-between gap-2">
+          <p class="text-[10.5px] font-bold text-muted">
+            <span class="font-extrabold text-ink">{{ results().length }}</span> products
+            <span class="mx-1 text-faint">·</span> delivered in 30–45 min
+          </p>
+          <span class="hidden items-center gap-1 text-[9.5px] font-semibold text-brand-700 sm:flex"><app-icon name="shield" [size]="11" /> Verified shops only</span>
+        </div>
+
+        @if (catalog.loading() && !results().length) {
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+            @for (row of [1, 2, 3, 4, 5, 6, 7, 8]; track row) {
+              <div class="h-64 animate-pulse rounded-2xl border border-line bg-white"></div>
+            }
+          </div>
+        } @else if (results().length) {
+          <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+            @for (product of results(); track product.id) {
+              <app-product-card [product]="product" />
+            }
+          </div>
+        } @else {
+          <div class="rounded-2xl border border-dashed border-line bg-white px-6 py-16 text-center">
+            <span class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-cream text-muted"><app-icon name="search" [size]="28" /></span>
+            <h2 class="mt-4 text-lg font-extrabold">Nothing matched those filters</h2>
+            <p class="mx-auto mt-1 max-w-sm text-[12px] leading-relaxed text-muted">Try a broader price range, a different category, or clear the filters to see everything.</p>
+            <button type="button" class="btn btn-primary btn-sm mt-4" (click)="clearFilters()">Reset filters</button>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
