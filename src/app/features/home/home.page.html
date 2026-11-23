@@ -1,96 +1,248 @@
 <!-- ============================================================ HERO -->
 <section class="bg-cream pb-5 pt-4">
-  <div class="container-page grid gap-3 lg:grid-cols-[1.85fr_1fr]">
-    <div class="relative min-h-[20.75rem] overflow-hidden rounded-[1.35rem] surface-hero px-6 py-6 sm:px-10 sm:py-8">
-      <span class="pointer-events-none absolute -right-12 -top-14 h-64 w-64 rounded-full bg-white/70 blur-2xl"></span>
-      <span class="pointer-events-none absolute bottom-[-5rem] right-[18%] h-52 w-52 rounded-full bg-brand-200/50 blur-3xl"></span>
-      <div class="relative z-10 max-w-[34rem] sm:max-w-[54%]">
-        <span class="inline-flex rounded-full bg-brand-100 px-3 py-1.5 text-[13px] font-extrabold text-brand-900">Your Local Marketplace</span>
-        <h1 class="mt-3 text-[2.3rem] font-extrabold leading-[1.03] tracking-[-0.045em] text-ink sm:text-[2.45rem]">All Your Daily Needs<br />from <span class="text-brand-700">Nearby Shops</span></h1>
-        <p class="mt-3 max-w-md text-[15px] leading-relaxed text-ink-soft">Groceries, Dairy, Fruits, Vegetables &amp; More — from trusted local stores near you.</p>
-        <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-          <span class="inline-flex items-center gap-1.5 text-[12px] font-extrabold leading-tight"><app-icon name="truck" [size]="20" class="text-brand-700" /> Fast &amp; Reliable<br />Delivery</span>
-          <span class="inline-flex items-center gap-1.5 text-[12px] font-extrabold leading-tight"><app-icon name="store" [size]="20" class="text-brand-700" /> Shop from<br />Local Stores</span>
-          <span class="inline-flex items-center gap-1.5 text-[12px] font-extrabold leading-tight"><app-icon name="shield" [size]="20" class="text-brand-700" /> Safe &amp; Secure<br />Payments</span>
+  <div class="container-page">
+    <div
+      class="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1.87fr)_minmax(0,1fr)]"
+    >
+      <!-- first banner : carousel -->
+      <div
+        class="relative aspect-[620/480] w-full overflow-hidden rounded-[1.1rem] bg-[#f7fbf7] sm:aspect-[940/366] sm:rounded-[1.4rem] lg:rounded-[1.6rem]"
+      >
+        <div class="absolute inset-0">
+          @for (slide of heroSlides; track slide.id) {
+          <div
+            class="absolute inset-0 transition-opacity duration-500"
+            [class]="activeSlide() === $index ? 'opacity-100' : 'opacity-0'"
+            [attr.aria-hidden]="activeSlide() !== $index"
+          >
+            <img
+              [src]="slide.mobile"
+              [alt]="slide.alt"
+              class="absolute inset-0 h-full w-full object-contain sm:hidden"
+            />
+            <img
+              [src]="slide.desktop"
+              [alt]="slide.alt"
+              class="absolute inset-0 hidden h-full w-full object-contain sm:block"
+            />
+          </div>
+          }
         </div>
-        <a routerLink="/shops" class="btn btn-primary mt-4">Shop Now <app-icon name="arrow-right" [size]="14" /></a>
-      </div>
-      <img src="/assets/reference/home-hero-art.jpg" alt="Fresh groceries packed for your Smart Dukaan order" class="absolute bottom-0 right-0 hidden h-full w-[49%] object-contain object-right-bottom sm:block" />
-      <div class="absolute bottom-3 left-1/2 hidden -translate-x-1/2 gap-1.5 sm:flex"><span class="h-2 w-2 rounded-full bg-brand-700"></span><span class="h-2 w-2 rounded-full bg-brand-300"></span><span class="h-2 w-2 rounded-full bg-brand-300"></span></div>
-    </div>
 
-    <div class="relative min-h-[20.75rem] overflow-hidden rounded-[1.35rem] border border-brand-100 surface-hero p-5 sm:p-6">
-      <span class="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-brand-100/70"></span>
-      <div class="relative z-10 max-w-[16rem] sm:max-w-[55%]">
-        <span class="text-[11px] font-extrabold uppercase tracking-[0.16em] text-brand-700">Shop smarter every day</span>
-        <h2 class="mt-2 text-[1.65rem] font-extrabold leading-tight tracking-tight">Get the<br /><span class="text-brand-700">Smart Dukaan App</span></h2>
-        <ul class="mt-4 space-y-2 text-[13px] font-bold text-ink-soft">
-          <li class="flex items-center gap-2"><app-icon name="check-circle" [size]="15" class="text-brand-700" /> Order from nearby shops</li>
-          <li class="flex items-center gap-2"><app-icon name="check-circle" [size]="15" class="text-brand-700" /> Real-time order tracking</li>
-          <li class="flex items-center gap-2"><app-icon name="check-circle" [size]="15" class="text-brand-700" /> Exclusive offers &amp; deals</li>
-        </ul>
-        <div class="mt-4 flex flex-wrap gap-2">
-          <button type="button" class="flex items-center gap-2 rounded-xl bg-ink px-3.5 py-2.5 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950" (click)="pwa.openDialog()">
-            <app-icon name="play" [size]="16" class="text-sun-300" />
+        <a
+          routerLink="/shops"
+          class="btn btn-primary absolute bottom-[9%] left-[3%] z-20 min-h-[30px] px-3 text-[12px] sm:bottom-[6%] sm:left-[3.8%] sm:min-h-[34px] sm:px-4 sm:text-[13px] lg:px-5 lg:text-[15px]"
+        >
+          Shop Now
+          <app-icon name="arrow-right" [size]="13" class="sm:hidden" /><app-icon
+            name="arrow-right"
+            [size]="14"
+            class="hidden sm:inline-flex"
+          />
+        </a>
+
+        <div
+          class="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1 sm:gap-1.5"
+        >
+          @for (slide of heroSlides; track slide.id) {
+          <button
+            type="button"
+            class="grid h-4 place-items-center sm:h-5"
+            [attr.aria-label]="'Show hero slide ' + ($index + 1)"
+            [attr.aria-current]="activeSlide() === $index ? 'true' : null"
+            (click)="selectHeroSlide($index)"
+          >
+            <span
+              class="rounded-full transition-all duration-300"
+              [class]="activeSlide() === $index ? 'h-1.5 w-4 bg-brand-700 sm:h-2 sm:w-6' : 'h-1.5 w-1.5 bg-brand-300 sm:h-2 sm:w-2'"
+            ></span>
+          </button>
+          }
+        </div>
+      </div>
+
+      <!-- second banner : static -->
+      <div
+        class="relative aspect-[620/520] w-full overflow-hidden rounded-[1.1rem] bg-[#f7fbf7] sm:aspect-[680/495] sm:rounded-[1.4rem] lg:rounded-[1.6rem]"
+      >
+        <img
+          [src]="appCard.mobile"
+          [alt]="appCard.alt"
+          class="absolute inset-0 h-full w-full object-contain sm:hidden"
+        />
+        <img
+          [src]="appCard.desktop"
+          [alt]="appCard.alt"
+          class="absolute inset-0 hidden h-full w-full object-contain sm:block"
+        />
+
+        <div class="absolute inset-0 z-20">
+          <button
+            type="button"
+            aria-label="Get Smart Dukaan on Google Play"
+            class="absolute bottom-[20%] left-[5%] flex h-[36px] w-[52%] items-center justify-center gap-1.5 rounded-lg bg-ink px-2 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950 sm:bottom-[28.7%] sm:left-[6.3%] sm:h-[10.9%] sm:w-[21.5%] sm:gap-1 sm:px-2"
+            (click)="pwa.openDialog()"
+          >
+            <app-icon
+              name="play"
+              [size]="12"
+              class="text-sun-300 sm:hidden"
+            /><app-icon
+              name="play"
+              [size]="14"
+              class="hidden text-sun-300 sm:block"
+            />
             <span class="leading-tight text-left">
-              <span class="block text-[7.5px] font-bold uppercase tracking-wider text-white/60">Get it on</span>
-              <span class="block text-[11px] font-extrabold">Google Play</span>
+              <span
+                class="block text-[9px] font-bold uppercase tracking-wider text-white/60 sm:text-[6px] lg:text-[7px]"
+                >Get it on</span
+              >
+              <span
+                class="block text-[13px] font-extrabold sm:text-[9px] lg:text-[11px]"
+                >Google Play</span
+              >
             </span>
           </button>
-          <button type="button" class="flex items-center gap-2 rounded-xl bg-ink px-3.5 py-2.5 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950" (click)="pwa.openDialog()">
-            <app-icon name="apple" [size]="16" />
+          <button
+            type="button"
+            aria-label="Get Smart Dukaan on the App Store"
+            class="absolute bottom-[3.5%] left-[5%] flex h-[36px] w-[56%] items-center justify-center gap-1.5 rounded-lg bg-ink px-2 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950 sm:bottom-[15.8%] sm:left-[6.3%] sm:h-[10.9%] sm:w-[24.4%] sm:gap-1 sm:px-2"
+            (click)="pwa.openDialog()"
+          >
+            <app-icon name="apple" [size]="12" class="sm:hidden" /><app-icon
+              name="apple"
+              [size]="14"
+              class="hidden sm:block"
+            />
             <span class="leading-tight text-left">
-              <span class="block text-[7.5px] font-bold uppercase tracking-wider text-white/60">Download on the</span>
-              <span class="block text-[11px] font-extrabold">App Store</span>
+              <span
+                class="block text-[9px] font-bold uppercase tracking-wider text-white/60 sm:text-[6px] lg:text-[7px]"
+                >Download on the</span
+              >
+              <span
+                class="block text-[13px] font-extrabold sm:text-[9px] lg:text-[11px]"
+                >App Store</span
+              >
             </span>
           </button>
         </div>
       </div>
-      <img src="/assets/reference/home-app-phone.jpg" alt="Smart Dukaan shopping app showing nearby shops" class="absolute bottom-0 right-3 hidden h-[19.5rem] w-[9.5rem] object-contain object-bottom sm:block" />
     </div>
   </div>
 </section>
 
 <!-- ============================================================ CATEGORIES -->
-<section class="bg-white pb-5">
-  <div class="container-page flex gap-3 overflow-x-auto hide-scrollbar">
+<section class="bg-white py-8 lg:py-10">
+  <div class="container-page mb-3">
+    <p class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-700">Shop by category</p>
+    <h2 class="mt-1 text-2xl font-extrabold tracking-tight text-ink sm:text-[28px]">Everything you need, nearby</h2>
+  </div>
+  <div class="container-page flex gap-3 overflow-x-auto hide-scrollbar pb-2">
     @for (category of homeCategories(); track category.slug) {
-      <a [routerLink]="['/shop']" [queryParams]="{ category: category.slug }" class="group flex w-[92px] shrink-0 flex-col items-center gap-1.5 text-center">
-        <span class="grid h-[4.5rem] w-[5rem] place-items-center overflow-hidden rounded-2xl bg-cream transition group-hover:-translate-y-1 group-hover:shadow-soft"><img [src]="categoryArtwork[category.slug]" [alt]="category.short" class="h-full w-full object-cover" /></span>
-        <span class="text-[13px] font-extrabold leading-tight text-ink">{{ category.short }}</span>
-      </a>
+    <a
+      [routerLink]="['/shop']"
+      [queryParams]="{ category: category.slug }"
+      class="group flex w-[132px] shrink-0 flex-col items-center gap-2 rounded-2xl border border-line bg-white p-3.5 text-center shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft sm:w-[150px]"
+    >
+      <span
+        class="grid h-20 w-20 place-items-center overflow-hidden rounded-xl bg-cream"
+        ><img
+          [src]="categoryArtwork[category.slug]"
+          [alt]="category.short"
+          class="h-full w-full object-cover"
+      /></span>
+      <span
+        class="flex min-h-[2.5rem] items-center justify-center text-[13px] font-extrabold leading-tight text-ink sm:text-[15px]"
+        >{{ category.short }}</span
+      >
+    </a>
     }
-    <a routerLink="/shop" class="group flex w-[92px] shrink-0 flex-col items-center gap-1.5 text-center"><span class="grid h-[4.5rem] w-[5rem] place-items-center rounded-2xl bg-brand-50 text-brand-700"><app-icon name="grid" [size]="25" /></span><span class="text-[10px] font-extrabold">More Categories</span></a>
+    <a
+      routerLink="/shop"
+      class="group flex w-[132px] shrink-0 flex-col items-center gap-2 rounded-2xl border border-line bg-white p-3.5 text-center shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft sm:w-[150px]"
+    >
+      <span
+        class="grid h-20 w-20 place-items-center rounded-xl bg-brand-50 text-brand-700"
+        ><app-icon name="grid" [size]="26"
+      /></span>
+      <span
+        class="flex min-h-[2.5rem] items-center justify-center text-[13px] font-extrabold leading-tight text-ink sm:text-[15px]"
+        >More Categories</span
+      >
+    </a>
   </div>
 </section>
 
 <!-- ============================================================ NEARBY SHOPS -->
-<section class="bg-cream py-6">
+<section class="bg-cream py-8 lg:py-10">
   <div class="container-page">
-    <div class="mb-4 flex items-end justify-between gap-3"><div><h2 class="text-2xl font-extrabold tracking-tight text-ink">Nearby Shops in {{ location.city() }}</h2><p class="mt-1 text-[13px] text-muted">Local stores, ready for your everyday list.</p></div><a routerLink="/shops" class="link-arrow shrink-0">View All Shops <app-icon name="arrow-right" [size]="13" /></a></div>
-    <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">@for (shop of featuredShops().slice(0, 4); track shop.slug) {<app-store-card [shop]="shop" [count]="shop.count" [compact]="true" />}</div>
+    <div class="mb-4 flex items-end justify-between gap-3">
+      <div>
+        <h2 class="text-3xl font-extrabold tracking-tight text-ink">
+          Nearby Shops in {{ location.city() }}
+        </h2>
+        <p class="mt-1 text-[16px] text-muted">
+          Local stores, ready for your everyday list.
+        </p>
+      </div>
+      <a routerLink="/shops" class="link-arrow shrink-0"
+        >View All Shops <app-icon name="arrow-right" [size]="15"
+      /></a>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      @for (shop of featuredShops().slice(0, 4); track shop.slug)
+      {<app-store-card [shop]="shop" [count]="shop.count" [compact]="true" />}
+    </div>
   </div>
 </section>
 
 <!-- ============================================================ PROMOS -->
-<section class="bg-white pb-6">
+<section class="bg-white py-8 lg:py-10">
   <div class="container-page grid gap-3 md:grid-cols-3">
     @for (promo of promoCards(); track promo.title) {
-      <a [routerLink]="['/shop']" [queryParams]="{ category: promo.slug }" class="group relative min-h-32 overflow-hidden rounded-2xl border border-line bg-gradient-to-r p-4 transition hover:-translate-y-0.5 hover:shadow-soft" [class]="promo.tint">
-        <div class="relative z-10 max-w-[65%]"><span class="text-[10px] font-extrabold uppercase tracking-widest text-brand-700">{{ promo.badge }}</span><h3 class="mt-1 text-[18px] font-extrabold leading-tight">{{ promo.title }}</h3><p class="mt-1 text-[11px] font-semibold text-muted">{{ promo.copy }}</p><span class="mt-2 inline-flex items-center gap-1 text-[11px] font-extrabold text-brand-700">Shop Now <app-icon name="arrow-right" [size]="11" /></span></div>
-        <img [src]="promoArtwork[promo.slug] ?? promo.image" [alt]="promo.title" class="absolute bottom-0 right-0 h-full w-[42%] object-contain transition group-hover:scale-105" loading="lazy" />
-      </a>
+    <a
+      [routerLink]="['/shop']"
+      [queryParams]="{ category: promo.slug }"
+      class="group relative aspect-[700/300] overflow-hidden rounded-2xl border border-line bg-cream transition hover:-translate-y-0.5 hover:shadow-soft sm:aspect-[760/300]"
+    >
+      <img
+        [src]="promoArtwork[promo.slug]?.mobile ?? promo.image"
+        [alt]="promo.title"
+        class="absolute inset-0 h-full w-full object-contain transition group-hover:scale-[1.02] sm:hidden"
+      />
+      <img
+        [src]="promoArtwork[promo.slug]?.desktop ?? promo.image"
+        [alt]="promo.title"
+        class="absolute inset-0 hidden h-full w-full object-contain transition group-hover:scale-[1.02] sm:block"
+      />
+      <span
+        class="absolute bottom-[8%] left-[4%] z-10 inline-flex items-center gap-1 rounded-lg bg-brand-700 px-3 py-1.5 text-[12px] font-extrabold text-white shadow-md"
+      >
+        Shop Now <app-icon name="arrow-right" [size]="13" />
+      </span>
+    </a>
     }
   </div>
 </section>
 
 <!-- ============================================================ TRUST STRIP -->
-<section class="bg-cream pb-8">
-  <div class="container-page grid gap-2 rounded-2xl border border-line bg-white p-3 sm:grid-cols-2 lg:grid-cols-4">
-    @for (point of trustPoints; track point.title) {<div class="flex items-center gap-3 px-2 py-2"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"><app-icon [name]="point.icon" [size]="19" /></span><span><span class="block text-[14px] font-extrabold text-ink">{{ point.title }}</span><span class="block text-[12px] font-semibold text-muted">{{ point.copy }}</span></span></div>}
+<section class="bg-cream pb-8 lg:pb-10">
+  <div
+    class="container-page grid gap-2 rounded-2xl border border-line bg-white p-3 sm:grid-cols-2 lg:grid-cols-4"
+  >
+    @for (point of trustPoints; track point.title) {
+    <div class="flex items-center gap-3 px-2 py-2">
+      <span
+        class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"
+        ><app-icon [name]="point.icon" [size]="21" /></span
+      ><span
+        ><span class="block text-[17px] font-extrabold text-ink"
+          >{{ point.title }}</span
+        ><span class="block text-[15px] font-semibold text-muted"
+          >{{ point.copy }}</span
+        ></span
+      >
+    </div>
+    }
   </div>
-</section>
-
-<section id="how-it-works" class="bg-white py-9">
-  <div class="container-page flex flex-wrap items-center justify-between gap-4"><div><span class="section-eyebrow">Simple local shopping</span><h2 class="section-title mt-1">From your neighbour's shop to your doorstep.</h2></div><a routerLink="/how-it-works" class="btn btn-primary btn-sm">See how it works <app-icon name="arrow-right" [size]="13" /></a></div>
 </section>

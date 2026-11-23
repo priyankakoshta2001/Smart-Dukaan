@@ -9,10 +9,10 @@
     }
   </div>
   @if (link()) {
-    <a [routerLink]="link()" class="group inline-flex items-center gap-1.5 text-[11.5px] font-extrabold text-brand-700 transition hover:text-brand-800">
+    <a [routerLink]="link()" class="group inline-flex items-center gap-1.5 text-[14px] font-extrabold text-brand-700 transition hover:text-brand-800">
       {{ linkLabel() }}
       <span class="grid h-7 w-7 place-items-center rounded-full border border-brand-200 bg-brand-50 transition group-hover:bg-brand-700 group-hover:text-white">
-        <app-icon name="arrow-right" [size]="13" />
+        <app-icon name="arrow-right" [size]="15" />
       </span>
     </a>
   }

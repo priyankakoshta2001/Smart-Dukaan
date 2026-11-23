@@ -1,24 +1,24 @@
-<div class="page-enter container-page pt-4">
+<div class="page-enter container-page pt-6">
   <!-- header -->
   <div class="relative overflow-hidden rounded-[1.5rem] border border-line surface-hero px-5 py-6 sm:px-7">
     <div class="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-brand-100/70 blur-3xl"></div>
     <div class="relative flex flex-wrap items-center justify-between gap-4">
       <div class="flex items-center gap-3.5">
-        <span class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-950 text-xl font-extrabold text-white shadow-[0_16px_30px_-16px_rgba(10,112,68,0.9)]">{{ auth.isLoggedIn() ? userInitial() : "G" }}</span>
+        <span class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-950 text-2xl font-extrabold text-white shadow-[0_16px_30px_-16px_rgba(10,112,68,0.9)]">{{ auth.isLoggedIn() ? userInitial() : "G" }}</span>
         <div>
           <span class="eyebrow">{{ auth.isLoggedIn() ? "Member since 2024" : "Guest mode" }}</span>
-          <h1 class="mt-0.5 text-[1.5rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[1.85rem]">
-            Hey {{ auth.isLoggedIn() ? auth.firstName() : "there" }}, <span class="font-display font-normal italic text-brand-700">welcome back.</span>
+          <h1 class="mt-0.5 text-[1.65rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2rem]">
+            Hey {{ auth.isLoggedIn() ? auth.firstName() : "there" }}, <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">welcome back.</span>
           </h1>
-          <p class="mt-0.5 text-[10.5px] font-semibold text-muted">{{ auth.user()?.email ?? "Your orders and addresses are saved on this device." }}</p>
+          <p class="mt-0.5 text-[13px] font-semibold text-muted">{{ auth.user()?.email ?? "Your orders and addresses are saved on this device." }}</p>
         </div>
       </div>
       <div class="flex gap-2">
-        <a routerLink="/shop" class="btn btn-primary btn-sm"><app-icon name="bag" [size]="14" /> Shop again</a>
+        <a routerLink="/shop" class="btn btn-primary btn-sm"><app-icon name="bag" [size]="16" /> Shop again</a>
         @if (auth.isLoggedIn()) {
-          <button type="button" class="btn btn-outline btn-sm" (click)="logout()"><app-icon name="logout" [size]="14" /> Sign out</button>
+          <button type="button" class="btn btn-outline btn-sm" (click)="logout()"><app-icon name="logout" [size]="16" /> Sign out</button>
         } @else {
-          <a routerLink="/login" class="btn btn-outline btn-sm"><app-icon name="user" [size]="14" /> Sign in</a>
+          <a routerLink="/login" class="btn btn-outline btn-sm"><app-icon name="user" [size]="16" /> Sign in</a>
         }
       </div>
     </div>
@@ -26,9 +26,9 @@
 
   @if (!auth.isLoggedIn()) {
     <div class="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-brand-200 bg-brand-50/60 px-4 py-3">
-      <span class="grid h-8 w-8 place-items-center rounded-lg bg-white text-brand-700 shadow-sm"><app-icon name="sparkles" [size]="15" /></span>
-      <p class="flex-1 text-[10.5px] font-semibold text-brand-900/80">You're browsing as a guest. Sign in to sync your basket across devices and unlock member-only prices.</p>
-      <a routerLink="/login" class="text-[10px] font-extrabold text-brand-700 underline-offset-2 hover:underline">Sign in now →</a>
+      <span class="grid h-8 w-8 place-items-center rounded-lg bg-white text-brand-700 shadow-sm"><app-icon name="sparkles" [size]="17" /></span>
+      <p class="flex-1 text-[13px] font-semibold text-brand-900/80">You're browsing as a guest. Sign in to sync your basket across devices and unlock member-only prices.</p>
+      <a routerLink="/login" class="text-[13px] font-extrabold text-brand-700 underline-offset-2 hover:underline">Sign in now →</a>
     </div>
   }
 
@@ -37,33 +37,33 @@
     <aside class="hidden lg:block lg:sticky lg:top-20">
       <div class="rounded-2xl border border-line bg-white p-2">
         @for (item of tabs; track item.key) {
-          <button type="button" class="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[11.5px] font-bold transition" [class.bg-brand-50]="tab() === item.key" [class.text-brand-800]="tab() === item.key" [class.text-ink-soft]="tab() !== item.key" [class.hover:bg-cream]="tab() !== item.key" (click)="setTab(item.key)">
-            <app-icon [name]="item.icon" [size]="16" [class.text-brand-700]="tab() === item.key" [class.text-muted]="tab() !== item.key" />
+          <button type="button" class="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-[14px] font-bold transition" [class.bg-brand-50]="tab() === item.key" [class.text-brand-800]="tab() === item.key" [class.text-ink-soft]="tab() !== item.key" [class.hover:bg-cream]="tab() !== item.key" (click)="setTab(item.key)">
+            <app-icon [name]="item.icon" [size]="18" [class.text-brand-700]="tab() === item.key" [class.text-muted]="tab() !== item.key" />
             {{ item.label }}
-            @if (item.key === "orders") { <span class="ml-auto rounded-full bg-cream px-1.5 py-0.5 text-[9px] font-extrabold text-muted">{{ orders.orders().length }}</span> }
+            @if (item.key === "orders") { <span class="ml-auto rounded-full bg-cream px-1.5 py-0.5 text-[12px] font-extrabold text-muted">{{ orders.orders().length }}</span> }
           </button>
         }
       </div>
 
       <div class="mt-3 rounded-2xl border border-line bg-white p-4">
-        <span class="grid h-9 w-9 place-items-center rounded-xl bg-sun-50 text-sun-700"><app-icon name="gift" [size]="17" /></span>
-        <p class="mt-2.5 text-[11px] font-extrabold">Smart Points</p>
-        <p class="mt-1 text-[10px] font-medium leading-relaxed text-muted">24 / 500 points. 476 more for ₹100 off.</p>
+        <span class="grid h-9 w-9 place-items-center rounded-xl bg-sun-50 text-sun-700"><app-icon name="gift" [size]="19" /></span>
+        <p class="mt-2.5 text-[14px] font-extrabold">Smart Points</p>
+        <p class="mt-1 text-[13px] font-medium leading-relaxed text-muted">24 / 500 points. 476 more for ₹100 off.</p>
         <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-cream"><div class="h-full w-[5%] rounded-full bg-sun-400"></div></div>
       </div>
 
       <a routerLink="/help" class="mt-3 flex items-center gap-2.5 rounded-2xl border border-line bg-white p-3 transition hover:border-brand-200">
-        <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="chat" [size]="15" /></span>
-        <span class="leading-tight"><span class="block text-[10.5px] font-extrabold">Need help?</span><span class="block text-[9px] font-semibold text-muted">7 AM – 11 PM, daily</span></span>
+        <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="chat" [size]="17" /></span>
+        <span class="leading-tight"><span class="block text-[13px] font-extrabold">Need help?</span><span class="block text-[12px] font-semibold text-muted">7 AM – 11 PM, daily</span></span>
       </a>
     </aside>
 
     <!-- content -->
     <div class="min-w-0">
-      <div class="mb-3 flex gap-1.5 overflow-x-auto pb-1 hide-scrollbar lg:hidden">
+      <div class="mb-3 flex flex-wrap gap-1.5 pb-1 hide-scrollbar lg:hidden">
         @for (item of tabs; track item.key) {
           <button type="button" class="chip shrink-0" [class.chip-active]="tab() === item.key" (click)="setTab(item.key)">
-            <app-icon [name]="item.icon" [size]="13" /> {{ item.label }}
+            <app-icon [name]="item.icon" [size]="15" /> {{ item.label }}
           </button>
         }
       </div>
@@ -74,10 +74,10 @@
           <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
             @for (stat of stats(); track stat.label) {
               <div class="rounded-2xl border border-line bg-white p-3.5">
-                <span class="grid h-8 w-8 place-items-center rounded-lg {{ stat.tint }}"><app-icon [name]="stat.icon" [size]="15" /></span>
-                <p class="mt-2.5 text-[1.35rem] font-extrabold leading-none tracking-tight">{{ stat.value }}</p>
-                <p class="mt-1 text-[9.5px] font-extrabold uppercase tracking-wider text-muted">{{ stat.label }}</p>
-                <p class="text-[8.5px] font-semibold text-faint">{{ stat.detail }}</p>
+                <span class="grid h-8 w-8 place-items-center rounded-lg {{ stat.tint }}"><app-icon [name]="stat.icon" [size]="17" /></span>
+                <p class="mt-2.5 text-[1.5rem] font-extrabold leading-none tracking-tight">{{ stat.value }}</p>
+                <p class="mt-1 text-[12px] font-extrabold uppercase tracking-wider text-muted">{{ stat.label }}</p>
+                <p class="text-[11px] font-semibold text-faint">{{ stat.detail }}</p>
               </div>
             }
           </div>
@@ -86,65 +86,65 @@
             <section class="overflow-hidden rounded-2xl border border-line bg-white">
               <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
                 <div class="flex items-center gap-2">
-                  <h2 class="text-[12.5px] font-extrabold">Latest order</h2>
+                  <h2 class="text-[15px] font-extrabold">Latest order</h2>
                   <span class="badge" [class]="'badge ' + statusTone(latest.status)">{{ latest.status }}</span>
                 </div>
-                <span class="text-[9.5px] font-semibold text-muted">#{{ latest.id }} · {{ formatDate(latest.createdAt) }}</span>
+                <span class="text-[12px] font-semibold text-muted">#{{ latest.id }} · {{ formatDate(latest.createdAt) }}</span>
               </div>
 
               <div class="flex flex-wrap items-center gap-3 px-4 py-3.5">
-                <div class="flex -space-x-2">
+                <div class="order-1 flex -space-x-2">
                   @for (item of latest.items.slice(0, 4); track item.id) {
                     <span class="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-cream p-1"><img [src]="item.image" [alt]="item.title" class="h-full w-full object-contain" /></span>
                   }
                   @if (latest.items.length > 4) {
-                    <span class="grid h-11 w-11 place-items-center rounded-full border-2 border-white bg-ink text-[9px] font-extrabold text-white">+{{ latest.items.length - 4 }}</span>
+                    <span class="grid h-11 w-11 place-items-center rounded-full border-2 border-white bg-ink text-[12px] font-extrabold text-white">+{{ latest.items.length - 4 }}</span>
                   }
                 </div>
-                <div class="min-w-0 flex-1">
-                  <p class="text-[11px] font-extrabold text-ink">{{ latest.items[0].title }}{{ latest.items.length > 1 ? " +" + (latest.items.length - 1) + " more" : "" }}</p>
-                  <p class="mt-0.5 flex items-center gap-1 text-[9.5px] font-semibold text-brand-700"><app-icon name="zap" [size]="11" /> {{ latest.eta }}</p>
+                <div class="order-3 min-w-0 basis-full sm:order-none sm:basis-auto sm:flex-1">
+                  <p class="text-[14px] font-extrabold text-ink">{{ latest.items[0].title }}{{ latest.items.length > 1 ? " +" + (latest.items.length - 1) + " more" : "" }}</p>
+                  <p class="mt-0.5 flex items-center gap-1 text-[12px] font-semibold text-brand-700"><app-icon name="zap" [size]="13" /> {{ latest.eta }}</p>
                 </div>
-                <div class="text-right">
-                  <p class="text-[13px] font-extrabold">₹{{ latest.total }}</p>
-                  <p class="text-[8.5px] font-semibold text-muted">{{ latest.payment }}</p>
+                <div class="order-2 text-right sm:order-none">
+                  <p class="text-[16px] font-extrabold">₹{{ latest.total }}</p>
+                  <p class="text-[11px] font-semibold text-muted">{{ latest.payment }}</p>
                 </div>
               </div>
 
               <div class="flex flex-wrap gap-2 border-t border-line bg-cream/40 px-4 py-2.5">
-                <a [routerLink]="['/order-success', latest.id]" class="btn btn-dark btn-sm h-8 px-3 text-[10px]"><app-icon name="truck" [size]="12" /> Track order</a>
-                <button type="button" class="btn btn-outline btn-sm h-8 px-3 text-[10px]" (click)="reorder(latest)"><app-icon name="refresh" [size]="12" /> Reorder</button>
-                <button type="button" class="btn btn-ghost btn-sm h-8 px-3 text-[10px]" (click)="setTab('orders')">Order details</button>
+                <a [routerLink]="['/order-success', latest.id]" class="btn btn-dark btn-sm h-8 px-3 text-[13px]"><app-icon name="truck" [size]="14" /> Track order</a>
+                <button type="button" class="btn btn-outline btn-sm h-8 px-3 text-[13px]" (click)="reorder(latest)"><app-icon name="refresh" [size]="14" /> Reorder</button>
+                <button type="button" class="btn btn-ghost btn-sm h-8 px-3 text-[13px]" (click)="setTab('orders')">Order details</button>
               </div>
             </section>
           }
 
-          <div class="grid gap-3 sm:grid-cols-2">
-            <section class="rounded-2xl border border-line bg-white p-4">
+          <div class="grid grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2">
+            <section class="min-w-0 rounded-2xl border border-line bg-white p-4">
               <div class="flex items-center justify-between">
-                <h2 class="text-[12px] font-extrabold">Saved addresses</h2>
-                <button type="button" class="text-[9.5px] font-extrabold text-brand-700 hover:underline" (click)="setTab('addresses')">Manage</button>
+                <h2 class="text-[15px] font-extrabold">Saved addresses</h2>
+                <button type="button" class="text-[12px] font-extrabold text-brand-700 hover:underline" (click)="setTab('addresses')">Manage</button>
               </div>
               <div class="mt-2.5 space-y-2">
                 @for (address of orders.addresses().slice(0, 2); track address.id) {
                   <div class="flex items-start gap-2 rounded-xl bg-cream/60 p-2.5">
-                    <app-icon name="pin" [size]="13" class="mt-0.5 shrink-0 text-brand-700" />
+                    <app-icon name="pin" [size]="15" class="mt-0.5 shrink-0 text-brand-700" />
                     <div class="min-w-0 leading-tight">
-                      <p class="text-[10px] font-extrabold text-ink">{{ address.label }} · {{ address.name }}</p>
-                      <p class="mt-0.5 truncate text-[9px] font-semibold text-muted">{{ address.line1 }}, {{ address.city }} — {{ address.pin }}</p>
+                      <p class="text-[13px] font-extrabold text-ink">{{ address.label }} · {{ address.name }}</p>
+                      <p class="mt-0.5 truncate text-[12px] font-semibold text-muted">{{ address.line1 }}, {{ address.city }} — {{ address.pin }}</p>
                     </div>
                   </div>
                 }
               </div>
             </section>
 
-            <section class="rounded-2xl border border-line bg-white p-4">
-              <h2 class="text-[12px] font-extrabold">Quick actions</h2>
+            <section class="min-w-0 rounded-2xl border border-line bg-white p-4">
+              <h2 class="text-[15px] font-extrabold">Quick actions</h2>
               <div class="mt-2.5 grid grid-cols-2 gap-2">
                 @for (item of quickActions; track item.label) {
                   <a [routerLink]="item.link" [queryParams]="item.tab ? { tab: item.tab } : {}" class="flex items-center gap-2 rounded-xl border border-line px-2.5 py-2 transition hover:border-brand-200 hover:bg-brand-50/40">
-                    <app-icon [name]="item.icon" [size]="14" class="text-brand-700" />
-                    <span class="text-[9.5px] font-extrabold text-ink-soft">{{ item.label }}</span>
+                    <app-icon [name]="item.icon" [size]="16" class="text-brand-700" />
+                    <span class="text-[12px] font-extrabold text-ink-soft">{{ item.label }}</span>
                   </a>
                 }
               </div>
@@ -157,10 +157,10 @@
       @if (tab() === "orders") {
         <div class="animate-pop space-y-3">
           @if (orders.orders().length === 0) {
-            <div class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-white px-6 py-16 text-center">
+            <div class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-white px-6 py-10 text-center">
               <span class="grid h-14 w-14 place-items-center rounded-full bg-cream text-muted"><app-icon name="package" [size]="26" /></span>
-              <h2 class="mt-3 text-base font-extrabold">No orders yet</h2>
-              <p class="mt-1 max-w-xs text-[11px] font-medium text-muted">Your first basket is one tap away. Fresh picks are waiting.</p>
+              <h2 class="mt-3 text-lg font-extrabold">No orders yet</h2>
+              <p class="mt-1 max-w-xs text-[14px] font-medium text-muted">Your first basket is one tap away. Fresh picks are waiting.</p>
               <a routerLink="/shop" class="btn btn-primary btn-sm mt-3">Start shopping</a>
             </div>
           }
@@ -169,8 +169,8 @@
             <section class="overflow-hidden rounded-2xl border border-line bg-white">
               <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-cream/40 px-4 py-2.5">
                 <div class="flex items-center gap-2">
-                  <span class="text-[10px] font-extrabold text-ink">#{{ order.id }}</span>
-                  <span class="text-[9px] font-semibold text-muted">Placed {{ formatDate(order.createdAt) }}</span>
+                  <span class="text-[13px] font-extrabold text-ink">#{{ order.id }}</span>
+                  <span class="text-[12px] font-semibold text-muted">Placed {{ formatDate(order.createdAt) }}</span>
                 </div>
                 <span class="badge" [class]="'badge ' + statusTone(order.status)">{{ order.status }}</span>
               </div>
@@ -181,20 +181,20 @@
                     <span class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-white bg-cream p-1"><img [src]="item.image" [alt]="item.title" class="h-full w-full object-contain" /></span>
                   }
                   @if (order.items.length > 3) {
-                    <span class="grid h-10 w-10 place-items-center rounded-full border-2 border-white bg-ink text-[8px] font-extrabold text-white">+{{ order.items.length - 3 }}</span>
+                    <span class="grid h-10 w-10 place-items-center rounded-full border-2 border-white bg-ink text-[11px] font-extrabold text-white">+{{ order.items.length - 3 }}</span>
                   }
                 </div>
                 <div class="min-w-0 flex-1">
-                  <p class="truncate text-[11px] font-extrabold text-ink">{{ order.items[0].title }}{{ order.items.length > 1 ? " and " + (order.items.length - 1) + " more" : "" }}</p>
-                  <p class="mt-0.5 text-[9px] font-semibold text-muted">{{ order.slot === "instant" ? "Instant delivery" : order.slot === "one-hour" ? "Within 1 hour" : "Evening slot" }} · {{ order.address.city }}</p>
+                  <p class="truncate text-[14px] font-extrabold text-ink">{{ order.items[0].title }}{{ order.items.length > 1 ? " and " + (order.items.length - 1) + " more" : "" }}</p>
+                  <p class="mt-0.5 text-[12px] font-semibold text-muted">{{ order.slot === "instant" ? "Instant delivery" : order.slot === "one-hour" ? "Within 1 hour" : "Evening slot" }} · {{ order.address.city }}</p>
                 </div>
-                <p class="text-[12.5px] font-extrabold">₹{{ order.total }}</p>
+                <p class="text-[15px] font-extrabold">₹{{ order.total }}</p>
               </div>
 
               <div class="flex flex-wrap gap-2 border-t border-line px-4 py-2.5">
-                <a [routerLink]="['/order-success', order.id]" class="btn btn-outline btn-sm h-8 px-3 text-[10px]"><app-icon name="truck" [size]="12" /> Track</a>
-                <button type="button" class="btn btn-primary btn-sm h-8 px-3 text-[10px]" (click)="reorder(order)"><app-icon name="refresh" [size]="12" /> Reorder</button>
-                <button type="button" class="btn btn-ghost btn-sm h-8 px-3 text-[10px]" (click)="toggleOrder(order.id)">{{ expandedOrder() === order.id ? "Hide details" : "View details" }} <app-icon [name]="expandedOrder() === order.id ? 'chevron-up' : 'chevron-down'" [size]="12" /></button>
+                <a [routerLink]="['/order-success', order.id]" class="btn btn-outline btn-sm h-8 px-3 text-[13px]"><app-icon name="truck" [size]="14" /> Track</a>
+                <button type="button" class="btn btn-primary btn-sm h-8 px-3 text-[13px]" (click)="reorder(order)"><app-icon name="refresh" [size]="14" /> Reorder</button>
+                <button type="button" class="btn btn-ghost btn-sm h-8 px-3 text-[13px]" (click)="toggleOrder(order.id)">{{ expandedOrder() === order.id ? "Hide details" : "View details" }} <app-icon [name]="expandedOrder() === order.id ? 'chevron-up' : 'chevron-down'" [size]="14" /></button>
               </div>
 
               @if (expandedOrder() === order.id) {
@@ -204,23 +204,23 @@
                       <div class="flex items-center gap-2.5 py-2">
                         <span class="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-cream p-0.5"><img [src]="item.image" [alt]="item.title" class="h-full w-full object-contain" /></span>
                         <div class="min-w-0 flex-1 leading-tight">
-                          <p class="truncate text-[10px] font-bold text-ink">{{ item.title }}</p>
-                          <p class="text-[8.5px] font-semibold text-muted">{{ item.unit }} · Qty {{ item.qty }}</p>
+                          <p class="truncate text-[13px] font-bold text-ink">{{ item.title }}</p>
+                          <p class="text-[11px] font-semibold text-muted">{{ item.unit }} · Qty {{ item.qty }}</p>
                         </div>
-                        <p class="text-[10px] font-extrabold">₹{{ item.price * item.qty }}</p>
+                        <p class="text-[13px] font-extrabold">₹{{ item.price * item.qty }}</p>
                       </div>
                     }
                   </div>
                   <div class="mt-2 grid gap-2 sm:grid-cols-2">
                     <div class="rounded-lg bg-cream/70 p-2.5">
-                      <p class="text-[8.5px] font-extrabold uppercase tracking-wider text-faint">Delivered to</p>
-                      <p class="mt-1 text-[9.5px] font-bold text-ink">{{ order.address.name }}, {{ order.address.line1 }}</p>
-                      <p class="text-[9px] font-semibold text-muted">{{ order.address.city }} — {{ order.address.pin }}</p>
+                      <p class="text-[11px] font-extrabold uppercase tracking-wider text-faint">Delivered to</p>
+                      <p class="mt-1 text-[12px] font-bold text-ink">{{ order.address.name }}, {{ order.address.line1 }}</p>
+                      <p class="text-[12px] font-semibold text-muted">{{ order.address.city }} — {{ order.address.pin }}</p>
                     </div>
                     <div class="rounded-lg bg-cream/70 p-2.5">
-                      <p class="text-[8.5px] font-extrabold uppercase tracking-wider text-faint">Payment</p>
-                      <p class="mt-1 text-[9.5px] font-bold text-ink">{{ order.payment }}</p>
-                      <p class="text-[9px] font-semibold text-muted">Subtotal ₹{{ order.subtotal }} · Delivery {{ order.delivery === 0 ? "free" : "₹" + order.delivery }}</p>
+                      <p class="text-[11px] font-extrabold uppercase tracking-wider text-faint">Payment</p>
+                      <p class="mt-1 text-[12px] font-bold text-ink">{{ order.payment }}</p>
+                      <p class="text-[12px] font-semibold text-muted">Subtotal ₹{{ order.subtotal }} · Delivery {{ order.delivery === 0 ? "free" : "₹" + order.delivery }}</p>
                     </div>
                   </div>
                 </div>
@@ -238,60 +238,60 @@
               <section class="rounded-2xl border bg-white p-4" [class.border-brand-300]="address.isDefault" [class.border-line]="!address.isDefault">
                 <div class="flex items-center justify-between">
                   <span class="badge badge-green">{{ address.label }}</span>
-                  @if (address.isDefault) { <span class="text-[8.5px] font-extrabold uppercase tracking-wider text-brand-700">Default</span> }
+                  @if (address.isDefault) { <span class="text-[11px] font-extrabold uppercase tracking-wider text-brand-700">Default</span> }
                 </div>
-                <p class="mt-2.5 text-[11.5px] font-extrabold text-ink">{{ address.name }}</p>
-                <p class="mt-0.5 text-[10px] font-medium leading-relaxed text-muted">{{ address.line1 }}, {{ address.line2 }}<br />{{ address.city }}, {{ address.state }} — {{ address.pin }}</p>
-                <p class="mt-1 text-[9.5px] font-semibold text-muted">{{ address.phone }}</p>
+                <p class="mt-2.5 text-[14px] font-extrabold text-ink">{{ address.name }}</p>
+                <p class="mt-0.5 text-[13px] font-medium leading-relaxed text-muted">{{ address.line1 }}, {{ address.line2 }}<br />{{ address.city }}, {{ address.state }} — {{ address.pin }}</p>
+                <p class="mt-1 text-[12px] font-semibold text-muted">{{ address.phone }}</p>
                 <div class="mt-2.5 flex flex-wrap gap-1.5 border-t border-line pt-2.5">
                   @if (!address.isDefault) {
-                    <button type="button" class="btn btn-outline btn-sm h-7 px-2.5 text-[9px]" (click)="setDefault(address.id)">Set default</button>
+                    <button type="button" class="btn btn-outline btn-sm h-7 px-2.5 text-[12px]" (click)="setDefault(address.id)">Set default</button>
                   }
-                  <button type="button" class="btn btn-ghost btn-sm h-7 px-2.5 text-[9px] text-rose-600" (click)="removeAddress(address.id)">Remove</button>
+                  <button type="button" class="btn btn-ghost btn-sm h-7 px-2.5 text-[12px] text-rose-600" (click)="removeAddress(address.id)">Remove</button>
                 </div>
               </section>
             }
 
             <button type="button" class="flex min-h-[150px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-line bg-white p-4 text-center transition hover:border-brand-300 hover:bg-brand-50/30" (click)="showAddressForm.set(!showAddressForm())">
-              <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-50 text-brand-700"><app-icon name="plus" [size]="18" /></span>
-              <span class="text-[10.5px] font-extrabold text-ink">Add a new address</span>
-              <span class="text-[9px] font-semibold text-muted">Home, work or a friend's place</span>
+              <span class="grid h-10 w-10 place-items-center rounded-full bg-brand-50 text-brand-700"><app-icon name="plus" [size]="20" /></span>
+              <span class="text-[13px] font-extrabold text-ink">Add a new address</span>
+              <span class="text-[12px] font-semibold text-muted">Home, work or a friend's place</span>
             </button>
           </div>
 
           @if (showAddressForm()) {
             <section class="animate-pop rounded-2xl border border-line bg-white p-4">
-              <h2 class="text-[12px] font-extrabold">New delivery address</h2>
+              <h2 class="text-[15px] font-extrabold">New delivery address</h2>
               <div class="mt-2.5 grid gap-2.5 sm:grid-cols-2">
                 <div>
-                  <label class="field-label text-[10px]">Full name</label>
-                  <input type="text" class="input h-9 text-[11px]" placeholder="Aarav Sharma" [value]="newAddress().name" (input)="onAddressField('name', $event)" />
+                  <label class="field-label text-[13px]">Full name</label>
+                  <input type="text" class="input h-9 text-[14px]" placeholder="Aarav Sharma" [value]="newAddress().name" (input)="onAddressField('name', $event)" />
                 </div>
                 <div>
-                  <label class="field-label text-[10px]">Phone</label>
-                  <input type="tel" maxlength="10" class="input h-9 text-[11px]" placeholder="98765 43210" [value]="newAddress().phone" (input)="onAddressField('phone', $event, true)" />
+                  <label class="field-label text-[13px]">Phone</label>
+                  <input type="tel" maxlength="10" class="input h-9 text-[14px]" placeholder="98765 43210" [value]="newAddress().phone" (input)="onAddressField('phone', $event, true)" />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="field-label text-[10px]">Flat / house, building</label>
-                  <input type="text" class="input h-9 text-[11px]" placeholder="Flat 402, Sunshine Residency" [value]="newAddress().line1" (input)="onAddressField('line1', $event)" />
+                  <label class="field-label text-[13px]">Flat / house, building</label>
+                  <input type="text" class="input h-9 text-[14px]" placeholder="Flat 402, Sunshine Residency" [value]="newAddress().line1" (input)="onAddressField('line1', $event)" />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="field-label text-[10px]">Area, street</label>
-                  <input type="text" class="input h-9 text-[11px]" placeholder="Napier Town, near clock tower" [value]="newAddress().line2" (input)="onAddressField('line2', $event)" />
+                  <label class="field-label text-[13px]">Area, street</label>
+                  <input type="text" class="input h-9 text-[14px]" placeholder="Napier Town, near clock tower" [value]="newAddress().line2" (input)="onAddressField('line2', $event)" />
                 </div>
                 <div>
-                  <label class="field-label text-[10px]">City</label>
-                  <input type="text" class="input h-9 text-[11px]" placeholder="Jabalpur" [value]="newAddress().city" (input)="onAddressField('city', $event)" />
+                  <label class="field-label text-[13px]">City</label>
+                  <input type="text" class="input h-9 text-[14px]" placeholder="Jabalpur" [value]="newAddress().city" (input)="onAddressField('city', $event)" />
                 </div>
                 <div>
-                  <label class="field-label text-[10px]">Pin code</label>
-                  <input type="text" maxlength="6" class="input h-9 text-[11px]" placeholder="482002" [value]="newAddress().pin" (input)="onAddressField('pin', $event, true)" />
+                  <label class="field-label text-[13px]">Pin code</label>
+                  <input type="text" maxlength="6" class="input h-9 text-[14px]" placeholder="482002" [value]="newAddress().pin" (input)="onAddressField('pin', $event, true)" />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="field-label text-[10px]">Label</label>
+                  <label class="field-label text-[13px]">Label</label>
                   <div class="flex gap-1.5">
                     @for (label of ["Home", "Work", "Other"]; track label) {
-                      <button type="button" class="chip h-8 text-[10px]" [class.chip-active]="newAddress().label === label" (click)="setAddressLabel(label)">{{ label }}</button>
+                      <button type="button" class="chip h-8 text-[13px]" [class.chip-active]="newAddress().label === label" (click)="setAddressLabel(label)">{{ label }}</button>
                     }
                   </div>
                 </div>
@@ -311,43 +311,43 @@
           @if (!auth.isLoggedIn()) {
             <div class="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-white px-6 py-14 text-center">
               <span class="grid h-14 w-14 place-items-center rounded-full bg-brand-50 text-brand-700"><app-icon name="user" [size]="26" /></span>
-              <h2 class="mt-3 text-base font-extrabold">Sign in to manage your profile</h2>
-              <p class="mt-1 max-w-xs text-[11px] font-medium text-muted">Update your name, email and phone, and keep your details in sync.</p>
+              <h2 class="mt-3 text-lg font-extrabold">Sign in to manage your profile</h2>
+              <p class="mt-1 max-w-xs text-[14px] font-medium text-muted">Update your name, email and phone, and keep your details in sync.</p>
               <div class="mt-3 flex gap-2">
                 <a routerLink="/login" class="btn btn-primary btn-sm">Sign in</a>
                 <a routerLink="/register" class="btn btn-outline btn-sm">Create account</a>
               </div>
             </div>
           } @else {
-            <section class="rounded-2xl border border-line bg-white p-4">
-              <h2 class="text-[12.5px] font-extrabold">Personal details</h2>
-              <p class="mt-0.5 text-[9.5px] font-semibold text-muted">Used for order updates and invoices.</p>
+            <section class="min-w-0 rounded-2xl border border-line bg-white p-4">
+              <h2 class="text-[15px] font-extrabold">Personal details</h2>
+              <p class="mt-0.5 text-[12px] font-semibold text-muted">Used for order updates and invoices.</p>
               <div class="mt-3 grid gap-2.5 sm:grid-cols-2">
                 <div>
-                  <label class="field-label text-[10px]">Full name</label>
-                  <input type="text" class="input h-9 text-[11px]" [value]="profileName()" (input)="profileName.set($any($event.target).value)" />
+                  <label class="field-label text-[13px]">Full name</label>
+                  <input type="text" class="input h-9 text-[14px]" [value]="profileName()" (input)="profileName.set($any($event.target).value)" />
                 </div>
                 <div>
-                  <label class="field-label text-[10px]">Phone</label>
-                  <input type="tel" class="input h-9 text-[11px]" [value]="profilePhone()" (input)="profilePhone.set($any($event.target).value)" />
+                  <label class="field-label text-[13px]">Phone</label>
+                  <input type="tel" class="input h-9 text-[14px]" [value]="profilePhone()" (input)="profilePhone.set($any($event.target).value)" />
                 </div>
                 <div class="sm:col-span-2">
-                  <label class="field-label text-[10px]">Email address</label>
-                  <input type="email" class="input h-9 text-[11px]" [value]="profileEmail()" (input)="profileEmail.set($any($event.target).value)" />
+                  <label class="field-label text-[13px]">Email address</label>
+                  <input type="email" class="input h-9 text-[14px]" [value]="profileEmail()" (input)="profileEmail.set($any($event.target).value)" />
                 </div>
               </div>
-              <button type="button" class="btn btn-primary btn-sm mt-3" (click)="saveProfile()"><app-icon name="check" [size]="13" /> Save changes</button>
+              <button type="button" class="btn btn-primary btn-sm mt-3" (click)="saveProfile()"><app-icon name="check" [size]="15" /> Save changes</button>
             </section>
 
-            <section class="rounded-2xl border border-line bg-white p-4">
-              <h2 class="text-[12.5px] font-extrabold">Notifications</h2>
+            <section class="min-w-0 rounded-2xl border border-line bg-white p-4">
+              <h2 class="text-[15px] font-extrabold">Notifications</h2>
               <div class="mt-2.5 space-y-2">
                 <label class="flex cursor-pointer items-center justify-between rounded-xl bg-cream/60 px-3 py-2.5">
-                  <span class="leading-tight"><span class="block text-[10.5px] font-extrabold">Order updates</span><span class="block text-[9px] font-semibold text-muted">SMS and WhatsApp notifications</span></span>
+                  <span class="leading-tight"><span class="block text-[13px] font-extrabold">Order updates</span><span class="block text-[12px] font-semibold text-muted">SMS and WhatsApp notifications</span></span>
                   <input type="checkbox" class="h-4 w-4 rounded accent-brand-700" [checked]="notifyOrders()" (change)="notifyOrders.set(!notifyOrders())" />
                 </label>
                 <label class="flex cursor-pointer items-center justify-between rounded-xl bg-cream/60 px-3 py-2.5">
-                  <span class="leading-tight"><span class="block text-[10.5px] font-extrabold">Deals & new arrivals</span><span class="block text-[9px] font-semibold text-muted">At most two emails a week</span></span>
+                  <span class="leading-tight"><span class="block text-[13px] font-extrabold">Deals & new arrivals</span><span class="block text-[12px] font-semibold text-muted">At most two emails a week</span></span>
                   <input type="checkbox" class="h-4 w-4 rounded accent-brand-700" [checked]="notifyDeals()" (change)="notifyDeals.set(!notifyDeals())" />
                 </label>
               </div>
@@ -355,10 +355,10 @@
 
             <section class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-rose-100 bg-rose-50/60 p-4">
               <div>
-                <h2 class="text-[12px] font-extrabold text-rose-900">Sign out of this device</h2>
-                <p class="mt-0.5 text-[9.5px] font-semibold text-rose-900/60">Your basket and orders stay saved for next time.</p>
+                <h2 class="text-[15px] font-extrabold text-rose-900">Sign out of this device</h2>
+                <p class="mt-0.5 text-[12px] font-semibold text-rose-900/60">Your basket and orders stay saved for next time.</p>
               </div>
-              <button type="button" class="btn btn-outline btn-sm border-rose-200 text-rose-600 hover:bg-rose-50" (click)="logout()"><app-icon name="logout" [size]="13" /> Sign out</button>
+              <button type="button" class="btn btn-outline btn-sm border-rose-200 text-rose-600 hover:bg-rose-50" (click)="logout()"><app-icon name="logout" [size]="15" /> Sign out</button>
             </section>
           }
         </div>

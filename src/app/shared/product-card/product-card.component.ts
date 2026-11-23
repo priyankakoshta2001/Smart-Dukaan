@@ -14,6 +14,7 @@ import { RatingStarsComponent } from "../rating-stars/rating-stars.component";
   imports: [RouterLink, IconComponent, RatingStarsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./product-card.component.html",
+  host: { class: "block min-w-0" },
 })
 export class ProductCardComponent {
   readonly product = input.required<Product>();

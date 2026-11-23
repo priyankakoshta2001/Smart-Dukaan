@@ -134,13 +134,17 @@
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
     margin: 0;
+    overflow-x: hidden;
+    overflow-x: clip;
     background: var(--color-cream);
     color: var(--color-ink);
-    font: 500 15px/1.55 var(--font-sans);
+    font: 500 1rem/1.6 var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -180,6 +184,13 @@
     display: block;
   }
 
+  /* Base-layer default so a Tailwind utility class on <app-icon> (hidden,
+     sm:block, etc.) always wins the cascade instead of tying with it. */
+  app-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
   input,
   select,
   textarea {
@@ -214,21 +225,29 @@
   }
 }
 
+/* Custom component classes live in the components layer so Tailwind
+   utilities (pl-*, text-*, py-*, ...) can override them as authored. */
+@layer components {
 /* ------------------------------------------------------------------ layout */
 .container-page {
   width: 100%;
   max-width: 100rem;
   margin-inline: auto;
-  padding-inline: 1rem;
+  padding-inline: 1.25rem;
 }
 @media (min-width: 640px) {
   .container-page {
-    padding-inline: 1.5rem;
+    padding-inline: 1.75rem;
   }
 }
 @media (min-width: 1024px) {
   .container-page {
-    padding-inline: 2rem;
+    padding-inline: 2.5rem;
+  }
+}
+@media (min-width: 1536px) {
+  .container-page {
+    padding-inline: 3rem;
   }
 }
 
@@ -252,11 +271,11 @@
 }
 
 .section-pad {
-  padding-block: 3.5rem;
+  padding-block: 4rem;
 }
 @media (min-width: 1024px) {
   .section-pad {
-    padding-block: 5rem;
+    padding-block: 5.5rem;
   }
 }
 
@@ -264,7 +283,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -278,7 +297,7 @@
   border-radius: 9999px;
   background: var(--color-brand-50);
   padding: 0.3rem 0.7rem;
-  font-size: 0.64rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -289,7 +308,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: var(--color-brand-700);
   transition: color 0.15s ease;
@@ -299,14 +318,14 @@
 }
 
 .section-title {
-  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-size: clamp(1.95rem, 3.4vw, 2.85rem);
   line-height: 1.08;
   letter-spacing: -0.045em;
 }
 
 .section-copy {
   color: var(--color-muted);
-  font-size: 0.92rem;
+  font-size: 1rem;
   line-height: 1.65;
 }
 
@@ -380,11 +399,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  height: 2.75rem;
+  height: 3rem;
   padding-inline: 1.15rem;
   border: 1px solid transparent;
   border-radius: 0.85rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
@@ -451,15 +470,15 @@
   transform: translateY(-1px);
 }
 .btn-sm {
-  height: 2.25rem;
+  height: 2.5rem;
   padding-inline: 0.9rem;
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   border-radius: 0.7rem;
 }
 .btn-lg {
-  height: 3.25rem;
+  height: 3.5rem;
   padding-inline: 1.5rem;
-  font-size: 0.95rem;
+  font-size: 1.0625rem;
   border-radius: 1rem;
 }
 .btn-block {
@@ -470,7 +489,7 @@
 .field-label {
   display: block;
   margin-bottom: 0.4rem;
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: #33493f;
 }
@@ -481,7 +500,7 @@
   border: 1px solid #dfe5da;
   border-radius: 0.8rem;
   background: #fff;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   color: #0b2218;
   transition:
@@ -562,7 +581,7 @@ textarea.input {
   gap: 0.25rem;
   border-radius: 999px;
   padding: 0.22rem 0.6rem;
-  font-size: 0.64rem;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.02em;
   white-space: nowrap;
@@ -595,9 +614,9 @@ textarea.input {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  height: 2.75rem;
+  height: 3rem;
   padding-inline: 0.15rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #46594f;
   transition: color 0.15s ease;
@@ -632,12 +651,12 @@ textarea.input {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  height: 2.15rem;
+  height: 2.35rem;
   padding-inline: 0.85rem;
   border-radius: 999px;
   border: 1px solid var(--color-line);
   background: #fff;
-  font-size: 0.74rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #46594f;
   white-space: nowrap;
@@ -668,13 +687,13 @@ textarea.input {
   align-items: center;
   gap: 0.35rem;
   margin-top: 0.35rem;
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: #dc2626;
 }
 
 .stat-divider {
-  height: 2.25rem;
+  height: 2.5rem;
   width: 1px;
   background: rgba(255, 255, 255, 0.18);
 }
@@ -720,4 +739,5 @@ textarea.input {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
 }

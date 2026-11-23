@@ -1,23 +1,23 @@
 <article class="group flex h-full min-w-0 items-center gap-3 rounded-2xl border border-line bg-white p-2.5 shadow-sm transition hover:-translate-y-0.5 hover:border-brand-200 hover:shadow-soft">
-  <a [routerLink]="['/store', shop().slug]" class="relative grid h-[5.75rem] w-[7.5rem] shrink-0 place-items-center overflow-hidden rounded-xl bg-gradient-to-br" [class]="shop().accent" [attr.aria-label]="shop().name">
+  <a [routerLink]="['/store', shop().slug]" class="relative grid h-[5rem] w-[5.75rem] shrink-0 place-items-center overflow-hidden rounded-xl bg-gradient-to-br sm:h-[5.75rem] sm:w-[7.5rem]" [class]="shop().accent" [attr.aria-label]="shop().name">
     @if (photo(); as photo) {
       <img [src]="photo" [alt]="shop().name" class="h-full w-full object-cover" loading="lazy" />
     } @else {
       <span class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent 0 11px, rgba(255,255,255,.8) 12px 14px)"></span>
       <span class="absolute inset-x-2 top-2 h-2 rounded-sm bg-sun-300 shadow"></span>
-      <span class="relative z-10 grid h-12 w-12 place-items-center rounded-xl border border-white/40 bg-white/20 text-[12px] font-extrabold text-white shadow backdrop-blur-sm">{{ shop().initials }}</span>
-      <span class="absolute bottom-1.5 rounded bg-white/90 px-1.5 py-0.5 text-[6.5px] font-extrabold text-brand-900">{{ shop().name }}</span>
+      <span class="relative z-10 grid h-12 w-12 place-items-center rounded-xl border border-white/40 bg-white/20 text-[15px] font-extrabold text-white shadow backdrop-blur-sm">{{ shop().initials }}</span>
+      <span class="absolute bottom-1.5 rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-extrabold text-brand-900">{{ shop().name }}</span>
     }
   </a>
   <div class="flex min-w-0 flex-1 flex-col self-stretch py-0.5">
     <div class="flex items-start gap-1">
-      <a [routerLink]="['/store', shop().slug]" class="min-w-0 flex-1 truncate text-[15px] font-extrabold leading-tight text-ink transition group-hover:text-brand-700">{{ shop().name }}</a>
-      <button type="button" class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-muted transition hover:bg-rose-50 hover:text-rose-600" [attr.aria-label]="'Save ' + shop().name"><app-icon name="heart" [size]="15" /></button>
+      <a [routerLink]="['/store', shop().slug]" class="min-w-0 flex-1 truncate text-[17px] font-extrabold leading-tight text-ink transition group-hover:text-brand-700">{{ shop().name }}</a>
+      <button type="button" class="grid h-6 w-6 shrink-0 place-items-center rounded-full text-muted transition hover:bg-rose-50 hover:text-rose-600" [attr.aria-label]="'Save ' + shop().name"><app-icon name="heart" [size]="17" /></button>
     </div>
-    <div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-semibold text-muted">
-      <span class="inline-flex items-center gap-0.5"><app-icon name="star" [size]="12" class="text-sun-500" /><b class="text-ink">{{ shop().rating.toFixed(1) }}</b> ({{ shop().reviews }})</span>
+    <div class="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[13px] font-semibold text-muted sm:text-[14px]">
+      <span class="inline-flex items-center gap-0.5"><app-icon name="star" [size]="14" class="text-sun-500" /><b class="text-ink">{{ shop().rating.toFixed(1) }}</b> ({{ shop().reviews }})</span>
       <span>•</span><span>{{ shop().distance }} km</span><span>•</span><span>{{ shop().etaMin }}–{{ shop().etaMax }} mins</span>
     </div>
-    <span class="mt-auto inline-flex w-fit items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[11px] font-extrabold text-brand-700"><span class="h-1.5 w-1.5 rounded-full bg-brand-600"></span>Open</span>
+    <span class="mt-auto inline-flex w-fit items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[14px] font-extrabold text-brand-700"><span class="h-1.5 w-1.5 rounded-full bg-brand-600"></span>Open</span>
   </div>
 </article>

@@ -1,88 +1,88 @@
 <section class="container-page pt-3">
-  <nav class="flex items-center gap-2 text-[12px] font-semibold text-muted" aria-label="Breadcrumb">
+  <nav class="flex items-center gap-2 text-[15px] font-semibold text-muted" aria-label="Breadcrumb">
     <a routerLink="/" class="hover:text-brand-700">Home</a>
-    <app-icon name="chevron-right" [size]="11" />
+    <app-icon name="chevron-right" [size]="13" />
     <a routerLink="/shops" class="hover:text-brand-700">Shops</a>
-    <app-icon name="chevron-right" [size]="11" />
+    <app-icon name="chevron-right" [size]="13" />
     <span class="font-extrabold text-brand-700">{{ shop().name }}</span>
   </nav>
 
   <!-- store banner -->
-  <div class="relative mt-3 grid min-h-[13rem] items-center gap-4 overflow-hidden rounded-[1.35rem] surface-hero p-4 sm:min-h-[13.5rem] sm:grid-cols-[16rem_1fr_24rem] sm:p-5">
+  <div class="relative mt-3 grid min-h-[13rem] items-center gap-4 overflow-hidden rounded-[1.35rem] surface-hero p-4 sm:min-h-[13.5rem] sm:grid-cols-[13rem_minmax(0,1fr)] sm:p-5 xl:grid-cols-[16rem_minmax(0,1fr)_20rem]">
     <span class="pointer-events-none absolute -right-12 -top-20 h-64 w-64 rounded-full bg-white/70"></span>
     <span class="pointer-events-none absolute right-[25%] top-[-7rem] h-56 w-56 rounded-full bg-brand-100/50"></span>
 
-    <div class="relative hidden h-40 overflow-hidden rounded-2xl border border-white/70 bg-gradient-to-br shadow-sm sm:block" [class]="shop().accent">
+    <div class="relative h-28 overflow-hidden rounded-2xl border border-white/70 bg-gradient-to-br shadow-sm sm:h-40" [class]="shop().accent">
       @if (photo(); as photo) {
         <img [src]="photo" [alt]="shop().name" class="h-full w-full object-cover" />
       } @else {
         <span class="absolute inset-0 opacity-20" style="background-image: repeating-linear-gradient(0deg, transparent 0 11px, rgba(255,255,255,.8) 12px 14px)"></span>
         <span class="absolute inset-x-3 top-3 h-3 rounded-sm bg-sun-300"></span>
-        <span class="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-white/50 bg-white/25 text-lg font-extrabold text-white backdrop-blur-sm">{{ shop().initials }}</span>
-        <span class="absolute inset-x-2 bottom-2 rounded bg-white/90 px-1 py-0.5 text-center text-[8px] font-extrabold text-brand-900">{{ shop().name }}</span>
+        <span class="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-white/50 bg-white/25 text-xl font-extrabold text-white backdrop-blur-sm">{{ shop().initials }}</span>
+        <span class="absolute inset-x-2 bottom-2 rounded bg-white/90 px-1 py-0.5 text-center text-[11px] font-extrabold text-brand-900">{{ shop().name }}</span>
       }
     </div>
 
     <div class="relative z-10 min-w-0">
       <div class="flex flex-wrap items-center gap-2">
-        <h1 class="text-[1.8rem] font-extrabold leading-none tracking-[-0.045em] text-ink sm:text-[2.1rem]">{{ shop().name }}</h1>
+        <h1 class="text-[1.95rem] font-extrabold leading-none tracking-[-0.045em] text-ink sm:text-[2.3rem]">{{ shop().name }}</h1>
         @if (shop().verified) {
-          <span class="inline-flex items-center gap-1 rounded-full bg-brand-700 px-2 py-0.5 text-[10px] font-extrabold text-white"><app-icon name="shield" [size]="11" /> Verified</span>
+          <span class="inline-flex items-center gap-1 rounded-full bg-brand-700 px-2 py-0.5 text-[13px] font-extrabold text-white"><app-icon name="shield" [size]="13" /> Verified</span>
         }
       </div>
-      <p class="mt-1 text-[12.5px] font-semibold text-ink-soft">{{ shop().tagline }} · {{ shop().area }}, {{ shop().city }}</p>
-      <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] font-semibold text-ink-soft">
-        <span class="inline-flex items-center gap-1"><app-icon name="star" [size]="15" class="text-sun-500" /><b>{{ shop().rating.toFixed(1) }}</b> ({{ shop().reviews }})</span>
+      <p class="mt-1 text-[15px] font-semibold text-ink-soft">{{ shop().tagline }} · {{ shop().area }}, {{ shop().city }}</p>
+      <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[16px] font-semibold text-ink-soft">
+        <span class="inline-flex items-center gap-1"><app-icon name="star" [size]="17" class="text-sun-500" /><b>{{ shop().rating.toFixed(1) }}</b> ({{ shop().reviews }})</span>
         <span class="text-faint">|</span>
-        <span class="inline-flex items-center gap-1"><app-icon name="pin" [size]="14" class="text-brand-700" />{{ shop().distance }} km</span>
+        <span class="inline-flex items-center gap-1"><app-icon name="pin" [size]="16" class="text-brand-700" />{{ shop().distance }} km</span>
         <span class="text-faint">|</span>
-        <span class="inline-flex items-center gap-1"><app-icon name="clock" [size]="14" class="text-brand-700" />{{ shop().etaMin }}–{{ shop().etaMax }} mins</span>
+        <span class="inline-flex items-center gap-1"><app-icon name="clock" [size]="16" class="text-brand-700" />{{ shop().etaMin }}–{{ shop().etaMax }} mins</span>
       </div>
-      <p class="mt-1.5 text-[12px] font-semibold text-ink-soft">
+      <p class="mt-1.5 text-[15px] font-semibold text-ink-soft">
         <span class="rounded-full bg-brand-100 px-2 py-0.5 font-extrabold text-brand-800">Open</span>
         <span class="mx-2 text-faint">|</span>
-        <app-icon name="clock" [size]="13" class="mr-1 inline text-brand-700" />Store Timing: {{ shop().timing }}
+        <app-icon name="clock" [size]="15" class="mr-1 inline text-brand-700" />Store Timing: {{ shop().timing }}
       </p>
       <div class="mt-2.5 flex flex-wrap gap-1.5">
         @for (chip of chips(); track chip.slug) {
           <a
             [routerLink]="['/store', shop().slug]"
             [queryParams]="{ category: chip.slug }"
-            class="inline-flex items-center gap-1 rounded-full border border-white bg-white/85 px-3 py-1.5 text-[12px] font-bold shadow-sm transition hover:border-brand-300"
+            class="inline-flex items-center gap-1 rounded-full border border-white bg-white/85 px-3 py-1.5 text-[15px] font-bold shadow-sm transition hover:border-brand-300"
           ><span>{{ chip.emoji }}</span>{{ chip.short }}</a>
         }
       </div>
     </div>
 
-    <img src="/assets/reference/store-basket-art.jpg" alt="Fresh groceries available from this shop" class="relative hidden h-32 w-full object-contain sm:block" />
+    <img src="/assets/reference/store-basket-art.jpg" alt="Fresh groceries available from this shop" class="relative hidden h-32 w-full object-contain xl:block" />
   </div>
 
   <!-- section tabs -->
-  <nav class="mt-2 flex gap-2 overflow-x-auto border-b border-line pb-2" aria-label="Store sections">
+  <nav class="mt-2 flex flex-wrap gap-2 border-b border-line pb-2 sm:flex-nowrap sm:overflow-x-auto" aria-label="Store sections">
     <a
       [routerLink]="['/store', shop().slug]"
       routerLinkActive
       #productsTab="routerLinkActive"
       [routerLinkActiveOptions]="{ exact: true }"
-      [class]="productsTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[13px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[13px] font-extrabold text-ink-soft hover:border-brand-200'"
+      [class]="productsTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[16px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[16px] font-extrabold text-ink-soft hover:border-brand-200'"
     >Products ({{ productCount() }})</a>
     <a
       [routerLink]="['/store', shop().slug, 'offers']"
       routerLinkActive
       #offersTab="routerLinkActive"
-      [class]="offersTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[13px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[13px] font-extrabold text-ink-soft hover:border-brand-200'"
+      [class]="offersTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[16px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[16px] font-extrabold text-ink-soft hover:border-brand-200'"
     >Offers</a>
     <a
       [routerLink]="['/store', shop().slug, 'about']"
       routerLinkActive
       #aboutTab="routerLinkActive"
-      [class]="aboutTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[13px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[13px] font-extrabold text-ink-soft hover:border-brand-200'"
+      [class]="aboutTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[16px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[16px] font-extrabold text-ink-soft hover:border-brand-200'"
     >About</a>
     <a
       [routerLink]="['/store', shop().slug, 'reviews']"
       routerLinkActive
       #reviewsTab="routerLinkActive"
-      [class]="reviewsTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[13px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[13px] font-extrabold text-ink-soft hover:border-brand-200'"
+      [class]="reviewsTab.isActive ? 'rounded-lg bg-brand-700 px-5 py-2.5 text-[16px] font-extrabold text-white shadow-sm' : 'rounded-lg border border-line bg-white px-5 py-2.5 text-[16px] font-extrabold text-ink-soft hover:border-brand-200'"
     >Reviews ({{ shop().reviews }})</a>
   </nav>
 </section>

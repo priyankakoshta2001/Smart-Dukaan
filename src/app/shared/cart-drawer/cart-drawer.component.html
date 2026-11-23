@@ -10,9 +10,9 @@
     <aside class="animate-pop absolute inset-y-0 right-0 flex w-full max-w-[26rem] flex-col bg-white shadow-2xl">
       <header class="flex items-start justify-between gap-3 border-b border-line bg-gradient-to-br from-brand-50 to-white px-5 py-4">
         <div>
-          <p class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-brand-700">Your basket</p>
-          <h2 class="mt-0.5 text-lg font-extrabold tracking-tight">Your Cart ({{ cart.count() }})</h2>
-          <p class="mt-0.5 text-[10.5px] font-semibold text-muted">
+          <p class="text-[13px] font-extrabold uppercase tracking-[0.18em] text-brand-700">Your basket</p>
+          <h2 class="mt-0.5 text-xl font-extrabold tracking-tight">Your Cart ({{ cart.count() }})</h2>
+          <p class="mt-0.5 text-[13px] font-semibold text-muted">
             {{ cart.shopCount() }} {{ cart.shopCount() === 1 ? "shop" : "shops" }} · one checkout
           </p>
         </div>
@@ -22,7 +22,7 @@
           aria-label="Close cart"
           (click)="cart.closeDrawer()"
         >
-          <app-icon name="close" [size]="16" />
+          <app-icon name="close" [size]="18" />
         </button>
       </header>
 
@@ -31,18 +31,18 @@
           <span class="grid h-20 w-20 place-items-center rounded-3xl bg-brand-50 text-brand-700">
             <app-icon name="cart" [size]="34" />
           </span>
-          <h3 class="mt-5 text-lg font-extrabold text-ink">Your cart is feeling light</h3>
-          <p class="mt-1.5 text-[12px] leading-relaxed text-muted">
+          <h3 class="mt-5 text-xl font-extrabold text-ink">Your cart is feeling light</h3>
+          <p class="mt-1.5 text-[15px] leading-relaxed text-muted">
             Add milk, atta, snacks or fresh produce from your nearby shops — you can mix shops in one cart.
           </p>
           <a routerLink="/shop" class="btn btn-primary mt-5" (click)="cart.closeDrawer()">
-            Start shopping <app-icon name="arrow-right" [size]="15" />
+            Start shopping <app-icon name="arrow-right" [size]="17" />
           </a>
         </div>
       } @else {
         <div class="border-b border-line px-5 py-3">
           @if (cart.freeDeliveryGap() > 0) {
-            <div class="flex items-center justify-between text-[10px] font-bold">
+            <div class="flex items-center justify-between text-[13px] font-bold">
               <span class="text-ink-soft">Add ₹{{ cart.freeDeliveryGap() }} for FREE delivery</span>
               <span class="text-brand-700">{{ percent(cart.freeDeliveryProgress()) }}%</span>
             </div>
@@ -50,8 +50,8 @@
               <div class="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-700" [style.width.%]="cart.freeDeliveryProgress()"></div>
             </div>
           } @else {
-            <p class="flex items-center gap-1.5 text-[10.5px] font-extrabold text-brand-700">
-              <app-icon name="check-circle" [size]="13" /> Yay! You unlocked FREE delivery
+            <p class="flex items-center gap-1.5 text-[13px] font-extrabold text-brand-700">
+              <app-icon name="check-circle" [size]="15" /> Yay! You unlocked FREE delivery
             </p>
           }
         </div>
@@ -60,12 +60,12 @@
           @for (group of cart.groups(); track group.shop.slug) {
             <div class="mb-3 overflow-hidden rounded-xl border border-line bg-white">
               <div class="flex items-center gap-2 border-b border-line/80 bg-cream/60 px-3 py-2">
-                <span class="grid h-6 w-6 place-items-center rounded-md bg-brand-700 text-[9px] font-extrabold text-white">{{ group.shop.initials }}</span>
+                <span class="grid h-6 w-6 place-items-center rounded-md bg-brand-700 text-[12px] font-extrabold text-white">{{ group.shop.initials }}</span>
                 <div class="min-w-0 flex-1">
-                  <p class="truncate text-[10.5px] font-extrabold text-ink">{{ group.shop.name }}</p>
-                  <p class="text-[9px] font-semibold text-muted">{{ group.shop.etaMin }}–{{ group.shop.etaMax }} min · {{ group.count }} items</p>
+                  <p class="truncate text-[13px] font-extrabold text-ink">{{ group.shop.name }}</p>
+                  <p class="text-[12px] font-semibold text-muted">{{ group.shop.etaMin }}–{{ group.shop.etaMax }} min · {{ group.count }} items</p>
                 </div>
-                <a [routerLink]="['/store', group.shop.slug]" class="text-[9px] font-extrabold text-brand-700" (click)="cart.closeDrawer()">+ Add</a>
+                <a [routerLink]="['/store', group.shop.slug]" class="text-[12px] font-extrabold text-brand-700" (click)="cart.closeDrawer()">+ Add</a>
               </div>
 
               @for (line of group.lines; track line.product.id) {
@@ -74,16 +74,16 @@
                     <img [src]="line.product.image" [alt]="line.product.title" class="h-full w-full object-contain" loading="lazy" />
                   </span>
                   <div class="min-w-0 flex-1">
-                    <p class="truncate text-[10.5px] font-bold text-ink">{{ line.product.title }}</p>
-                    <p class="text-[9px] font-semibold text-muted">{{ line.product.unit }} · ₹{{ line.product.price }}</p>
+                    <p class="truncate text-[13px] font-bold text-ink">{{ line.product.title }}</p>
+                    <p class="text-[12px] font-semibold text-muted">{{ line.product.unit }} · ₹{{ line.product.price }}</p>
                   </div>
                   <div class="flex h-7 shrink-0 items-center rounded-md border border-brand-200 bg-brand-50 text-brand-700">
                     <button type="button" class="grid h-7 w-6 place-items-center" aria-label="Decrease" (click)="cart.decrement(line.product.id)">
-                      <app-icon name="minus" [size]="10" />
+                      <app-icon name="minus" [size]="12" />
                     </button>
-                    <span class="min-w-4 text-center text-[10px] font-extrabold">{{ line.qty }}</span>
+                    <span class="min-w-4 text-center text-[13px] font-extrabold">{{ line.qty }}</span>
                     <button type="button" class="grid h-7 w-6 place-items-center" aria-label="Increase" (click)="cart.increment(line.product.id)">
-                      <app-icon name="plus" [size]="10" />
+                      <app-icon name="plus" [size]="12" />
                     </button>
                   </div>
                 </div>
@@ -93,7 +93,7 @@
         </div>
 
         <footer class="border-t border-line bg-cream/40 px-5 py-4">
-          <div class="space-y-1.5 text-[11px] font-semibold text-muted">
+          <div class="space-y-1.5 text-[14px] font-semibold text-muted">
             <div class="flex justify-between"><span>Subtotal</span><span class="font-extrabold text-ink">₹{{ cart.subtotal() }}</span></div>
             @if (cart.discount() > 0) {
               <div class="flex justify-between text-brand-700"><span>Coupon ({{ cart.couponCode() }})</span><span class="font-extrabold">−₹{{ cart.discount() }}</span></div>
@@ -101,14 +101,14 @@
             <div class="flex justify-between"><span>Delivery fee</span><span class="font-extrabold" [class.text-brand-700]="cart.deliveryFee() === 0">{{ cart.deliveryFee() === 0 ? "FREE" : "₹" + cart.deliveryFee() }}</span></div>
           </div>
           <div class="mt-3 flex items-center justify-between border-t border-line pt-3">
-            <span class="text-[12px] font-extrabold text-ink">Total</span>
-            <span class="text-xl font-extrabold tracking-tight text-ink">₹{{ cart.total() }}</span>
+            <span class="text-[15px] font-extrabold text-ink">Total</span>
+            <span class="text-2xl font-extrabold tracking-tight text-ink">₹{{ cart.total() }}</span>
           </div>
           <div class="mt-3 grid grid-cols-2 gap-2">
             <a routerLink="/cart" class="btn btn-outline btn-sm" (click)="cart.closeDrawer()">View cart</a>
             <a routerLink="/checkout" class="btn btn-primary btn-sm" (click)="cart.closeDrawer()">Checkout</a>
           </div>
-          <p class="mt-2 text-center text-[9px] font-semibold text-faint">Secure checkout · UPI, cards & COD</p>
+          <p class="mt-2 text-center text-[12px] font-semibold text-faint">Secure checkout · UPI, cards & COD</p>
         </footer>
       }
     </aside>

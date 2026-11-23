@@ -2,7 +2,7 @@
   <div class="bg-white pb-12">
     <app-store-hero [shop]="shop" [productCount]="productCount()" />
 
-    <div class="container-page pt-4">
+    <div class="container-page pt-6">
       <!-- ================================================== welcome coupon -->
       <section class="relative overflow-hidden rounded-[1.35rem] bg-gradient-to-r from-brand-800 via-brand-900 to-brand-950 p-5 text-white sm:p-7">
         <div class="hero-grid pointer-events-none absolute inset-0 opacity-50"></div>
@@ -12,11 +12,11 @@
         <div class="relative grid items-center gap-4 lg:grid-cols-[auto_1fr_auto]">
           <span class="grid h-14 w-14 place-items-center rounded-2xl bg-sun-400 text-ink shadow-lg"><app-icon name="gift" [size]="26" /></span>
           <div class="min-w-0">
-            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[9px] font-extrabold uppercase tracking-[0.16em] text-sun-300"><app-icon name="sparkles" [size]="11" /> First order special</span>
-            <h1 class="mt-2 text-[1.6rem] font-extrabold leading-tight tracking-[-0.03em] sm:text-[2rem]">Flat ₹100 OFF<span class="font-display font-normal italic text-sun-300"> at {{ shop.name }}</span></h1>
-            <p class="mt-1 text-[12px] font-medium text-white/85">On your first order above ₹399 from this store. Stacks with the store deals below.</p>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[12px] font-extrabold uppercase tracking-[0.16em] text-sun-300"><app-icon name="sparkles" [size]="13" /> First order special</span>
+            <h1 class="mt-2 text-[1.75rem] font-extrabold leading-tight tracking-[-0.03em] sm:text-[2.2rem]">Flat ₹100 OFF<span class="relative z-0 font-display font-normal italic text-sun-200 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-sun-300/30"> at {{ shop.name }}</span></h1>
+            <p class="mt-1 text-[15px] font-medium text-white/85">On your first order above ₹399 from this store. Stacks with the store deals below.</p>
           </div>
-          <button type="button" class="btn btn-sun btn-lg relative" (click)="copy('NEW100')"><app-icon name="copy" [size]="15" /> Copy code NEW100</button>
+          <button type="button" class="btn btn-sun btn-lg relative" (click)="copy('NEW100')"><app-icon name="copy" [size]="17" /> Copy code NEW100</button>
         </div>
       </section>
 
@@ -24,10 +24,10 @@
       <section class="mt-5">
         <div class="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <span class="eyebrow"><app-icon name="percent" [size]="12" /> Live at this shop</span>
-            <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">Offers from <span class="font-display font-normal italic text-brand-700">{{ shop.name }}</span></h2>
+            <span class="eyebrow"><app-icon name="percent" [size]="14" /> Live at this shop</span>
+            <h2 class="section-title mt-1.5 text-[1.45rem] sm:text-[1.7rem]">Offers from <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">{{ shop.name }}</span></h2>
           </div>
-          <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1.5 text-[10px] font-extrabold text-brand-800"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-600"></span> {{ deals().length }} live offers</span>
+          <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1.5 text-[13px] font-extrabold text-brand-800"><span class="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-600"></span> {{ deals().length }} live offers</span>
         </div>
 
         <div class="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -35,12 +35,12 @@
             <article class="group relative overflow-hidden rounded-2xl border border-brand-100 bg-gradient-to-br from-brand-50 via-white to-white p-4 transition hover:-translate-y-0.5 hover:shadow-soft">
               <div class="dot-grid pointer-events-none absolute inset-0 opacity-30"></div>
               <div class="relative flex items-start justify-between">
-                <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-700 text-white shadow-sm"><app-icon [name]="deal.icon" [size]="19" /></span>
-                <span class="rounded-full bg-white px-2.5 py-1 text-[8.5px] font-extrabold uppercase tracking-[0.12em] text-brand-700 shadow-sm">{{ deal.kicker }}</span>
+                <span class="grid h-11 w-11 place-items-center rounded-xl bg-brand-700 text-white shadow-sm"><app-icon [name]="deal.icon" [size]="21" /></span>
+                <span class="rounded-full bg-white px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.12em] text-brand-700 shadow-sm">{{ deal.kicker }}</span>
               </div>
-              <h3 class="relative mt-3 text-[15px] font-extrabold leading-snug text-ink">{{ deal.offer }}</h3>
-              <p class="relative mt-1 text-[10.5px] font-medium leading-relaxed text-muted">{{ deal.detail }}</p>
-              <a [routerLink]="['/store', shop.slug]" class="relative mt-3 inline-flex items-center gap-1 text-[10.5px] font-extrabold text-brand-700 transition group-hover:gap-1.5">Shop the offer <app-icon name="arrow-right" [size]="11" /></a>
+              <h3 class="relative mt-3 text-[17px] font-extrabold leading-snug text-ink">{{ deal.offer }}</h3>
+              <p class="relative mt-1 text-[13px] font-medium leading-relaxed text-muted">{{ deal.detail }}</p>
+              <a [routerLink]="['/store', shop.slug]" class="relative mt-3 inline-flex items-center gap-1 text-[13px] font-extrabold text-brand-700 transition group-hover:gap-1.5">Shop the offer <app-icon name="arrow-right" [size]="13" /></a>
             </article>
           }
         </div>
@@ -50,22 +50,22 @@
       <section class="mt-6">
         <div class="flex flex-wrap items-end justify-between gap-2">
           <div>
-            <span class="eyebrow"><app-icon name="copy" [size]="12" /> Sitewide coupons</span>
-            <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">Coupons that <span class="font-display font-normal italic text-brand-700">work here too.</span></h2>
+            <span class="eyebrow"><app-icon name="copy" [size]="14" /> Sitewide coupons</span>
+            <h2 class="section-title mt-1.5 text-[1.45rem] sm:text-[1.7rem]">Coupons that <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">work here too.</span></h2>
           </div>
-          <span class="text-[10px] font-semibold text-muted">Tap a card to copy the code</span>
+          <span class="text-[13px] font-semibold text-muted">Tap a card to copy the code</span>
         </div>
 
         <div class="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
           @for (coupon of coupons; track coupon.code) {
             <button type="button" class="group relative overflow-hidden rounded-2xl border-2 border-dashed border-brand-300 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:border-brand-500 hover:shadow-soft" (click)="copy(coupon.code)">
               <div class="flex items-center justify-between">
-                <span class="rounded-lg bg-brand-700 px-2.5 py-1 font-mono text-[11px] font-extrabold tracking-wider text-white">{{ coupon.code }}</span>
-                <app-icon name="copy" [size]="15" class="text-faint transition group-hover:text-brand-700" />
+                <span class="rounded-lg bg-brand-700 px-2.5 py-1 font-mono text-[14px] font-extrabold tracking-wider text-white">{{ coupon.code }}</span>
+                <app-icon name="copy" [size]="17" class="text-faint transition group-hover:text-brand-700" />
               </div>
-              <p class="mt-2.5 text-[13px] font-extrabold text-ink">{{ coupon.title }}</p>
-              <p class="mt-0.5 text-[10px] font-medium leading-relaxed text-muted">{{ coupon.detail }}</p>
-              <p class="mt-2 flex items-center gap-1 text-[9px] font-extrabold uppercase tracking-wider text-brand-700"><app-icon name="check-circle" [size]="11" /> Works at this store</p>
+              <p class="mt-2.5 text-[16px] font-extrabold text-ink">{{ coupon.title }}</p>
+              <p class="mt-0.5 text-[13px] font-medium leading-relaxed text-muted">{{ coupon.detail }}</p>
+              <p class="mt-2 flex items-center gap-1 text-[12px] font-extrabold uppercase tracking-wider text-brand-700"><app-icon name="check-circle" [size]="13" /> Works at this store</p>
             </button>
           }
         </div>
@@ -76,10 +76,10 @@
         <section class="mt-8">
           <div class="flex flex-wrap items-end justify-between gap-2">
             <div>
-              <span class="eyebrow"><app-icon name="tag" [size]="12" /> Biggest savings</span>
-              <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">Discounted items <span class="font-display font-normal italic text-brand-700">from this shop</span></h2>
+              <span class="eyebrow"><app-icon name="tag" [size]="14" /> Biggest savings</span>
+              <h2 class="section-title mt-1.5 text-[1.45rem] sm:text-[1.7rem]">Discounted items <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">from this shop</span></h2>
             </div>
-            <span class="inline-flex items-center gap-1.5 rounded-full bg-sun-50 px-3 py-1.5 text-[10px] font-extrabold text-sun-700"><app-icon name="percent" [size]="12" /> Save ₹{{ totalSaved() }} on these picks</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-sun-50 px-3 py-1.5 text-[13px] font-extrabold text-sun-700"><app-icon name="percent" [size]="14" /> Save ₹{{ totalSaved() }} on these picks</span>
           </div>
           <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 2xl:grid-cols-4">
             @for (product of dealProducts(); track product.id) {
@@ -93,20 +93,20 @@
       <section class="mt-8">
         <div class="relative flex flex-wrap items-center justify-between gap-4 overflow-hidden rounded-2xl surface-hero px-5 py-5">
           <div class="flex items-center gap-3">
-            <span class="grid h-11 w-11 place-items-center rounded-xl bg-white text-brand-700 shadow-sm"><app-icon name="bag" [size]="20" /></span>
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-white text-brand-700 shadow-sm"><app-icon name="bag" [size]="21" /></span>
             <div>
-              <p class="text-[13px] font-extrabold text-ink">Ready to save on your daily needs?</p>
-              <p class="text-[10.5px] font-semibold text-muted">{{ shop.name }} ke saare products ek hi cart me.</p>
+              <p class="text-[16px] font-extrabold text-ink">Ready to save on your daily needs?</p>
+              <p class="text-[13px] font-semibold text-muted">{{ shop.name }} ke saare products ek hi cart me.</p>
             </div>
           </div>
-          <a [routerLink]="['/store', shop.slug]" class="btn btn-primary btn-sm">Start shopping <app-icon name="arrow-right" [size]="13" /></a>
+          <a [routerLink]="['/store', shop.slug]" class="btn btn-primary btn-sm">Start shopping <app-icon name="arrow-right" [size]="15" /></a>
         </div>
       </section>
     </div>
   </div>
 } @else {
   <section class="container-page py-20 text-center">
-    <h1 class="text-2xl font-extrabold">Store not found</h1>
+    <h1 class="text-3xl font-extrabold">Store not found</h1>
     <a routerLink="/shops" class="btn btn-primary btn-sm mt-4">Browse nearby shops</a>
   </section>
 }

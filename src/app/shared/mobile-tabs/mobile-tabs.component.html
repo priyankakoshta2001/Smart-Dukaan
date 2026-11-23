@@ -1,28 +1,28 @@
-<nav class="fixed inset-x-0 bottom-0 z-[60] border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg md:hidden">
+<nav class="fixed inset-x-0 bottom-0 z-[60] border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg lg:hidden">
   <div class="grid grid-cols-5">
     <a routerLink="/" routerLinkActive="text-brand-700" [routerLinkActiveOptions]="{ exact: true }" class="flex flex-col items-center gap-1 py-2 text-faint transition">
-      <app-icon name="home" [size]="19" /><span class="text-[8.5px] font-extrabold">Home</span>
+      <app-icon name="home" [size]="21" /><span class="text-[11px] font-extrabold">Home</span>
     </a>
     <a routerLink="/shops" routerLinkActive="text-brand-700" class="flex flex-col items-center gap-1 py-2 text-faint transition">
-      <app-icon name="store" [size]="19" /><span class="text-[8.5px] font-extrabold">Shops</span>
+      <app-icon name="store" [size]="21" /><span class="text-[11px] font-extrabold">Shops</span>
     </a>
     <button type="button" class="relative -mt-4 flex flex-col items-center gap-0.5" (click)="cart.openDrawer()" aria-label="Open cart">
       <span class="relative grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-brand-600 to-brand-900 text-white shadow-[0_14px_26px_-12px_rgba(6,112,68,0.9)]">
-        <app-icon name="cart" [size]="21" />
+        <app-icon name="cart" [size]="22" />
         @if (cart.count() > 0) {
-          <span class="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-sun-400 px-1 text-[8px] font-extrabold text-ink">{{ cart.count() }}</span>
+          <span class="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-sun-400 px-1 text-[11px] font-extrabold text-ink">{{ cart.count() }}</span>
         }
       </span>
-      <span class="text-[8.5px] font-extrabold text-brand-700">Cart</span>
+      <span class="text-[11px] font-extrabold text-brand-700">Cart</span>
     </button>
     <a routerLink="/wishlist" routerLinkActive="text-brand-700" class="relative flex flex-col items-center gap-1 py-2 text-faint transition">
-      <app-icon name="heart" [size]="19" /><span class="text-[8.5px] font-extrabold">Wishlist</span>
+      <app-icon name="heart" [size]="21" /><span class="text-[11px] font-extrabold">Wishlist</span>
       @if (wishlist.count() > 0) {
         <span class="absolute right-[calc(50%-15px)] top-1 h-1.5 w-1.5 rounded-full bg-rose-500"></span>
       }
     </a>
     <a [routerLink]="auth.isLoggedIn() ? '/account' : '/login'" routerLinkActive="text-brand-700" class="flex flex-col items-center gap-1 py-2 text-faint transition">
-      <app-icon name="user" [size]="19" /><span class="text-[8.5px] font-extrabold">{{ auth.isLoggedIn() ? "Account" : "Login" }}</span>
+      <app-icon name="user" [size]="21" /><span class="text-[11px] font-extrabold">{{ auth.isLoggedIn() ? "Account" : "Login" }}</span>
     </a>
   </div>
 </nav>

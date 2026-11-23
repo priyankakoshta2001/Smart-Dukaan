@@ -1,21 +1,21 @@
 <section class="border-b border-line bg-white">
-  <div class="container-page py-5">
-    <nav class="flex items-center gap-1.5 text-[10px] font-bold text-muted" aria-label="Breadcrumb">
+  <div class="container-page py-8">
+    <nav class="flex items-center gap-1.5 text-[13px] font-bold text-muted" aria-label="Breadcrumb">
       <a routerLink="/" class="transition hover:text-brand-700">Home</a>
-      <app-icon name="chevron-right" [size]="10" class="text-faint" />
+      <app-icon name="chevron-right" [size]="12" class="text-faint" />
       <span class="text-ink">Cart</span>
     </nav>
     <div class="mt-2 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h1 class="text-2xl font-extrabold tracking-[-0.045em] sm:text-3xl">Your basket</h1>
-        <p class="mt-1 text-[11.5px] font-semibold text-muted">
+        <h1 class="text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">Your basket</h1>
+        <p class="mt-1 text-[14px] font-semibold text-muted">
           {{ totalItems() }} {{ totalItems() === 1 ? "item" : "items" }} from {{ cart.shopCount() }} {{ cart.shopCount() === 1 ? "shop" : "shops" }}
           <span class="mx-1 text-faint">·</span> check out once, pay one delivery fee
         </p>
       </div>
       @if (cart.count() > 0) {
-        <button type="button" class="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold text-rose-600 transition hover:text-rose-700" (click)="clearCart()">
-          <app-icon name="trash" [size]="13" /> Clear cart
+        <button type="button" class="inline-flex items-center gap-1.5 text-[13px] font-extrabold text-rose-600 transition hover:text-rose-700" (click)="clearCart()">
+          <app-icon name="trash" [size]="15" /> Clear cart
         </button>
       }
     </div>
@@ -26,9 +26,9 @@
   <section class="container-page py-20">
     <div class="mx-auto max-w-lg rounded-[1.75rem] border border-line bg-white px-6 py-14 text-center">
       <span class="mx-auto grid h-20 w-20 place-items-center rounded-3xl bg-brand-50 text-brand-700"><app-icon name="cart" [size]="34" /></span>
-      <h2 class="mt-5 text-2xl font-extrabold tracking-tight">Your basket is empty</h2>
-      <p class="mx-auto mt-2 max-w-sm text-[12.5px] leading-relaxed text-muted">Add milk, atta, snacks or fresh produce from nearby shops. You can mix multiple shops in one cart.</p>
-      <div class="mt-5 flex justify-center gap-2">
+      <h2 class="mt-5 text-3xl font-extrabold tracking-tight">Your basket is empty</h2>
+      <p class="mx-auto mt-2 max-w-sm text-[15px] leading-relaxed text-muted">Add milk, atta, snacks or fresh produce from nearby shops. You can mix multiple shops in one cart.</p>
+      <div class="mt-5 flex flex-wrap justify-center gap-2">
         <a routerLink="/shops" class="btn btn-primary btn-sm">Browse nearby shops</a>
         <a routerLink="/shop" class="btn btn-outline btn-sm">Shop all products</a>
       </div>
@@ -41,7 +41,7 @@
             <span class="section-eyebrow">Popular right now</span>
             <h2 class="section-title mt-1.5">Start with these</h2>
           </div>
-          <a routerLink="/shop" class="inline-flex items-center gap-1 text-[10.5px] font-extrabold text-brand-700">See all <app-icon name="arrow-right" [size]="12" /></a>
+          <a routerLink="/shop" class="inline-flex items-center gap-1 text-[13px] font-extrabold text-brand-700">See all <app-icon name="arrow-right" [size]="14" /></a>
         </div>
         <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           @for (product of suggested(); track product.id) {
@@ -56,33 +56,33 @@
     <div class="container-page grid gap-5 lg:grid-cols-[1fr_20rem] xl:grid-cols-[1fr_22rem]">
       <div class="space-y-3">
         <div class="flex items-center gap-2 rounded-2xl border border-brand-100 bg-gradient-to-r from-brand-50 to-white px-4 py-3">
-          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-700 text-white"><app-icon name="truck" [size]="15" /></span>
+          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-700 text-white"><app-icon name="truck" [size]="17" /></span>
           @if (cart.freeDeliveryGap() > 0) {
             <div class="min-w-0 flex-1">
-              <p class="text-[10.5px] font-extrabold text-ink">Add ₹{{ cart.freeDeliveryGap() }} more for FREE delivery</p>
+              <p class="text-[13px] font-extrabold text-ink">Add ₹{{ cart.freeDeliveryGap() }} more for FREE delivery</p>
               <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-brand-100">
                 <div class="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-700 transition-all" [style.width.%]="cart.freeDeliveryProgress()"></div>
               </div>
             </div>
-            <span class="text-[10px] font-extrabold text-brand-700">{{ percent(cart.freeDeliveryProgress()) }}%</span>
+            <span class="text-[13px] font-extrabold text-brand-700">{{ percent(cart.freeDeliveryProgress()) }}%</span>
           } @else {
-            <p class="flex-1 text-[10.5px] font-extrabold text-brand-700">🎉 You unlocked FREE delivery on this order!</p>
-            <app-icon name="check-circle" [size]="16" class="text-brand-600" />
+            <p class="flex-1 text-[13px] font-extrabold text-brand-700">🎉 You unlocked FREE delivery on this order!</p>
+            <app-icon name="check-circle" [size]="18" class="text-brand-600" />
           }
         </div>
 
         @for (group of cart.groups(); track group.shop.slug) {
           <div class="overflow-hidden rounded-2xl border border-line bg-white">
             <div class="flex flex-wrap items-center gap-2.5 border-b border-line bg-cream/50 px-4 py-3">
-              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-[10px] font-extrabold text-white" [class]="group.shop.accent">{{ group.shop.initials }}</span>
+              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br text-[13px] font-extrabold text-white" [class]="group.shop.accent">{{ group.shop.initials }}</span>
               <div class="min-w-0 flex-1">
-                <a [routerLink]="['/store', group.shop.slug]" class="flex items-center gap-1.5 text-[11.5px] font-extrabold text-ink transition hover:text-brand-700">
-                  {{ group.shop.name }} <app-icon name="arrow-up-right" [size]="11" class="text-muted" />
+                <a [routerLink]="['/store', group.shop.slug]" class="flex items-center gap-1.5 text-[14px] font-extrabold text-ink transition hover:text-brand-700">
+                  {{ group.shop.name }} <app-icon name="arrow-up-right" [size]="13" class="text-muted" />
                 </a>
-                <p class="text-[9px] font-semibold text-muted">{{ group.count }} items · delivered in {{ group.shop.etaMin }}–{{ group.shop.etaMax }} min from {{ group.shop.area }}</p>
+                <p class="text-[12px] font-semibold text-muted">{{ group.count }} items · delivered in {{ group.shop.etaMin }}–{{ group.shop.etaMax }} min from {{ group.shop.area }}</p>
               </div>
-              <a [routerLink]="['/store', group.shop.slug]" class="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2 py-1 text-[9px] font-extrabold text-brand-700 transition hover:border-brand-300">
-                <app-icon name="plus" [size]="10" /> Add more
+              <a [routerLink]="['/store', group.shop.slug]" class="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2 py-1 text-[12px] font-extrabold text-brand-700 transition hover:border-brand-300">
+                <app-icon name="plus" [size]="12" /> Add more
               </a>
             </div>
 
@@ -96,28 +96,28 @@
                   <div class="min-w-0 flex-1">
                     <div class="flex items-start justify-between gap-2">
                       <div class="min-w-0">
-                        <p class="text-[9px] font-extrabold uppercase tracking-[0.12em] text-faint">{{ line.product.brand }} · {{ line.product.unit }}</p>
-                        <a [routerLink]="['/product', line.product.slug]" class="mt-0.5 line-clamp-2 text-[12px] font-extrabold leading-snug text-ink transition hover:text-brand-700">{{ line.product.title }}</a>
-                        <p class="mt-1 inline-flex items-center gap-1 text-[9px] font-bold text-brand-700"><app-icon name="truck" [size]="10" /> In stock at {{ group.shop.name }}</p>
+                        <p class="text-[12px] font-extrabold uppercase tracking-[0.12em] text-faint">{{ line.product.brand }} · {{ line.product.unit }}</p>
+                        <a [routerLink]="['/product', line.product.slug]" class="mt-0.5 line-clamp-2 text-[15px] font-extrabold leading-snug text-ink transition hover:text-brand-700">{{ line.product.title }}</a>
+                        <p class="mt-1 inline-flex items-center gap-1 text-[12px] font-bold text-brand-700"><app-icon name="truck" [size]="12" /> In stock at {{ group.shop.name }}</p>
                       </div>
                       <button type="button" class="grid h-7 w-7 shrink-0 place-items-center rounded-lg text-faint transition hover:bg-rose-50 hover:text-rose-600" (click)="removeLine(line.product.id, line.product.title)" aria-label="Remove item">
-                        <app-icon name="trash" [size]="14" />
+                        <app-icon name="trash" [size]="16" />
                       </button>
                     </div>
 
                     <div class="mt-2 flex flex-wrap items-end justify-between gap-2">
                       <div class="flex items-baseline gap-1.5">
-                        <span class="text-[14px] font-extrabold text-ink">₹{{ line.product.price * line.qty }}</span>
+                        <span class="text-[17px] font-extrabold text-ink">₹{{ line.product.price * line.qty }}</span>
                         @if (line.product.mrp > line.product.price) {
-                          <span class="price-strike text-[10px] font-semibold">₹{{ line.product.mrp * line.qty }}</span>
-                          <span class="text-[9px] font-extrabold text-brand-700">{{ percent(((line.product.mrp - line.product.price) / line.product.mrp) * 100) }}% off</span>
+                          <span class="price-strike text-[13px] font-semibold">₹{{ line.product.mrp * line.qty }}</span>
+                          <span class="text-[12px] font-extrabold text-brand-700">{{ percent(((line.product.mrp - line.product.price) / line.product.mrp) * 100) }}% off</span>
                         }
                       </div>
 
                       <div class="flex h-8 items-center rounded-lg border border-brand-200 bg-brand-50 text-brand-700">
-                        <button type="button" class="grid h-8 w-8 place-items-center rounded-l-lg transition hover:bg-brand-100" (click)="cart.decrement(line.product.id)" aria-label="Decrease quantity"><app-icon name="minus" [size]="11" /></button>
-                        <span class="min-w-5 text-center text-[11px] font-extrabold">{{ line.qty }}</span>
-                        <button type="button" class="grid h-8 w-8 place-items-center rounded-r-lg transition hover:bg-brand-100" (click)="cart.increment(line.product.id)" aria-label="Increase quantity"><app-icon name="plus" [size]="11" /></button>
+                        <button type="button" class="grid h-8 w-8 place-items-center rounded-l-lg transition hover:bg-brand-100" (click)="cart.decrement(line.product.id)" aria-label="Decrease quantity"><app-icon name="minus" [size]="13" /></button>
+                        <span class="min-w-5 text-center text-[14px] font-extrabold">{{ line.qty }}</span>
+                        <button type="button" class="grid h-8 w-8 place-items-center rounded-r-lg transition hover:bg-brand-100" (click)="cart.increment(line.product.id)" aria-label="Increase quantity"><app-icon name="plus" [size]="13" /></button>
                       </div>
                     </div>
                   </div>
@@ -125,7 +125,7 @@
               }
             </div>
 
-            <div class="flex items-center justify-between border-t border-line bg-cream/30 px-4 py-2 text-[10px] font-bold">
+            <div class="flex items-center justify-between border-t border-line bg-cream/30 px-4 py-2 text-[13px] font-bold">
               <span class="text-muted">Subtotal from this shop</span>
               <span class="text-ink">₹{{ group.subtotal }} <span class="ml-1 font-semibold text-brand-700">saved ₹{{ group.mrp - group.subtotal }}</span></span>
             </div>
@@ -134,26 +134,26 @@
 
         <div class="rounded-2xl border border-line bg-white p-4">
           <div class="flex items-center justify-between gap-2">
-            <h2 class="flex items-center gap-1.5 text-[12px] font-extrabold"><app-icon name="tag" [size]="15" class="text-brand-700" /> Apply a coupon</h2>
-            <a routerLink="/offers" class="text-[9.5px] font-extrabold text-brand-700">View all offers</a>
+            <h2 class="flex items-center gap-1.5 text-[15px] font-extrabold"><app-icon name="tag" [size]="17" class="text-brand-700" /> Apply a coupon</h2>
+            <a routerLink="/offers" class="text-[12px] font-extrabold text-brand-700">View all offers</a>
           </div>
 
           @if (cart.couponCode()) {
             <div class="mt-2.5 flex items-center justify-between gap-2 rounded-xl border border-dashed border-brand-300 bg-brand-50 px-3 py-2.5">
               <div>
-                <p class="text-[11px] font-extrabold text-brand-800">{{ cart.couponCode() }} applied</p>
-                <p class="text-[9.5px] font-semibold text-brand-700">You saved ₹{{ cart.discount() }} on this order</p>
+                <p class="text-[14px] font-extrabold text-brand-800">{{ cart.couponCode() }} applied</p>
+                <p class="text-[12px] font-semibold text-brand-700">You saved ₹{{ cart.discount() }} on this order</p>
               </div>
-              <button type="button" class="text-[9.5px] font-extrabold text-rose-600 hover:underline" (click)="removeCoupon()">Remove</button>
+              <button type="button" class="text-[12px] font-extrabold text-rose-600 hover:underline" (click)="removeCoupon()">Remove</button>
             </div>
           } @else {
             <form (submit)="onCouponSubmit($event)" class="mt-2.5 flex gap-2">
               <input type="text" class="input h-10 flex-1 uppercase placeholder:normal-case" placeholder="Enter coupon code — try SMART50" [value]="couponInput()" (input)="onCouponInput($event)" aria-label="Coupon code" />
-              <button type="submit" class="btn btn-dark h-10 px-4 text-[11px]">Apply</button>
+              <button type="submit" class="btn btn-dark h-10 px-4 text-[14px]">Apply</button>
             </form>
             <div class="mt-2 flex flex-wrap gap-1.5">
               @for (coupon of coupons.slice(0, 3); track coupon.code) {
-                <button type="button" class="rounded-lg border border-dashed border-line bg-cream/50 px-2 py-1 text-[9px] font-extrabold text-ink-soft transition hover:border-brand-300 hover:text-brand-700" (click)="applyCoupon(coupon.code)">{{ coupon.code }}</button>
+                <button type="button" class="rounded-lg border border-dashed border-line bg-cream/50 px-2 py-1 text-[12px] font-extrabold text-ink-soft transition hover:border-brand-300 hover:text-brand-700" (click)="applyCoupon(coupon.code)">{{ coupon.code }}</button>
               }
             </div>
           }
@@ -163,9 +163,9 @@
       <!-- summary -->
       <aside class="lg:sticky lg:top-[11.5rem] lg:h-fit">
         <div class="rounded-2xl border border-line bg-white p-4">
-          <h2 class="text-[12px] font-extrabold uppercase tracking-[0.14em] text-ink">Order summary</h2>
+          <h2 class="text-[15px] font-extrabold uppercase tracking-[0.14em] text-ink">Order summary</h2>
 
-          <dl class="mt-3 space-y-2 text-[11px]">
+          <dl class="mt-3 space-y-2 text-[14px]">
             <div class="flex justify-between gap-3">
               <dt class="font-semibold text-muted">Item total ({{ cart.count() }})</dt>
               <dd class="font-extrabold text-ink">₹{{ cart.subtotal() }}</dd>
@@ -188,41 +188,41 @@
 
           <div class="mt-3 flex items-center justify-between border-t border-line pt-3">
             <div>
-              <p class="text-[11px] font-extrabold text-ink">Total payable</p>
-              <p class="text-[9px] font-semibold text-muted">Inclusive of all taxes</p>
+              <p class="text-[14px] font-extrabold text-ink">Total payable</p>
+              <p class="text-[12px] font-semibold text-muted">Inclusive of all taxes</p>
             </div>
-            <p class="text-2xl font-extrabold tracking-tight text-ink">₹{{ cart.total() }}</p>
+            <p class="text-3xl font-extrabold tracking-tight text-ink">₹{{ cart.total() }}</p>
           </div>
 
           <div class="mt-2 rounded-lg bg-brand-50 px-3 py-2 text-center">
-            <p class="text-[10px] font-extrabold text-brand-800">You're saving ₹{{ cart.savingsTotal() }} on this order 🎉</p>
+            <p class="text-[13px] font-extrabold text-brand-800">You're saving ₹{{ cart.savingsTotal() }} on this order 🎉</p>
           </div>
 
           <button type="button" class="btn btn-primary btn-block mt-3 h-11" (click)="checkout()">
-            Proceed to checkout <app-icon name="arrow-right" [size]="15" />
+            Proceed to checkout <app-icon name="arrow-right" [size]="17" />
           </button>
 
-          <div class="mt-3 flex items-center justify-center gap-3 text-[8.5px] font-bold text-faint">
-            <span class="inline-flex items-center gap-1"><app-icon name="lock" [size]="10" /> Secure</span>
-            <span class="inline-flex items-center gap-1"><app-icon name="shield" [size]="10" /> Verified shops</span>
-            <span class="inline-flex items-center gap-1"><app-icon name="refresh" [size]="10" /> Easy returns</span>
+          <div class="mt-3 flex items-center justify-center gap-3 text-[11px] font-bold text-faint">
+            <span class="inline-flex items-center gap-1"><app-icon name="lock" [size]="12" /> Secure</span>
+            <span class="inline-flex items-center gap-1"><app-icon name="shield" [size]="12" /> Verified shops</span>
+            <span class="inline-flex items-center gap-1"><app-icon name="refresh" [size]="12" /> Easy returns</span>
           </div>
         </div>
 
         <div class="mt-3 rounded-2xl border border-line bg-white p-4">
-          <p class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-ink">Delivery estimate</p>
+          <p class="text-[13px] font-extrabold uppercase tracking-[0.14em] text-ink">Delivery estimate</p>
           <div class="mt-2 flex items-center gap-2">
-            <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="clock" [size]="15" /></span>
+            <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon name="clock" [size]="17" /></span>
             <div>
-              <p class="text-[11px] font-extrabold text-ink">{{ cart.shopCount() > 0 ? "30–45 minutes" : "Select items first" }}</p>
-              <p class="text-[9px] font-semibold text-muted">{{ cart.shopCount() }} {{ cart.shopCount() === 1 ? "shop" : "shops" }} packing together</p>
+              <p class="text-[14px] font-extrabold text-ink">{{ cart.shopCount() > 0 ? "30–45 minutes" : "Select items first" }}</p>
+              <p class="text-[12px] font-semibold text-muted">{{ cart.shopCount() }} {{ cart.shopCount() === 1 ? "shop" : "shops" }} packing together</p>
             </div>
           </div>
         </div>
 
         <div class="mt-3 rounded-2xl border border-sun-200 bg-sun-50 p-4">
-          <p class="flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-sun-700"><app-icon name="sparkles" [size]="12" /> Smart tip</p>
-          <p class="mt-1.5 text-[10.5px] font-semibold leading-relaxed text-ink-soft">You save {{ savingsPercent() }}% vs local MRP. Add items worth ₹{{ cart.freeDeliveryGap() }} more to skip the delivery fee.</p>
+          <p class="flex items-center gap-1 text-[13px] font-extrabold uppercase tracking-[0.14em] text-sun-700"><app-icon name="sparkles" [size]="14" /> Smart tip</p>
+          <p class="mt-1.5 text-[13px] font-semibold leading-relaxed text-ink-soft">You save {{ savingsPercent() }}% vs local MRP. Add items worth ₹{{ cart.freeDeliveryGap() }} more to skip the delivery fee.</p>
         </div>
       </aside>
     </div>
@@ -234,7 +234,7 @@
             <span class="section-eyebrow">Complete your basket</span>
             <h2 class="section-title mt-1.5">People also add</h2>
           </div>
-          <a routerLink="/shop" class="inline-flex items-center gap-1 text-[10.5px] font-extrabold text-brand-700">See all <app-icon name="arrow-right" [size]="12" /></a>
+          <a routerLink="/shop" class="inline-flex items-center gap-1 text-[13px] font-extrabold text-brand-700">See all <app-icon name="arrow-right" [size]="14" /></a>
         </div>
         <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           @for (product of suggested(); track product.id) {

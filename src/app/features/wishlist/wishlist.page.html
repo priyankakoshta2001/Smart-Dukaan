@@ -1,14 +1,14 @@
-<div class="page-enter container-page pt-4 sm:pt-6">
+<div class="page-enter container-page pt-6 sm:pt-8">
   <!-- header -->
   <div class="relative overflow-hidden rounded-[1.5rem] border border-line surface-hero px-5 py-6 sm:px-8 sm:py-7">
     <div class="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-rose-100/60 blur-3xl"></div>
     <div class="relative flex flex-wrap items-end justify-between gap-4">
       <div>
-        <span class="eyebrow"><app-icon name="heart" [size]="12" /> Your saved shelf</span>
-        <h1 class="mt-1.5 text-[1.7rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2.15rem]">
-          Things you <span class="font-display font-normal italic text-brand-700">quietly loved.</span>
+        <span class="eyebrow"><app-icon name="heart" [size]="14" /> Your saved shelf</span>
+        <h1 class="mt-1.5 text-[1.85rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2.35rem]">
+          Things you <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">quietly loved.</span>
         </h1>
-        <p class="mt-1.5 text-[11.5px] font-medium text-muted">
+        <p class="mt-1.5 text-[14px] font-medium text-muted">
           {{ count() }} {{ count() === 1 ? "item" : "items" }} saved
           @if (count() > 0) {
             · ₹{{ basketValue() }} worth of good taste
@@ -19,10 +19,10 @@
       @if (count() > 0) {
         <div class="flex flex-wrap gap-2">
           <button type="button" class="btn btn-primary btn-sm" (click)="moveAll()">
-            <app-icon name="bag" [size]="14" /> Move all to basket
+            <app-icon name="bag" [size]="16" /> Move all to basket
           </button>
           <button type="button" class="btn btn-outline btn-sm text-rose-600 hover:border-rose-200 hover:bg-rose-50" (click)="clearAll()">
-            <app-icon name="trash" [size]="13" /> Clear
+            <app-icon name="trash" [size]="15" /> Clear
           </button>
         </div>
       }
@@ -32,8 +32,8 @@
       <div class="relative mt-5 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line/70">
         @for (item of [{ label: "Saved items", value: count() }, { label: "Basket value", value: "₹" + basketValue() }, { label: "MRP savings", value: "₹" + savings() }]; track item.label) {
           <div class="bg-white/80 px-3 py-2.5 backdrop-blur">
-            <p class="text-[13px] font-extrabold leading-none text-ink">{{ item.value }}</p>
-            <p class="mt-1 text-[8.5px] font-extrabold uppercase tracking-[0.12em] text-muted">{{ item.label }}</p>
+            <p class="text-[16px] font-extrabold leading-none text-ink">{{ item.value }}</p>
+            <p class="mt-1 text-[11px] font-extrabold uppercase tracking-[0.12em] text-muted">{{ item.label }}</p>
           </div>
         }
       </div>
@@ -45,17 +45,17 @@
     <div class="mt-4 grid items-center gap-6 overflow-hidden rounded-2xl border border-line bg-white p-6 sm:p-9 lg:grid-cols-[1.1fr_0.9fr]">
       <div>
         <span class="grid h-14 w-14 place-items-center rounded-2xl bg-rose-50 text-rose-500"><app-icon name="heart" [size]="27" /></span>
-        <h2 class="mt-4 text-xl font-extrabold tracking-tight">Nothing saved just yet</h2>
-        <p class="mt-1.5 max-w-md text-[12px] font-medium leading-relaxed text-muted">
+        <h2 class="mt-4 text-2xl font-extrabold tracking-tight">Nothing saved just yet</h2>
+        <p class="mt-1.5 max-w-md text-[15px] font-medium leading-relaxed text-muted">
           Tap the little heart on any product and it will wait right here — across visits, across devices on this browser. No pressure, no expiry.
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
-          <a routerLink="/shop" class="btn btn-primary">Browse all products <app-icon name="arrow-right" [size]="15" /></a>
-          <a routerLink="/offers" class="btn btn-outline"><app-icon name="tag" [size]="14" /> See today's deals</a>
+          <a routerLink="/shop" class="btn btn-primary">Browse all products <app-icon name="arrow-right" [size]="17" /></a>
+          <a routerLink="/offers" class="btn btn-outline"><app-icon name="tag" [size]="16" /> See today's deals</a>
         </div>
         <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2">
           @for (perk of perks; track perk.title) {
-            <span class="flex items-center gap-1.5 text-[9.5px] font-bold text-muted"><app-icon [name]="perk.icon" [size]="12" class="text-brand-700" /> {{ perk.title }}</span>
+            <span class="flex items-center gap-1.5 text-[12px] font-bold text-muted"><app-icon [name]="perk.icon" [size]="14" class="text-brand-700" /> {{ perk.title }}</span>
           }
         </div>
       </div>
@@ -70,15 +70,15 @@
   } @else {
     <!-- toolbar -->
     <div class="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-white px-3.5 py-2.5">
-      <p class="text-[10.5px] font-semibold text-muted">
+      <p class="text-[13px] font-semibold text-muted">
         <span class="font-extrabold text-ink">{{ count() }}</span> saved
         @if (inBasket() > 0) {
           · <span class="font-extrabold text-brand-700">{{ inBasket() }}</span> already in basket
         }
       </p>
       <div class="flex items-center gap-3">
-        <a routerLink="/cart" class="flex items-center gap-1 text-[10px] font-extrabold text-brand-700 hover:underline"><app-icon name="cart" [size]="12" /> View basket</a>
-        <a routerLink="/shop" class="flex items-center gap-1 text-[10px] font-extrabold text-muted hover:text-brand-700">Keep browsing <app-icon name="arrow-right" [size]="11" /></a>
+        <a routerLink="/cart" class="flex items-center gap-1 text-[13px] font-extrabold text-brand-700 hover:underline"><app-icon name="cart" [size]="14" /> View basket</a>
+        <a routerLink="/shop" class="flex items-center gap-1 text-[13px] font-extrabold text-muted hover:text-brand-700">Keep browsing <app-icon name="arrow-right" [size]="13" /></a>
       </div>
     </div>
 
@@ -93,10 +93,10 @@
     <div class="mt-5 grid gap-2.5 sm:grid-cols-3">
       @for (perk of perks; track perk.title) {
         <div class="flex items-start gap-2.5 rounded-xl border border-line bg-white p-3">
-          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon [name]="perk.icon" [size]="15" /></span>
+          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-700"><app-icon [name]="perk.icon" [size]="17" /></span>
           <div class="leading-tight">
-            <p class="text-[10.5px] font-extrabold text-ink">{{ perk.title }}</p>
-            <p class="mt-0.5 text-[9px] font-semibold leading-relaxed text-muted">{{ perk.copy }}</p>
+            <p class="text-[13px] font-extrabold text-ink">{{ perk.title }}</p>
+            <p class="mt-0.5 text-[12px] font-semibold leading-relaxed text-muted">{{ perk.copy }}</p>
           </div>
         </div>
       }
@@ -108,10 +108,10 @@
     <section class="mt-10">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <span class="eyebrow"><app-icon name="sparkles" [size]="12" /> Picked for you</span>
-          <h2 class="section-title mt-1.5 text-[1.3rem] sm:text-[1.55rem]">You might <span class="font-display font-normal italic text-brand-700">love these too.</span></h2>
+          <span class="eyebrow"><app-icon name="sparkles" [size]="14" /> Picked for you</span>
+          <h2 class="section-title mt-1.5 text-[1.45rem] sm:text-[1.7rem]">You might <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">love these too.</span></h2>
         </div>
-        <a routerLink="/shop" class="link-arrow">Browse all <app-icon name="arrow-right" [size]="13" /></a>
+        <a routerLink="/shop" class="link-arrow">Browse all <app-icon name="arrow-right" [size]="15" /></a>
       </div>
       <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         @for (product of recommended(); track product.id) {

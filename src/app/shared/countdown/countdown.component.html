@@ -1,11 +1,11 @@
 <div class="flex items-center gap-1.5">
   @for (part of parts(); track part.label) {
     <div class="flex flex-col items-center">
-      <span class="grid h-10 min-w-10 place-items-center rounded-xl bg-white px-1.5 text-[15px] font-extrabold tabular-nums text-ink shadow-sm">{{ part.value }}</span>
-      <span class="mt-1 text-[8px] font-extrabold uppercase tracking-[0.14em] text-white/55">{{ part.label }}</span>
+      <span class="grid h-10 min-w-10 place-items-center rounded-xl bg-white px-1.5 text-[17px] font-extrabold tabular-nums text-ink shadow-sm">{{ part.value }}</span>
+      <span class="mt-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-white/55">{{ part.label }}</span>
     </div>
     @if (part.label !== "Sec") {
-      <span class="-mt-3 text-sm font-extrabold text-white/30">:</span>
+      <span class="-mt-3 text-base font-extrabold text-white/30">:</span>
     }
   }
 </div>

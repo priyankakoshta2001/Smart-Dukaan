@@ -16,10 +16,10 @@
         [class.bg-cream]="message.tone === 'info'"
         [class.text-muted]="message.tone === 'info'"
       >
-        <app-icon [name]="message.tone === 'success' ? 'check-circle' : message.tone === 'error' ? 'x-circle' : 'info'" [size]="15" />
+        <app-icon [name]="message.tone === 'success' ? 'check-circle' : message.tone === 'error' ? 'x-circle' : 'info'" [size]="17" />
       </span>
-      <p class="flex-1 pt-0.5 text-[11.5px] font-bold leading-snug text-ink">{{ message.text }}</p>
-      <button type="button" class="mt-0.5 text-faint transition hover:text-ink" (click)="toast.dismiss(message.id)" aria-label="Dismiss"><app-icon name="close" [size]="13" /></button>
+      <p class="flex-1 pt-0.5 text-[14px] font-bold leading-snug text-ink">{{ message.text }}</p>
+      <button type="button" class="mt-0.5 text-faint transition hover:text-ink" (click)="toast.dismiss(message.id)" aria-label="Dismiss"><app-icon name="close" [size]="15" /></button>
     </div>
   }
 </div>

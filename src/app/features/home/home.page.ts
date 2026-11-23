@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { CATEGORIES, FAQS, PARTNER_BENEFITS, STEPS, TESTIMONIALS } from "../../core/data/catalog";
 import type { Product } from "../../core/models";
@@ -29,6 +29,7 @@ export class HomePage {
 
   private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly categories = this.catalog.categoryViews;
   readonly homeCategories = computed(() => {
@@ -60,10 +61,19 @@ export class HomePage {
     "atta-rice-pulses": "/assets/reference/home-category-grains.jpg",
     ayurveda: "/assets/reference/home-category-ayurveda.jpg",
   };
-  readonly promoArtwork: Record<string, string> = {
-    grocery: "/assets/reference/home-promo-grocery.jpg",
-    "fruits-vegetables": "/assets/reference/home-promo-fruits.jpg",
-    dairy: "/assets/reference/home-promo-dairy.jpg",
+  readonly promoArtwork: Record<string, { desktop: string; mobile: string }> = {
+    grocery: {
+      desktop: "/assets/reference/home-promo-grocery-user.png",
+      mobile: "/assets/reference/home-promo-grocery-mobile.jpg",
+    },
+    "fruits-vegetables": {
+      desktop: "/assets/reference/home-promo-fruits-user.png",
+      mobile: "/assets/reference/home-promo-fruits-mobile.jpg",
+    },
+    dairy: {
+      desktop: "/assets/reference/home-promo-dairy-user.png",
+      mobile: "/assets/reference/home-promo-dairy-mobile.jpg",
+    },
   };
   readonly featuredShops = this.catalog.featuredShops;
   readonly bestsellers = this.catalog.bestsellers;
@@ -91,6 +101,40 @@ export class HomePage {
   readonly heroSide = computed<Product | undefined>(() => this.heroProducts()[1]);
   readonly heroThird = computed<Product | undefined>(() => this.heroProducts()[2]);
   readonly heroCategories = computed(() => this.categories().slice(0, 4));
+
+  readonly appCard = {
+    desktop: "/assets/reference/home-app-card-static.png",
+    mobile: "/assets/reference/home-app-card-mobile.jpg",
+    alt: "Get the Smart Dukaan App — order from nearby shops with live tracking and exclusive deals",
+  };
+
+  readonly heroSlides = [
+    {
+      id: "daily",
+      desktop: "/assets/reference/home-hero-daily-desktop.jpg",
+      mobile: "/assets/reference/home-hero-daily-mobile.jpg",
+      alt: "All your daily needs from nearby shops — Smart Dukaan banner",
+    },
+    {
+      id: "fresh",
+      desktop: "/assets/reference/home-hero-fresh-desktop.jpg",
+      mobile: "/assets/reference/home-hero-fresh-mobile.jpg",
+      alt: "Fresh fruits and vegetables from nearby shops — Smart Dukaan banner",
+    },
+    {
+      id: "dairy",
+      desktop: "/assets/reference/home-hero-dairy-desktop.jpg",
+      mobile: "/assets/reference/home-hero-dairy-mobile.jpg",
+      alt: "Dairy and breakfast essentials from nearby shops — Smart Dukaan banner",
+    },
+  ];
+  readonly activeSlide = signal(0);
+  private heroTimer?: ReturnType<typeof setInterval>;
+
+  constructor() {
+    this.startHeroCarousel();
+    this.destroyRef.onDestroy(() => this.stopHeroCarousel());
+  }
 
   readonly dealProducts = computed(() =>
     [...this.catalog.products()]
@@ -139,6 +183,31 @@ export class HomePage {
       },
     ];
   });
+
+  selectHeroSlide(index: number): void {
+    this.activeSlide.set(index);
+    this.restartHeroCarousel();
+  }
+
+  private startHeroCarousel(): void {
+    this.heroTimer = setInterval(() => this.nextHeroSlide(), 4200);
+  }
+
+  private nextHeroSlide(): void {
+    this.activeSlide.update((current) => (current + 1) % this.heroSlides.length);
+  }
+
+  private restartHeroCarousel(): void {
+    this.stopHeroCarousel();
+    this.startHeroCarousel();
+  }
+
+  private stopHeroCarousel(): void {
+    if (this.heroTimer !== undefined) {
+      clearInterval(this.heroTimer);
+      this.heroTimer = undefined;
+    }
+  }
 
   onQuery(event: Event): void {
     this.query.set((event.target as HTMLInputElement).value);

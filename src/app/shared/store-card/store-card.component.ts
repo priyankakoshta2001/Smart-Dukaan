@@ -9,6 +9,7 @@ import { IconComponent } from "../icon/icon.component";
   imports: [RouterLink, IconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./store-card.component.html",
+  host: { class: "block min-w-0" },
 })
 export class StoreCardComponent {
   readonly shop = input.required<Shop>();

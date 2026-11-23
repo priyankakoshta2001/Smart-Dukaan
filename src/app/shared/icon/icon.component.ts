@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component, input } from "@angular/core";
   selector: "app-icon",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: "inline-flex flex-none" },
   templateUrl: "./icon.component.html",
 })
 export class IconComponent {
