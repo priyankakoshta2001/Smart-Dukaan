@@ -1,28 +1,25 @@
-<div class="page-enter container-page pt-6">
-  <!-- header -->
-  <div class="relative overflow-hidden rounded-[1.5rem] border border-line surface-hero px-5 py-6 sm:px-7">
-    <div class="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full bg-brand-100/70 blur-3xl"></div>
-    <div class="relative flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3.5">
-        <span class="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-950 text-2xl font-extrabold text-white shadow-[0_16px_30px_-16px_rgba(10,112,68,0.9)]">{{ auth.isLoggedIn() ? userInitial() : "G" }}</span>
-        <div>
-          <span class="eyebrow">{{ auth.isLoggedIn() ? "Member since 2024" : "Guest mode" }}</span>
-          <h1 class="mt-0.5 text-[1.65rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2rem]">
-            Hey {{ auth.isLoggedIn() ? auth.firstName() : "there" }}, <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">welcome back.</span>
-          </h1>
-          <p class="mt-0.5 text-[13px] font-semibold text-muted">{{ auth.user()?.email ?? "Your orders and addresses are saved on this device." }}</p>
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <a routerLink="/shop" class="btn btn-primary btn-sm"><app-icon name="bag" [size]="16" /> Shop again</a>
-        @if (auth.isLoggedIn()) {
-          <button type="button" class="btn btn-outline btn-sm" (click)="logout()"><app-icon name="logout" [size]="16" /> Sign out</button>
-        } @else {
-          <a routerLink="/login" class="btn btn-outline btn-sm"><app-icon name="user" [size]="16" /> Sign in</a>
-        }
-      </div>
+<div class="page-enter">
+  <app-page-banner
+    compact
+    [eyebrow]="auth.isLoggedIn() ? 'Member since 2024' : 'Guest mode'"
+    eyebrowIcon="user"
+    [title]="'Hey ' + (auth.isLoggedIn() ? auth.firstName() : 'there') + ','"
+    highlight="welcome back."
+    [copy]="auth.user()?.email ?? 'Your orders and addresses are saved on this device.'"
+    image="/assets/reference/home-hero-art.jpg"
+    imageAlt="A Smart Dukaan bag full of fresh groceries"
+  >
+    <div actions class="contents">
+      <a routerLink="/shop" class="btn btn-primary btn-sm"><app-icon name="bag" [size]="16" /> Shop again</a>
+      @if (auth.isLoggedIn()) {
+        <button type="button" class="btn btn-outline btn-sm" (click)="logout()"><app-icon name="logout" [size]="16" /> Sign out</button>
+      } @else {
+        <a routerLink="/login" class="btn btn-outline btn-sm"><app-icon name="user" [size]="16" /> Sign in</a>
+      }
     </div>
-  </div>
+  </app-page-banner>
+
+  <div class="container-page pb-8 pt-6 sm:pb-12 sm:pt-8">
 
   @if (!auth.isLoggedIn()) {
     <div class="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-brand-200 bg-brand-50/60 px-4 py-3">
@@ -365,4 +362,6 @@
       }
     </div>
   </div>
+</div>
+
 </div>

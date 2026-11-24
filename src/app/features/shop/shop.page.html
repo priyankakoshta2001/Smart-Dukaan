@@ -1,53 +1,60 @@
-<section class="border-b border-line bg-white">
-  <div class="container-page py-8">
-    <nav class="flex items-center gap-1.5 text-[13px] font-bold text-muted" aria-label="Breadcrumb">
-      <a routerLink="/" class="transition hover:text-brand-700">Home</a>
-      <app-icon name="chevron-right" [size]="12" class="text-faint" />
-      <a routerLink="/shop" class="transition hover:text-brand-700">Shop</a>
-      <app-icon name="chevron-right" [size]="12" class="text-faint" />
-      <span class="text-ink">{{ categoryLabel() }}</span>
-    </nav>
+<!-- ============================================================ BANNER -->
+<app-page-banner
+  compact
+  [crumbs]="crumbs()"
+  [eyebrow]="'Browse by category · ' + location.city()"
+  eyebrowIcon="grid"
+  [title]="category() === 'all' ? 'Browse by' : categoryLabel()"
+  [highlight]="category() === 'all' ? 'Category' : 'from nearby shops'"
+  copy="Fresh stock from verified shops near you. Add from multiple shops — checkout once, pay one delivery fee."
+  [image]="categoryImage()"
+  [imageFit]="category() === 'all' ? 'cover' : 'contain'"
+  [imageAlt]="categoryLabel()"
+  [badge]="results().length + ' items'"
+  badgeIcon="bag"
+>
+  <div actions class="contents">
+    <button type="button" class="btn btn-outline btn-sm lg:hidden" (click)="filtersOpen.set(!filtersOpen())">
+      <app-icon name="sliders" [size]="16" /> Filters
+      @if (hasFilters()) {
+        <span class="ml-0.5 h-1.5 w-1.5 rounded-full bg-brand-600"></span>
+      }
+    </button>
+    <select class="input h-10 w-48 text-[14px] font-bold" [value]="sort()" (change)="onSort($event)" aria-label="Sort products">
+      @for (option of sortOptions; track option.value) {
+        <option [value]="option.value">{{ option.label }}</option>
+      }
+    </select>
+  </div>
+</app-page-banner>
 
-    <div class="mt-2.5 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <div class="flex flex-wrap items-center gap-2">
-          <h1 class="text-4xl font-extrabold tracking-[-0.045em] sm:text-4xl">{{ categoryLabel() }}</h1>
-          <span class="badge badge-green">{{ results().length }} items</span>
-        </div>
-        <p class="mt-1.5 max-w-xl text-[15px] leading-relaxed text-muted">
-          Fresh stock from verified shops in {{ location.city() }}. Add from multiple shops — checkout once, pay one delivery fee.
-        </p>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <button type="button" class="btn btn-outline btn-sm lg:hidden" (click)="filtersOpen.set(!filtersOpen())">
-          <app-icon name="sliders" [size]="16" /> Filters
-          @if (hasFilters()) {
-            <span class="ml-0.5 h-1.5 w-1.5 rounded-full bg-brand-600"></span>
-          }
-        </button>
-        <select class="input h-9 w-44 text-[14px] font-bold" [value]="sort()" (change)="onSort($event)" aria-label="Sort products">
-          @for (option of sortOptions; track option.value) {
-            <option [value]="option.value">{{ option.label }}</option>
-          }
-        </select>
-      </div>
-    </div>
-
-    <div class="mt-4 flex flex-wrap gap-1.5 hide-scrollbar pb-1 sm:flex-nowrap sm:overflow-x-auto">
-      <button type="button" class="chip shrink-0" [class.chip-active]="category() === 'all'" (click)="selectCategory('all')">
-        <app-icon name="grid" [size]="14" /> All
+<!-- ============================================================ CATEGORY RAIL -->
+<section class="container-page pt-6 sm:pt-8" aria-label="Product categories">
+  <div class="rounded-[1.4rem] border border-white/80 bg-white/80 p-3 shadow-soft ring-1 ring-brand-100/60 backdrop-blur sm:p-4">
+    <div class="hide-scrollbar flex gap-3 overflow-x-auto pb-1 sm:gap-4">
+      <button type="button" class="group flex w-[96px] shrink-0 flex-col items-center gap-2 sm:w-[118px]" [attr.aria-pressed]="category() === 'all'" (click)="selectCategory('all')">
+        <span
+          class="relative grid aspect-[10/7] w-full place-items-center overflow-hidden rounded-2xl bg-gradient-to-br from-brand-600 to-brand-900 text-white shadow-sm ring-2 ring-offset-2 ring-offset-white transition group-hover:-translate-y-0.5"
+          [class]="category() === 'all' ? 'ring-brand-500' : 'ring-transparent'"
+        ><app-icon name="grid" [size]="26" /></span>
+        <span class="text-center text-[12.5px] font-extrabold leading-tight sm:text-[13.5px]" [class]="category() === 'all' ? 'text-brand-800' : 'text-ink'">All</span>
       </button>
       @for (item of categories(); track item.slug) {
-        <button type="button" class="chip shrink-0" [class.chip-active]="category() === item.slug" (click)="selectCategory(item.slug)">
-          <span class="text-[15px]">{{ item.emoji }}</span> {{ item.short }}
+        <button type="button" class="group flex w-[96px] shrink-0 flex-col items-center gap-2 sm:w-[118px]" [attr.aria-pressed]="category() === item.slug" (click)="selectCategory(item.slug)">
+          <span
+            class="relative block aspect-[10/7] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-brand-50 to-white shadow-sm ring-2 ring-offset-2 ring-offset-white transition group-hover:-translate-y-0.5"
+            [class]="category() === item.slug ? 'ring-brand-500' : 'ring-transparent group-hover:ring-brand-200'"
+          >
+            <img [src]="artFor(item.slug)" [alt]="item.short" loading="lazy" class="h-full w-full object-cover" />
+          </span>
+          <span class="text-center text-[12.5px] font-extrabold leading-tight sm:text-[13.5px]" [class]="category() === item.slug ? 'text-brand-800' : 'text-ink'">{{ item.short }}</span>
         </button>
       }
     </div>
   </div>
 </section>
 
-<section class="section-pad pt-7">
+<section class="section-pad pt-6 sm:pt-8">
   <div class="container-page">
     <div class="grid gap-6 lg:grid-cols-[15rem_1fr]">
       <!-- sidebar -->

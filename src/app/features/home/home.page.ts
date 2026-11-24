@@ -61,6 +61,27 @@ export class HomePage {
     "atta-rice-pulses": "/assets/reference/home-category-grains.jpg",
     ayurveda: "/assets/reference/home-category-ayurveda.jpg",
   };
+  /** Two identical sets make the category strip loop seamlessly. The second
+      set is hidden from assistive tech and keyboard navigation. */
+  readonly marqueeSets = computed(() => {
+    const base = [
+      ...this.homeCategories().map((category) => ({
+        key: category.slug,
+        slug: category.slug,
+        short: category.short,
+        image: this.categoryArtwork[category.slug] ?? "",
+      })),
+      { key: "all", slug: "", short: "More Categories", image: "" },
+    ];
+    const build = (clone: boolean) =>
+      base.map((item) => ({
+        ...item,
+        id: clone ? `${item.key}-clone` : item.key,
+        clone,
+      }));
+    return [build(false), build(true)];
+  });
+
   readonly promoArtwork: Record<string, { desktop: string; mobile: string }> = {
     grocery: {
       desktop: "/assets/reference/home-promo-grocery-user.png",
@@ -104,7 +125,7 @@ export class HomePage {
 
   readonly appCard = {
     desktop: "/assets/reference/home-app-card-static.png",
-    mobile: "/assets/reference/home-app-card-mobile.jpg",
+    mobile: "/assets/banners/home-app-stack.webp",
     alt: "Get the Smart Dukaan App — order from nearby shops with live tracking and exclusive deals",
   };
 
@@ -112,19 +133,19 @@ export class HomePage {
     {
       id: "daily",
       desktop: "/assets/reference/home-hero-daily-desktop.jpg",
-      mobile: "/assets/reference/home-hero-daily-mobile.jpg",
+      mobile: "/assets/banners/home-daily-stack.webp",
       alt: "All your daily needs from nearby shops — Smart Dukaan banner",
     },
     {
       id: "fresh",
       desktop: "/assets/reference/home-hero-fresh-desktop.jpg",
-      mobile: "/assets/reference/home-hero-fresh-mobile.jpg",
+      mobile: "/assets/banners/home-fresh-stack.webp",
       alt: "Fresh fruits and vegetables from nearby shops — Smart Dukaan banner",
     },
     {
       id: "dairy",
       desktop: "/assets/reference/home-hero-dairy-desktop.jpg",
-      mobile: "/assets/reference/home-hero-dairy-mobile.jpg",
+      mobile: "/assets/banners/home-dairy-stack.webp",
       alt: "Dairy and breakfast essentials from nearby shops — Smart Dukaan banner",
     },
   ];

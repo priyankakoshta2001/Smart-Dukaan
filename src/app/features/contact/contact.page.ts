@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/cor
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { ToastService } from "../../core/services/toast.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 const TOPIC_PRESETS: Record<string, { topic: string; message: string }> = {
   "shop-partner": {
@@ -26,7 +27,7 @@ interface Channel {
 @Component({
   selector: "app-contact-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./contact.page.html",
 })

@@ -4,11 +4,12 @@ import { ActivatedRoute, RouterLink } from "@angular/router";
 import { OrderService } from "../../core/services/order.service";
 import { ToastService } from "../../core/services/toast.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 @Component({
   selector: "app-order-success-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./order-success.page.html",
 })

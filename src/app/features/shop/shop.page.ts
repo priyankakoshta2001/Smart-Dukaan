@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { CatalogService } from "../../core/services/catalog.service";
 import { LocationService } from "../../core/services/location.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 import { ProductCardComponent } from "../../shared/product-card/product-card.component";
 
 type SortKey = "popular" | "price-low" | "price-high" | "discount" | "rating";
@@ -11,7 +12,7 @@ type SortKey = "popular" | "price-low" | "price-high" | "discount" | "rating";
 @Component({
   selector: "app-shop-page",
   standalone: true,
-  imports: [RouterLink, IconComponent, ProductCardComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent, ProductCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./shop.page.html",
 })
@@ -86,6 +87,35 @@ export class ShopPage {
     this.category() === "all"
       ? "All products"
       : (this.catalog.categories.find((item) => item.slug === this.category())?.name ?? "All products"),
+  );
+
+  private readonly artwork: Record<string, string> = {
+    grocery: "/assets/reference/home-category-grocery.jpg",
+    dairy: "/assets/reference/home-category-dairy.jpg",
+    "fruits-vegetables": "/assets/reference/home-category-fruits.jpg",
+    snacks: "/assets/reference/home-category-snacks.jpg",
+    beverages: "/assets/reference/home-category-beverages.jpg",
+    "home-care": "/assets/reference/home-category-home-care.jpg",
+    "personal-care": "/assets/reference/home-category-personal-care.jpg",
+    "baby-care": "/assets/reference/home-category-baby-care.jpg",
+    "atta-rice-pulses": "/assets/reference/home-category-grains.jpg",
+    ayurveda: "/assets/reference/home-category-ayurveda.jpg",
+    household: "/assets/reference/browse-category-household.jpg",
+  };
+
+  artFor(slug: string): string {
+    return this.artwork[slug] ?? "/assets/reference/nearby-basket-art.jpg";
+  }
+
+  readonly crumbs = computed(() => [
+    { label: "Home", link: "/" },
+    { label: "Browse by Category", link: "/shop" },
+    ...(this.category() === "all" ? [] : [{ label: this.categoryLabel() }]),
+  ]);
+
+  /** Banner artwork follows the selected category. */
+  readonly categoryImage = computed(() =>
+    this.category() === "all" ? "/assets/reference/nearby-basket-art.jpg" : this.artFor(this.category()),
   );
 
   readonly hasFilters = computed(

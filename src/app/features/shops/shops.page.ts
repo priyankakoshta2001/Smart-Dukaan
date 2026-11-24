@@ -3,12 +3,13 @@ import { RouterLink } from "@angular/router";
 import { CatalogService } from "../../core/services/catalog.service";
 import { LocationService } from "../../core/services/location.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 import { StoreCardComponent } from "../../shared/store-card/store-card.component";
 
 @Component({
   selector: "app-shops-page",
   standalone: true,
-  imports: [RouterLink, IconComponent, StoreCardComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent, StoreCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./shops.page.html",
 })

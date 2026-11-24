@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@a
 import { Router, RouterLink } from "@angular/router";
 import { CatalogService } from "../../core/services/catalog.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 import { ProductCardComponent } from "../../shared/product-card/product-card.component";
 
 @Component({
   selector: "app-not-found-page",
   standalone: true,
-  imports: [RouterLink, IconComponent, ProductCardComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent, ProductCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./not-found.page.html",
 })

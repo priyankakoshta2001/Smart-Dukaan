@@ -4,6 +4,7 @@ import { FAQS } from "../../core/data/catalog";
 import { OrderService } from "../../core/services/order.service";
 import { ToastService } from "../../core/services/toast.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 interface HelpTopic {
   icon: string;
@@ -16,7 +17,7 @@ interface HelpTopic {
 @Component({
   selector: "app-help-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./help.page.html",
 })

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 interface FeatureGroup {
   eyebrow: string;
@@ -11,7 +12,7 @@ interface FeatureGroup {
 @Component({
   selector: "app-features-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./features.page.html",
 })

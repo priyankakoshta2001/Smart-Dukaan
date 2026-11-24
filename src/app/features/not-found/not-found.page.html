@@ -1,38 +1,33 @@
-<div class="page-enter container-page pt-6 sm:pt-8">
-  <div class="relative overflow-hidden rounded-[1.75rem] border border-line surface-hero px-5 py-6 text-center sm:px-8 sm:py-8">
-    <div class="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-brand-100/60 blur-3xl"></div>
-    <div class="pointer-events-none absolute -bottom-24 right-0 h-56 w-56 rounded-full bg-sun-100/70 blur-3xl"></div>
-
-    <div class="relative mx-auto max-w-xl">
-      <div class="flex items-center justify-center gap-3">
-        <span class="font-display text-[5.8rem] italic leading-none text-brand-300 sm:text-[7.4rem]">4</span>
-        <span class="grid h-16 w-16 place-items-center rounded-full border border-line bg-white text-brand-700 shadow-soft sm:h-20 sm:w-20">
-          <app-icon name="bag" [size]="30" />
-        </span>
-        <span class="font-display text-[5.8rem] italic leading-none text-brand-300 sm:text-[7.4rem]">4</span>
-      </div>
-
-      <span class="eyebrow mt-2 justify-center"><app-icon name="search" [size]="14" /> Aisle not found</span>
-      <h1 class="mt-2 text-[1.85rem] font-extrabold leading-tight tracking-[-0.04em] sm:text-[2.4rem]">
-        This shelf seems to have<br />
-        <span class="relative z-0 font-display font-normal italic text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">wandered off.</span>
-      </h1>
-      <p class="mx-auto mt-2 max-w-md text-[14px] font-medium leading-relaxed text-muted">
-        The page you're looking for may have moved, sold out, or never existed. No worries — the rest of the marketplace is well stocked.
-      </p>
-
-      <form (submit)="search($event)" class="relative mx-auto mt-5 max-w-md">
-        <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"><app-icon name="search" [size]="18" /></span>
-        <input type="text" class="input h-11 pl-10 pr-24 text-[15px]" placeholder="Search for milk, atta, mascara…" [value]="query()" (input)="onQuery($event)" aria-label="Search products" />
-        <button type="submit" class="btn btn-primary btn-sm absolute right-1.5 top-1/2 h-8 -translate-y-1/2 px-3.5 text-[13px]">Search</button>
-      </form>
-
-      <div class="mt-4 flex flex-wrap justify-center gap-2">
-        <a routerLink="/" class="btn btn-primary btn-sm"><app-icon name="home" [size]="15" /> Back home</a>
-        <a routerLink="/shop" class="btn btn-outline btn-sm"><app-icon name="bag" [size]="15" /> Shop everything</a>
-      </div>
+<div class="page-enter">
+  <app-page-banner
+    align="center"
+    eyebrow="Aisle not found"
+    eyebrowIcon="search"
+    title="This shelf seems to have"
+    highlight="wandered off."
+    copy="The page you're looking for may have moved, sold out, or never existed. No worries — the rest of the marketplace is well stocked."
+  >
+    <div lead class="mb-1 flex items-center justify-center gap-3">
+      <span class="font-display text-[5rem] italic leading-none text-brand-300 sm:text-[6.5rem]">4</span>
+      <span class="grid h-14 w-14 place-items-center rounded-full border border-line bg-white text-brand-700 shadow-soft sm:h-[4.5rem] sm:w-[4.5rem]">
+        <app-icon name="bag" [size]="28" />
+      </span>
+      <span class="font-display text-[5rem] italic leading-none text-brand-300 sm:text-[6.5rem]">4</span>
     </div>
-  </div>
+
+    <form (submit)="search($event)" class="relative mx-auto mt-5 max-w-md">
+      <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"><app-icon name="search" [size]="18" /></span>
+      <input type="text" class="input h-11 pl-10 pr-24 text-[15px]" placeholder="Search for milk, atta, mascara…" [value]="query()" (input)="onQuery($event)" aria-label="Search products" />
+      <button type="submit" class="btn btn-primary btn-sm absolute right-1.5 top-1/2 h-8 -translate-y-1/2 px-3.5 text-[13px]">Search</button>
+    </form>
+
+    <div actions class="contents">
+      <a routerLink="/" class="btn btn-primary btn-sm"><app-icon name="home" [size]="15" /> Back home</a>
+      <a routerLink="/shop" class="btn btn-outline btn-sm"><app-icon name="bag" [size]="15" /> Shop everything</a>
+    </div>
+  </app-page-banner>
+
+  <div class="container-page pb-8 pt-6 sm:pb-12 sm:pt-8">
 
   <!-- quick links -->
   <div class="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
@@ -71,4 +66,6 @@
     </p>
     <a routerLink="/contact" class="btn btn-outline btn-sm">Report a broken link</a>
   </div>
+</div>
+
 </div>

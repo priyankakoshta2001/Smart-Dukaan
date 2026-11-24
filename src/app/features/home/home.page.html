@@ -1,12 +1,12 @@
 <!-- ============================================================ HERO -->
-<section class="bg-cream pb-5 pt-4">
-  <div class="container-page">
-    <div
-      class="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1.87fr)_minmax(0,1fr)]"
-    >
-      <!-- first banner : carousel -->
+<section class="relative overflow-hidden bg-gradient-to-b from-[#e6f4e9] via-[#f2f9ef] to-cream pb-5 pt-4">
+  <span class="pointer-events-none absolute -left-24 -top-28 h-80 w-80 rounded-full bg-brand-100/60 blur-3xl"></span>
+  <span class="pointer-events-none absolute -bottom-32 -right-24 h-96 w-96 rounded-full bg-sun-100/50 blur-3xl"></span>
+  <div class="container-page relative">
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1.87fr)_minmax(0,1fr)]">
+      <!-- carousel -->
       <div
-        class="relative aspect-[620/480] w-full overflow-hidden rounded-[1.1rem] bg-[#f7fbf7] sm:aspect-[940/366] sm:rounded-[1.4rem] lg:rounded-[1.6rem]"
+        class="relative aspect-square overflow-hidden rounded-[1.35rem] border border-white/80 bg-gradient-to-br from-[#e8f6e6] via-[#f1fbef] to-[#dcf2df] shadow-soft ring-1 ring-brand-100/70 sm:aspect-[940/366] sm:rounded-[1.4rem] lg:rounded-[1.6rem]"
       >
         <div class="absolute inset-0">
           @for (slide of heroSlides; track slide.id) {
@@ -31,7 +31,7 @@
 
         <a
           routerLink="/shops"
-          class="btn btn-primary absolute bottom-[9%] left-[3%] z-20 min-h-[30px] px-3 text-[12px] sm:bottom-[6%] sm:left-[3.8%] sm:min-h-[34px] sm:px-4 sm:text-[13px] lg:px-5 lg:text-[15px]"
+          class="btn btn-primary absolute bottom-[5%] left-[5%] z-20 h-10 gap-1.5 px-4 text-[13px] sm:bottom-[5%] sm:left-[3.8%] sm:h-[11%] sm:px-4 sm:text-[clamp(11px,1.05vw,16px)] lg:px-5"
         >
           Shop Now
           <app-icon name="arrow-right" [size]="13" class="sm:hidden" /><app-icon
@@ -61,9 +61,9 @@
         </div>
       </div>
 
-      <!-- second banner : static -->
+      <!-- app card -->
       <div
-        class="relative aspect-[620/520] w-full overflow-hidden rounded-[1.1rem] bg-[#f7fbf7] sm:aspect-[680/495] sm:rounded-[1.4rem] lg:rounded-[1.6rem]"
+        class="relative aspect-square overflow-hidden rounded-[1.35rem] border border-white/80 bg-gradient-to-br from-[#eef8ef] via-[#f7fbf7] to-[#e6f3e8] shadow-soft ring-1 ring-brand-100/70 sm:aspect-[680/495] sm:rounded-[1.4rem] lg:rounded-[1.6rem]"
       >
         <img
           [src]="appCard.mobile"
@@ -80,25 +80,21 @@
           <button
             type="button"
             aria-label="Get Smart Dukaan on Google Play"
-            class="absolute bottom-[20%] left-[5%] flex h-[36px] w-[52%] items-center justify-center gap-1.5 rounded-lg bg-ink px-2 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950 sm:bottom-[28.7%] sm:left-[6.3%] sm:h-[10.9%] sm:w-[21.5%] sm:gap-1 sm:px-2"
+            class="absolute bottom-[20%] left-[5.2%] flex h-[42px] w-[47%] items-center justify-center gap-1.5 rounded-lg bg-ink px-2 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950 sm:bottom-[27%] sm:left-[6.3%] sm:h-[12%] sm:w-[24%] sm:gap-1 sm:px-2"
             (click)="pwa.openDialog()"
           >
-            <app-icon
-              name="play"
-              [size]="12"
-              class="text-sun-300 sm:hidden"
-            /><app-icon
+            <app-icon name="play" [size]="12" class="text-sun-300 sm:hidden" /><app-icon
               name="play"
               [size]="14"
               class="hidden text-sun-300 sm:block"
             />
             <span class="leading-tight text-left">
               <span
-                class="block text-[9px] font-bold uppercase tracking-wider text-white/60 sm:text-[6px] lg:text-[7px]"
+                class="block text-[9px] font-bold uppercase tracking-wider text-white/60 sm:text-[clamp(6px,0.58vw,9px)]"
                 >Get it on</span
               >
               <span
-                class="block text-[13px] font-extrabold sm:text-[9px] lg:text-[11px]"
+                class="block text-[13px] font-extrabold sm:text-[clamp(9px,0.92vw,14px)]"
                 >Google Play</span
               >
             </span>
@@ -106,7 +102,7 @@
           <button
             type="button"
             aria-label="Get Smart Dukaan on the App Store"
-            class="absolute bottom-[3.5%] left-[5%] flex h-[36px] w-[56%] items-center justify-center gap-1.5 rounded-lg bg-ink px-2 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950 sm:bottom-[15.8%] sm:left-[6.3%] sm:h-[10.9%] sm:w-[24.4%] sm:gap-1 sm:px-2"
+            class="absolute bottom-[6%] left-[5.2%] flex h-[42px] w-[47%] items-center justify-center gap-1.5 rounded-lg bg-ink px-2 text-white shadow-md transition hover:-translate-y-0.5 hover:bg-brand-950 sm:bottom-[12%] sm:left-[6.3%] sm:h-[12%] sm:w-[27%] sm:gap-1 sm:px-2"
             (click)="pwa.openDialog()"
           >
             <app-icon name="apple" [size]="12" class="sm:hidden" /><app-icon
@@ -116,11 +112,11 @@
             />
             <span class="leading-tight text-left">
               <span
-                class="block text-[9px] font-bold uppercase tracking-wider text-white/60 sm:text-[6px] lg:text-[7px]"
+                class="block text-[9px] font-bold uppercase tracking-wider text-white/60 sm:text-[clamp(6px,0.58vw,9px)]"
                 >Download on the</span
               >
               <span
-                class="block text-[13px] font-extrabold sm:text-[9px] lg:text-[11px]"
+                class="block text-[13px] font-extrabold sm:text-[clamp(9px,0.92vw,14px)]"
                 >App Store</span
               >
             </span>
@@ -137,39 +133,47 @@
     <p class="text-[11px] font-extrabold uppercase tracking-[0.18em] text-brand-700">Shop by category</p>
     <h2 class="mt-1 text-2xl font-extrabold tracking-tight text-ink sm:text-[28px]">Everything you need, nearby</h2>
   </div>
-  <div class="container-page flex gap-3 overflow-x-auto hide-scrollbar pb-2">
-    @for (category of homeCategories(); track category.slug) {
-    <a
-      [routerLink]="['/shop']"
-      [queryParams]="{ category: category.slug }"
-      class="group flex w-[132px] shrink-0 flex-col items-center gap-2 rounded-2xl border border-line bg-white p-3.5 text-center shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft sm:w-[150px]"
-    >
-      <span
-        class="grid h-20 w-20 place-items-center overflow-hidden rounded-xl bg-cream"
-        ><img
-          [src]="categoryArtwork[category.slug]"
-          [alt]="category.short"
-          class="h-full w-full object-cover"
-      /></span>
-      <span
-        class="flex min-h-[2.5rem] items-center justify-center text-[13px] font-extrabold leading-tight text-ink sm:text-[15px]"
-        >{{ category.short }}</span
-      >
-    </a>
-    }
-    <a
-      routerLink="/shop"
-      class="group flex w-[132px] shrink-0 flex-col items-center gap-2 rounded-2xl border border-line bg-white p-3.5 text-center shadow-sm transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-soft sm:w-[150px]"
-    >
-      <span
-        class="grid h-20 w-20 place-items-center rounded-xl bg-brand-50 text-brand-700"
-        ><app-icon name="grid" [size]="26"
-      /></span>
-      <span
-        class="flex min-h-[2.5rem] items-center justify-center text-[13px] font-extrabold leading-tight text-ink sm:text-[15px]"
-        >More Categories</span
-      >
-    </a>
+  <div class="container-page">
+    <div class="category-marquee">
+      <div class="marquee-track category-marquee-track pb-2">
+        @for (set of marqueeSets(); track $index) {
+        <div
+          class="flex shrink-0 gap-3 pr-3"
+          [attr.aria-hidden]="set[0].clone ? 'true' : null"
+        >
+          @for (item of set; track item.id) {
+          <a
+            [routerLink]="['/shop']"
+            [queryParams]="item.slug ? { category: item.slug } : {}"
+            [class.marquee-clone]="item.clone"
+            [attr.tabindex]="item.clone ? -1 : null"
+            class="group flex w-[116px] shrink-0 flex-col items-center gap-2.5 text-center sm:w-[150px]"
+          >
+            @if (item.image) {
+            <span
+              class="grid h-[100px] w-[100px] place-items-center overflow-hidden rounded-full bg-brand-50 shadow-[0_10px_24px_-14px_rgba(11,34,24,0.55)] ring-1 ring-line transition duration-300 group-hover:-translate-y-1 group-hover:ring-2 group-hover:ring-brand-300 sm:h-[124px] sm:w-[124px]"
+              ><img
+                [src]="item.image"
+                [alt]="item.short"
+                loading="lazy"
+                class="h-full w-full origin-[50%_35%] scale-[1.16] object-cover object-center transition duration-500 group-hover:scale-[1.2]"
+            /></span>
+            } @else {
+            <span
+              class="grid h-[100px] w-[100px] place-items-center rounded-full bg-brand-50 text-brand-700 shadow-[0_10px_24px_-14px_rgba(11,34,24,0.55)] ring-1 ring-line transition duration-300 group-hover:-translate-y-1 group-hover:ring-2 group-hover:ring-brand-300 sm:h-[124px] sm:w-[124px]"
+              ><app-icon name="grid" [size]="28"
+            /></span>
+            }
+            <span
+              class="flex min-h-[2.5rem] items-center justify-center text-[13px] font-extrabold leading-tight text-ink sm:text-[15px]"
+              >{{ item.short }}</span
+            >
+          </a>
+          }
+        </div>
+        }
+      </div>
+    </div>
   </div>
 </section>
 
@@ -226,7 +230,7 @@
 </section>
 
 <!-- ============================================================ TRUST STRIP -->
-<section class="bg-cream pb-8 lg:pb-10">
+<section class="bg-cream pb-8 pt-4 sm:pt-6 lg:pb-10 lg:pt-8">
   <div
     class="container-page grid gap-2 rounded-2xl border border-line bg-white p-3 sm:grid-cols-2 lg:grid-cols-4"
   >

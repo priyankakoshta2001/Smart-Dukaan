@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 interface PolicySection {
   heading: string;
@@ -21,7 +22,7 @@ interface PolicyDoc {
 @Component({
   selector: "app-policy-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./policy.page.html",
 })

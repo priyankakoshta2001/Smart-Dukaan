@@ -1,77 +1,17 @@
 <div class="page-enter bg-cream">
   <!-- ============================================================ HERO -->
-  <section class="relative overflow-hidden surface-hero">
-    <span class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-brand-100/60 blur-3xl"></span>
-    <span class="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-sun-100/60 blur-3xl"></span>
-
-    <div class="container-page relative py-7 lg:py-10">
-      <nav class="flex items-center gap-1.5 text-[13px] font-bold text-muted">
-        <a routerLink="/" class="transition hover:text-brand-700">Home</a>
-        <app-icon name="chevron-right" [size]="13" class="text-faint" />
-        <span class="text-ink">For Delivery Partners</span>
-      </nav>
-
-      <div class="mt-5 grid items-center gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-12">
-        <div>
-          <span class="eyebrow"><app-icon name="truck" [size]="14" /> For delivery partners</span>
-          <h1 class="mt-3 text-[2.45rem] font-extrabold leading-[1.03] tracking-[-0.05em] text-ink sm:text-[3.2rem]">
-            Earn on your schedule<br />
-            <span class="relative z-0 text-brand-700 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-brand-200/80">deliver with Smart Dukaan.</span>
-          </h1>
-          <p class="mt-3 max-w-xl text-[16px] font-medium leading-relaxed text-ink-soft sm:text-[17px]">
-            Pick your own hours, deliver orders near your home and get paid every week — plus a fuel bonus and insurance on every trip.
-          </p>
-
-          <div class="mt-5 flex flex-wrap gap-2.5">
-            <a routerLink="/contact" [queryParams]="{ topic: 'delivery-partner' }" class="btn btn-primary">Apply Now <app-icon name="arrow-right" [size]="16" /></a>
-            <a href="#onboarding" class="btn btn-outline">See how it works</a>
-          </div>
-
-          <div class="mt-6 grid max-w-lg grid-cols-1 gap-2.5 sm:grid-cols-3">
-            @for (stat of stats; track stat.label) {
-              <div class="rounded-xl border border-line bg-white/85 px-3 py-3 text-center shadow-sm">
-                <p class="text-[20px] font-extrabold leading-none text-ink sm:text-[22px]">{{ stat.value }}</p>
-                <p class="mt-1.5 text-[12px] font-bold leading-tight text-muted">{{ stat.label }}</p>
-              </div>
-            }
-          </div>
-        </div>
-
-        <div class="relative mx-auto w-full max-w-[26rem] lg:mx-0 lg:justify-self-end">
-          <span class="pointer-events-none absolute -inset-5 rounded-[2.5rem] bg-brand-200/40 blur-2xl"></span>
-          <div class="relative overflow-hidden rounded-[1.6rem] border border-line bg-white shadow-soft">
-            <div class="relative h-56 sm:h-64">
-              <img src="/assets/reference/partner-rider.jpg" alt="A Smart Dukaan delivery partner with a delivery bag" class="h-full w-full object-cover object-center" />
-              <span class="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-950/65 via-transparent to-transparent"></span>
-              <span class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.12em] text-brand-700 backdrop-blur">
-                <app-icon name="truck" [size]="14" /> Delivery partner
-              </span>
-              <div class="absolute inset-x-3 bottom-3 rounded-xl bg-white/95 px-3.5 py-3 shadow-soft backdrop-blur">
-                <div class="flex items-center gap-2.5">
-                  <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700"><app-icon name="cash" [size]="20" /></span>
-                  <div class="min-w-0">
-                    <p class="text-[15px] font-extrabold leading-tight text-ink">₹25,000+ average earning</p>
-                    <p class="text-[13px] font-semibold text-muted">Working full-time, paid every week</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="p-5">
-              <p class="text-[12px] font-extrabold uppercase tracking-[0.16em] text-brand-700">Why riders choose us</p>
-              <ul class="mt-3 space-y-2">
-                @for (benefit of benefits; track benefit) {
-                  <li class="flex items-start gap-2 text-[15px] font-semibold leading-snug text-ink-soft">
-                    <app-icon name="check-circle" [size]="17" class="mt-0.5 shrink-0 text-brand-700" /> {{ benefit }}
-                  </li>
-                }
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- ============================================================ HERO -->
+  <app-page-banner
+    title="Earn on your schedule"
+    highlight="deliver with Smart Dukaan."
+    desktopBanner="/assets/banners/delivery-wide.webp"
+    mobileBanner="/assets/banners/delivery-stack.webp"
+  >
+    <div actions class="contents">
+      <a routerLink="/contact" [queryParams]="{ topic: 'delivery-partner' }" class="btn btn-primary">Apply Now <app-icon name="arrow-right" [size]="16" /></a>
+      <a href="#onboarding" class="btn btn-outline">See how it works</a>
     </div>
-  </section>
+  </app-page-banner>
 
   <!-- ============================================================ REQUIREMENTS -->
   <section class="section-pad bg-white">

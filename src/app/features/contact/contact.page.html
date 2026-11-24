@@ -1,61 +1,12 @@
 <div class="page-enter">
-  <!-- ================================================== dark support hero -->
-  <section class="relative overflow-hidden bg-brand-950 text-white">
-    <div class="mesh-green absolute inset-0 opacity-80"></div>
-    <div class="hero-grid pointer-events-none absolute inset-0 opacity-40"></div>
-    <span class="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-brand-500/25 blur-3xl"></span>
-    <span class="pointer-events-none absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-sun-400/15 blur-3xl"></span>
-
-    <div class="container-page relative py-6 lg:py-8">
-      <div class="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-        <div class="max-w-xl">
-          <nav class="flex items-center gap-1.5 text-[13px] font-bold text-white/60">
-            <a routerLink="/" class="transition hover:text-white">Home</a>
-            <app-icon name="chevron-right" [size]="13" />
-            <span class="text-white">Contact &amp; Support</span>
-          </nav>
-
-          <span class="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[12px] font-extrabold uppercase tracking-[0.16em] text-sun-300">
-            <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-sun-400"></span> Real humans · not bots
-          </span>
-
-          <h1 class="mt-3 text-[2.4rem] font-extrabold leading-[1.04] tracking-[-0.045em] sm:text-[2.9rem]">
-            We're here<br />
-            <span class="relative z-0 font-display font-normal italic text-sun-200 after:absolute after:inset-x-0 after:bottom-[0.05em] after:-z-10 after:h-[0.36em] after:rounded-md after:bg-sun-300/30">to help.</span>
-          </h1>
-          <p class="mt-3 max-w-md text-[15px] font-medium leading-relaxed text-white/85">
-            Missing item, late rider ya bas ek sawaal ho — 7 AM se 11 PM tak, har din, hum sun rahe hain. Live order issues 24×7.
-          </p>
-
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[13px] font-bold text-white/90 backdrop-blur"><app-icon name="clock" [size]="15" class="text-sun-300" /> 7 AM – 11 PM, all days</span>
-            <span class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[13px] font-bold text-white/90 backdrop-blur"><app-icon name="zap" [size]="15" class="text-sun-300" /> Avg. reply 4 hrs</span>
-            <span class="inline-flex items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[13px] font-bold text-white/90 backdrop-blur"><app-icon name="phone" [size]="15" class="text-sun-300" /> +91 761 400 2200</span>
-          </div>
-        </div>
-
-        <!-- rider image card -->
-        <div class="relative mx-auto w-full max-w-[19rem]">
-          <div class="relative overflow-hidden rounded-[1.6rem] border-4 border-white/15 bg-brand-800 shadow-[0_30px_60px_-24px_rgba(0,0,0,0.6)]">
-            <img src="/assets/reference/partner-rider.jpg" alt="Smart Dukaan delivery partner ready to help" class="h-56 w-full object-cover object-top sm:h-64" />
-            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-950/90 to-transparent p-4 pt-8">
-              <p class="text-[15px] font-extrabold">Rider at your door in 30–45 min</p>
-              <p class="mt-0.5 text-[13px] font-semibold text-white/75">Live tracking on every order</p>
-            </div>
-          </div>
-          <span class="absolute -left-3 top-4 flex items-center gap-1.5 rounded-full bg-sun-400 px-3 py-1.5 text-[12px] font-extrabold text-ink shadow-lg">
-            <app-icon name="chat" [size]="13" /> Chat reply · 48 sec
-          </span>
-          <span class="absolute -right-2 bottom-16 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-extrabold text-ink shadow-lg">
-            <app-icon name="shield" [size]="13" class="text-brand-700" /> 100% issue resolution
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- curve into page -->
-    <div class="h-6 rounded-t-[2rem] bg-paper"></div>
-  </section>
+  <!-- ================================================== support banner -->
+  <app-page-banner
+    title="We're here"
+    highlight="to help."
+    desktopBanner="/assets/banners/contact-wide.webp"
+    mobileBanner="/assets/banners/contact-stack.webp"
+  >
+  </app-page-banner>
 
   <div class="container-page pt-2">
     <!-- ================================================== channels -->

@@ -5,12 +5,13 @@ import { CatalogService } from "../../core/services/catalog.service";
 import { ToastService } from "../../core/services/toast.service";
 import { WishlistService } from "../../core/services/wishlist.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 import { ProductCardComponent } from "../../shared/product-card/product-card.component";
 
 @Component({
   selector: "app-wishlist-page",
   standalone: true,
-  imports: [RouterLink, IconComponent, ProductCardComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent, ProductCardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./wishlist.page.html",
 })

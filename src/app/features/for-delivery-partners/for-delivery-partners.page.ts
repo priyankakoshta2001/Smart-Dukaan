@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { PARTNER_BENEFITS } from "../../core/data/catalog";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 interface OnboardStep {
   icon: string;
@@ -12,7 +13,7 @@ interface OnboardStep {
 @Component({
   selector: "app-for-delivery-partners-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./for-delivery-partners.page.html",
 })

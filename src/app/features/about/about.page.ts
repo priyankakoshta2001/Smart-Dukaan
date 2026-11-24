@@ -6,6 +6,7 @@ import { LocationService } from "../../core/services/location.service";
 import { PwaService } from "../../core/services/pwa.service";
 import { ToastService } from "../../core/services/toast.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 interface LandingFeature {
   icon: string;
@@ -27,7 +28,7 @@ interface PartnerCard {
 @Component({
   selector: "app-about-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./about.page.html",
 })

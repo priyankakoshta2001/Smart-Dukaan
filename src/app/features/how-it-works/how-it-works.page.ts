@@ -4,11 +4,12 @@ import { STEPS } from "../../core/data/catalog";
 import { CatalogService } from "../../core/services/catalog.service";
 import { LocationService } from "../../core/services/location.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 @Component({
   selector: "app-how-it-works-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./how-it-works.page.html",
 })

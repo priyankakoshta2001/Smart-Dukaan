@@ -16,9 +16,9 @@
   --color-muted: #687a70;
   --color-faint: #97a59c;
   --color-line: #e6eade;
-  --color-cream: #f7f6ef;
-  --color-paper: #fffef9;
-  --color-mint: #eef7f1;
+  --color-cream: #f1f8ef;
+  --color-paper: #fbfef9;
+  --color-mint: #e6f5ea;
 
   --color-brand-50: #edfdf3;
   --color-brand-100: #d4f9e2;
@@ -142,7 +142,11 @@
     margin: 0;
     overflow-x: hidden;
     overflow-x: clip;
-    background: var(--color-cream);
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(70rem 32rem at 0% 0%, rgba(168, 240, 197, 0.35) 0, transparent 70%),
+      radial-gradient(60rem 30rem at 100% 8%, rgba(255, 224, 136, 0.22) 0, transparent 70%);
+    background-repeat: no-repeat;
     color: var(--color-ink);
     font: 500 1rem/1.6 var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -191,6 +195,13 @@
     flex-shrink: 0;
   }
 
+  /* When an icon is used inline next to text (class="inline"), a block-level
+     svg would split the line and push the icon above the label. */
+  app-icon > svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
   input,
   select,
   textarea {
@@ -218,7 +229,7 @@
   ::-webkit-scrollbar-thumb {
     background: #cbd5c5;
     border-radius: 999px;
-    border: 2px solid var(--color-cream);
+    border: 2px solid #e6f1e3;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #aab8a4;
@@ -256,6 +267,19 @@
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* Let a banner break out of .container-page and span the full viewport on
+   tablet / laptop / desktop, while staying inside the padded container on
+   phones. The navbar and every other section keep their normal layout. */
+.full-bleed {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
 }
 
 .filters-panel {
@@ -680,6 +704,49 @@ textarea.input {
   display: flex;
   width: max-content;
   animation: var(--animate-marquee);
+}
+
+/* Shop-by-category strip: continuous scroll that pauses as soon as the
+   pointer (or keyboard focus) reaches a category card. */
+.category-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 2.5%,
+    #000 97.5%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 2.5%,
+    #000 97.5%,
+    transparent 100%
+  );
+}
+.category-marquee-track {
+  animation-duration: 38s;
+  will-change: transform;
+}
+.category-marquee:hover .category-marquee-track,
+.category-marquee:focus-within .category-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .category-marquee {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .category-marquee::-webkit-scrollbar {
+    display: none;
+  }
+  .category-marquee-track {
+    animation: none !important;
+  }
+  .marquee-clone {
+    display: none;
+  }
 }
 
 .form-error {

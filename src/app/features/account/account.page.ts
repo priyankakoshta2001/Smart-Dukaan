@@ -8,13 +8,14 @@ import { LocationService } from "../../core/services/location.service";
 import { OrderService } from "../../core/services/order.service";
 import { ToastService } from "../../core/services/toast.service";
 import { IconComponent } from "../../shared/icon/icon.component";
+import { PageBannerComponent } from "../../shared/page-banner/page-banner.component";
 
 type AccountTab = "overview" | "orders" | "addresses" | "profile";
 
 @Component({
   selector: "app-account-page",
   standalone: true,
-  imports: [RouterLink, IconComponent],
+  imports: [RouterLink, IconComponent, PageBannerComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./account.page.html",
 })
